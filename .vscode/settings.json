@@ -1,0 +1,7 @@
+{
+  "tinymist.previewFeature": "enable",
+  "tinymist.preview.refresh": "onType",
+  "tinymist.preview.invertColors": "never",
+  "tinymist.exportPdf": "onType",
+  "tinymist.rootPath": "/Users/jorisbusink/Documents/Typst"
+}

@@ -1,0 +1,463 @@
+{
+  "codeblokken": 75,
+  "codeverschillen": [],
+  "opmerking": "Controle op behoud van code; meetcode en hardware-aansturing zijn niet uitgevoerd.",
+  "compilaties": [
+    {
+      "file": "Python_handleiding.typ",
+      "pages": 33,
+      "overflow": []
+    },
+    {
+      "file": "Leerjaar2.typ",
+      "pages": 161,
+      "overflow": []
+    },
+    {
+      "file": "Project_1.4.typ",
+      "pages": 27,
+      "overflow": []
+    },
+    {
+      "file": "template.typ",
+      "pages": 2,
+      "overflow": []
+    },
+    {
+      "file": "Na2.4_typst/Digitale_Viscositeit.typ",
+      "pages": 5,
+      "overflow": []
+    },
+    {
+      "file": "Na2.4_typst/Hardheid_Kerfslag.typ",
+      "pages": 7,
+      "overflow": []
+    },
+    {
+      "file": "Na2.4_typst/TrekbankproefI.typ",
+      "pages": 4,
+      "overflow": []
+    },
+    {
+      "file": "Na2.4_typst/Kinematische_Viscositeit.typ",
+      "pages": 4,
+      "overflow": []
+    },
+    {
+      "file": "Na2.4_typst/TrekbankproefII.typ",
+      "pages": 5,
+      "overflow": []
+    },
+    {
+      "file": "Na2.2_typst/Zonnecel.typ",
+      "pages": 5,
+      "overflow": []
+    },
+    {
+      "file": "Na2.2_typst/UV_VIS.typ",
+      "pages": 10,
+      "overflow": []
+    },
+    {
+      "file": "Na2.2_typst/Aero_pendulum_OL.typ",
+      "pages": 10,
+      "overflow": []
+    },
+    {
+      "file": "Na2.2_typst/SEMEDX.typ",
+      "pages": 7,
+      "overflow": []
+    },
+    {
+      "file": "Na2.2_typst/Aero_pendulum_PID.typ",
+      "pages": 10,
+      "overflow": []
+    },
+    {
+      "file": "Na2.3_typst/Elektronen_e_m_bepalen.typ",
+      "pages": 6,
+      "overflow": []
+    },
+    {
+      "file": "Na2.3_typst/Dieetzout_buigen.typ",
+      "pages": 10,
+      "overflow": []
+    },
+    {
+      "file": "Na2.3_typst/Elektronen_diffractie.typ",
+      "pages": 5,
+      "overflow": []
+    },
+    {
+      "file": "Na2.3_typst/Apparaat_communicatie.typ",
+      "pages": 16,
+      "overflow": []
+    },
+    {
+      "file": "Planning/Jaarplanning&verbeteringen.typ",
+      "pages": 5,
+      "overflow": []
+    },
+    {
+      "file": "Planning/Verdiepende_practica_2026.typ",
+      "pages": 3,
+      "overflow": []
+    },
+    {
+      "file": "Planning/P4.typ",
+      "pages": 1,
+      "overflow": []
+    },
+    {
+      "file": "Planning/P1.typ",
+      "pages": 1,
+      "overflow": []
+    },
+    {
+      "file": "Planning/P3.typ",
+      "pages": 1,
+      "overflow": []
+    },
+    {
+      "file": "Planning/P2.typ",
+      "pages": 1,
+      "overflow": []
+    },
+    {
+      "file": "Planning/Verbeteringen.typ",
+      "pages": 1,
+      "overflow": []
+    },
+    {
+      "file": "Planning/evaluatie.typ",
+      "pages": 1,
+      "overflow": []
+    },
+    {
+      "file": "Na2.1_typst/Spectrometer.typ",
+      "pages": 10,
+      "overflow": []
+    },
+    {
+      "file": "Na2.1_typst/Code_snippets.typ",
+      "pages": 5,
+      "overflow": []
+    },
+    {
+      "file": "Na2.1_typst/Python_intro.typ",
+      "pages": 9,
+      "overflow": []
+    },
+    {
+      "file": "Na2.1_typst/Lenzen.typ",
+      "pages": 8,
+      "overflow": []
+    },
+    {
+      "file": "Na2.1_typst/Python_tips.typ",
+      "pages": 25,
+      "overflow": []
+    },
+    {
+      "file": "Na2.1_typst/Meetplan.typ",
+      "pages": 3,
+      "overflow": []
+    },
+    {
+      "file": "Python_Cursus_typst/PythonLJ2.typ",
+      "pages": 30,
+      "overflow": []
+    },
+    {
+      "file": "Python_Cursus_typst/Week5.typ",
+      "pages": 3,
+      "overflow": []
+    },
+    {
+      "file": "Python_Cursus_typst/Week4.typ",
+      "pages": 2,
+      "overflow": []
+    },
+    {
+      "file": "Python_Cursus_typst/Week1.typ",
+      "pages": 7,
+      "overflow": []
+    },
+    {
+      "file": "Python_Cursus_typst/Week3.typ",
+      "pages": 7,
+      "overflow": []
+    },
+    {
+      "file": "Python_Cursus_typst/Week2.typ",
+      "pages": 10,
+      "overflow": []
+    },
+    {
+      "file": "Algemeen/Regels_Veiligheid.typ",
+      "pages": 9,
+      "overflow": []
+    },
+    {
+      "file": "Algemeen/Leerdoelen_overzicht.typ",
+      "pages": 1,
+      "overflow": []
+    }
+  ],
+  "documenten": 40,
+  "compilatiefouten": 0,
+  "controle": "Alle documenten gecompileerd; tekstbegrenzingen automatisch gecontroleerd; representatieve pagina’s visueel bekeken.",
+  "bronbestanden": [
+    {
+      "bron": "Practicum/Leerdoelen_overzicht.tex",
+      "typst": "Algemeen/Leerdoelen_overzicht.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.1/Code_snippets.tex",
+      "typst": "Na2.1_typst/Code_snippets.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.1/Figuren/mappenstructuur.tex",
+      "typst": "Na2.1_typst/Figuren/mappenstructuur.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.1/Lenzen.tex",
+      "typst": "Na2.1_typst/Lenzen.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.1/Meetplan.tex",
+      "typst": "Na2.1_typst/Meetplan.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.1/Python_intro.tex",
+      "typst": "Na2.1_typst/Python_intro.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.1/Python_tips.tex",
+      "typst": "Na2.1_typst/Python_tips.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.1/Spectrometer.tex",
+      "typst": "Na2.1_typst/Spectrometer.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.2/Aero_pendulum_OL.tex",
+      "typst": "Na2.2_typst/Aero_pendulum_OL.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.2/Aero_pendulum_PID.tex",
+      "typst": "Na2.2_typst/Aero_pendulum_PID.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.2/CSV_werkwijze.tex",
+      "typst": "Na2.2_typst/CSV_werkwijze.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.2/Constante_planck.tex",
+      "typst": "Na2.2_typst/Constante_planck.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.2/Figuren/zonnecel_model.tex",
+      "typst": "Na2.2_typst/Figuren/zonnecel_model.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.2/SEMEDX.tex",
+      "typst": "Na2.2_typst/SEMEDX.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.2/UV_VIS.tex",
+      "typst": "Na2.2_typst/UV_VIS.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.2/Zonnecel.tex",
+      "typst": "Na2.2_typst/Zonnecel.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Apparaat_communicatie.tex",
+      "typst": "Na2.3_typst/Apparaat_communicatie.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Dieetzout_buigen.tex",
+      "typst": "Na2.3_typst/Dieetzout_buigen.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Elektronen_diffractie.tex",
+      "typst": "Na2.3_typst/Elektronen_diffractie.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Elektronen_e_m_bepalen.tex",
+      "typst": "Na2.3_typst/Elektronen_e_m_bepalen.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Figuren/Bandpass.tex",
+      "typst": "Na2.3_typst/Figuren/Bandpass.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Figuren/Highpass.tex",
+      "typst": "Na2.3_typst/Figuren/Highpass.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Figuren/Lowpass.tex",
+      "typst": "Na2.3_typst/Figuren/Lowpass.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Figuren/Magneetveld_tikz.tex",
+      "typst": "Na2.3_typst/Figuren/Magneetveld_tikz.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.3/Figuren/comm_tree.tex",
+      "typst": "Na2.3_typst/Figuren/comm_tree.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.4/Digitale_Viscositeit.tex",
+      "typst": "Na2.4_typst/Digitale_Viscositeit.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.4/Hardheid_Kerfslag.tex",
+      "typst": "Na2.4_typst/Hardheid_Kerfslag.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.4/Kinematische_Viscositeit.tex",
+      "typst": "Na2.4_typst/Kinematische_Viscositeit.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.4/TrekbankproefI.tex",
+      "typst": "Na2.4_typst/TrekbankproefI.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Na2.4/TrekbankproefII.tex",
+      "typst": "Na2.4_typst/TrekbankproefII.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Planning/Jaarplanning&verbeteringen.tex",
+      "typst": "Planning/Jaarplanning&verbeteringen.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Planning/P1.tex",
+      "typst": "Planning/P1.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Planning/P2.tex",
+      "typst": "Planning/P2.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Planning/P3.tex",
+      "typst": "Planning/P3.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Planning/P4.tex",
+      "typst": "Planning/P4.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Planning/Verbeteringen.tex",
+      "typst": "Planning/Verbeteringen.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Planning/Verdiepende_practica_2026.tex",
+      "typst": "Planning/Verdiepende_practica_2026.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Planning/evaluatie.tex",
+      "typst": "Planning/evaluatie.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/Regels_Veiligheid.tex",
+      "typst": "Algemeen/Regels_Veiligheid.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Practicum/benodigdheden.tex",
+      "typst": "Algemeen/benodigdheden.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Python_Cursus/PythonLJ2.tex",
+      "typst": "Python_Cursus_typst/PythonLJ2.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Python_Cursus/Week1.tex",
+      "typst": "Python_Cursus_typst/Week1.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Python_Cursus/Week2.tex",
+      "typst": "Python_Cursus_typst/Week2.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Python_Cursus/Week3.tex",
+      "typst": "Python_Cursus_typst/Week3.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Python_Cursus/Week4.tex",
+      "typst": "Python_Cursus_typst/Week4.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Python_Cursus/Week5.tex",
+      "typst": "Python_Cursus_typst/Week5.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Leerjaar2.tex",
+      "typst": "Leerjaar2.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Python_handleiding.tex",
+      "typst": "Python_handleiding.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Project_1.4.tex",
+      "typst": "Project_1.4.typ",
+      "aanwezig": true
+    },
+    {
+      "bron": "Template.tex",
+      "typst": "template.typ",
+      "aanwezig": true
+    }
+  ],
+  "laatste_wijziging": "Oude bronnen en dubbelingen verwijderd; codelettergrootte teruggebracht naar effectief 8pt; alle documenten opnieuw gecompileerd."
+}

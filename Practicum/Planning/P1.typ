@@ -1,0 +1,86 @@
+#import "../../styl.typ": *
+#show: stijl.with(titel: "P1", kop: "Technische Natuurkunde — Planning")
+
+#page(flipped: true, margin: 1.5cm, header: none, footer: none)[
+#set text(size: 9pt)
+#heading(level: 1, numbering: none)[Planning Periode 1]
+
+#figure(
+  [
+#table(
+  columns: (1.5fr,1.5fr,2fr,2fr,2fr,3fr,3fr,3fr,),
+  align: (center,center,center,center,center,left,left,left,),
+  table.header(table.cell(x: 0, y: 0)[#strong[kalender week]], table.cell(x: 1, y: 0)[#strong[Periode week]], table.cell(x: 2, y: 0)[#strong[Ma 12:00-14:30]], table.cell(x: 3, y: 0)[#strong[Ma 14:30-17:00]], table.cell(x: 4, y: 0)[#strong[Vrij 15:20-17:50]], table.cell(x: 5, y: 0)[#strong[Activiteit Bijeenkomst 1]], table.cell(x: 6, y: 0)[#strong[Activiteit Bijeenkomst 2]], table.cell(x: 7, y: 0)[#strong[Extra bijeenkomst]]),
+  table.cell(x: 0, y: 1, colspan: 8, align: center, fill: rgb("E6E6E6"))[#strong[Blok 1]],
+  table.cell(x: 0, y: 2)[36],
+  table.cell(x: 1, y: 2)[1],
+  table.cell(x: 2, y: 2)[31-aug],
+  table.cell(x: 3, y: 2)[31-aug],
+  table.cell(x: 4, y: 2)[4-sep],
+  table.cell(x: 5, y: 2)[Gr. 1 Python],
+  table.cell(x: 6, y: 2)[Gr. 2 Python],
+  table.cell(x: 7, y: 2)[\-],
+  table.cell(x: 0, y: 3)[37],
+  table.cell(x: 1, y: 3)[2],
+  table.cell(x: 2, y: 3)[7-sep],
+  table.cell(x: 3, y: 3)[7-sep],
+  table.cell(x: 4, y: 3)[11-sep],
+  table.cell(x: 5, y: 3)[Gr. 1 Optica],
+  table.cell(x: 6, y: 3)[Gr. 2 Optica],
+  table.cell(x: 7, y: 3)[\-],
+  table.cell(x: 0, y: 4)[38],
+  table.cell(x: 1, y: 4)[3],
+  table.cell(x: 2, y: 4)[14-sep],
+  table.cell(x: 3, y: 4)[14-sep],
+  table.cell(x: 4, y: 4)[18-sep],
+  table.cell(x: 5, y: 4, colspan: 2, align: center)[Groep 1: Bouwen spectrometer#super[1]],
+  table.cell(x: 7, y: 4)[\-],
+  table.cell(x: 0, y: 5)[39],
+  table.cell(x: 1, y: 5)[4],
+  table.cell(x: 2, y: 5)[21-sep],
+  table.cell(x: 3, y: 5)[21-sep],
+  table.cell(x: 4, y: 5)[25-sep],
+  table.cell(x: 5, y: 5, colspan: 2, align: center)[Groep 1: Experimenteren spectrometer#super[1]],
+  table.cell(x: 7, y: 5)[\-],
+  table.cell(x: 0, y: 6)[40],
+  table.cell(x: 1, y: 6)[5],
+  table.cell(x: 2, y: 6)[28-sep],
+  table.cell(x: 3, y: 6)[28-sep],
+  table.cell(x: 4, y: 6)[2-okt],
+  table.cell(x: 5, y: 6, colspan: 2, align: center)[Groep 2: Bouwen spectrometer#super[1]],
+  table.cell(x: 7, y: 6)[\-],
+  table.cell(x: 0, y: 7)[41],
+  table.cell(x: 1, y: 7)[6],
+  table.cell(x: 2, y: 7)[5-okt],
+  table.cell(x: 3, y: 7)[5-sep],
+  table.cell(x: 4, y: 7)[9-okt],
+  table.cell(x: 5, y: 7, colspan: 2, align: center)[Groep 2: Experimenteren spectrometer#super[1]],
+  table.cell(x: 7, y: 7)[\-],
+  table.cell(x: 0, y: 8, fill: rgb("FFCCCC"))[42],
+  table.cell(x: 1, y: 8, fill: rgb("FFCCCC"))[7],
+  table.cell(x: 2, y: 8, colspan: 6, align: center, fill: rgb("FFCCCC"))[#strong[Herfstvakantie]],
+  table.cell(x: 0, y: 9)[43],
+  table.cell(x: 1, y: 9)[8],
+  table.cell(x: 2, y: 9)[19-okt],
+  table.cell(x: 3, y: 9)[19-okt],
+  table.cell(x: 4, y: 9)[23-okt],
+  table.cell(x: 5, y: 9, colspan: 3, align: center)[\-],
+  table.cell(x: 0, y: 10)[44],
+  table.cell(x: 1, y: 10)[9],
+  table.cell(x: 2, y: 10)[26-okt],
+  table.cell(x: 3, y: 10)[26-okt],
+  table.cell(x: 4, y: 10)[30-okt],
+  table.cell(x: 5, y: 10, colspan: 3, align: center)[Herkansing op afspraak],
+  table.cell(x: 0, y: 11)[45],
+  table.cell(x: 1, y: 11)[10],
+  table.cell(x: 2, y: 11, colspan: 6, align: center)[#strong[Tentamens]],
+  table.cell(x: 0, y: 12, colspan: 8, align: center, fill: rgb("E6E6E6"))[#strong[Blok 2]],
+)
+  ],
+  caption: [Planning practica blok 1.],
+  kind: table,
+)
+
+#text(size: 8pt)[#super[1] Studenten worden geacht alle bijeenkomsten bij te wonen.]
+
+]
