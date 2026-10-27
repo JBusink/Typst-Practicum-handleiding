@@ -96,7 +96,7 @@ plt.show()
 
 ]
 
-Zoals je kunt zien in het figuur is er een duidelijk, maar soms ook verwarrend, verband tussen de beeldafstand en de voorwerpsafstand. De lenzenformule
+Zoals je kunt zien in het figuur is er een duidelijk, maar soms ook verwarrend, verbanden tussen de beeldafstand en de voorwerpsafstand. De lenzenformule
 
 #math.equation(block: true, numbering: "(1)", $1 / f = 1 / v + 1 / b \,$)
 
