@@ -1,0 +1,439 @@
+\documentclass[12pt]{article}
+
+% eForms (AcroTeX) met driver
+\usepackage[pdftex]{eforms}
+\usepackage[dutch]{babel}
+\usepackage[a4paper,
+  left=2.2cm,
+  right=2.2cm,
+  top=1.6cm,
+  bottom=2.2cm
+]{geometry}
+
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\makeatletter
+\pdfcatalog{/AcroForm << /NeedAppearances true >>}
+\makeatother
+
+% Compactere itemize (globaal)
+\setlist[itemize]{%
+  topsep=0pt,
+  partopsep=0pt,
+  itemsep=2pt,
+  parsep=0pt,
+  parskip=0pt
+}
+
+
+% Zwarte checkbox met kruisje
+\newcommand{\myCheckBox}[1]{%
+  \checkBox[\symbolchoice{cross}]{#1}{10bp}{10bp}{On}%
+}
+
+% ========================
+% Document
+% ========================
+
+\title{\bfseries Feedback Werkveld Stages -- Week 5}
+
+\author{%
+  \large Hogeschool van Amsterdam\\
+  \large Faculteit van Techniek\\
+  \large Technische Natuurkunde -- Jaar 3\\[0.5em]
+}
+
+\date{}
+
+
+\begin{document}
+\maketitle
+% \ChoiceMenu[ combo, width=8cm, bordercolor={0 0 0}, backgroundcolor={1 1 1}, charsize=11, borderwidth=1 ]{\textbf{Week: }\hspace{5 cm}}{Week 5=5,Week 15=15}
+
+\vspace{3mm}
+
+\renewcommand{\arraystretch}{1.3}
+
+\begin{tabular}{@{} l @{\hspace{2 cm}} r @{}}
+\textbf{Naam student:} &
+\textField[]{namefield1}{8cm}{12bp}\\
+\textbf{Naam stagebegeleider:} &
+\textField[]{namefield2}{8cm}{12bp}\\
+\textbf{Naam stagedocent:} &
+\textField[]{namefield3}{8cm}{12bp}\\
+\textbf{Datum:} &
+\textField[]{namefield4}{8cm}{12bp}\\
+\end{tabular}
+
+\bigskip
+
+\vspace{4pt}
+
+\noindent\textbf{Instructie}
+
+\vspace{0.4em}
+\noindent Dit feedbackdocument is bedoeld om de student te ondersteunen bij het schrijven van een zelfreflectie over de voortgang van de stage (week~5) en/of een reflectie op het totale stageverloop (week~15). 
+
+De stage is opgebouwd rond de competenties die binnen de opleiding
+Technische Natuurkunde van de student worden verwacht, inclusief bijbehorende
+criteria en indicatoren. Deze vormen de leidraad voor zowel de beoordeling als de
+inhoudelijke terugkoppeling. De inhoudelijke competenties worden beoordeeld via scores, uiteenlopend van Excelent (\textbf{E}) tot Onvoldoende (\textbf{O}).\\
+
+\noindent Naast het invullen van dit document is het van groot belang dat de feedback
+ook mondeling met de student wordt besproken, zodat observaties, aandachtspunten
+en ontwikkelkansen verder kunnen worden toegelicht. Zorg ervoor dat dit feedbackdocument \textbf{vóór} het stagebezoek al is ingevuld.\\
+
+\noindent 
+
+\vspace{12pt}
+% Leeg tekstvak (meerdere regels)
+\noindent\textbf{Gemaakt afspraken / opmerkingen algemeen}\\
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{opmerkingen_algemeen}{\linewidth}{3cm}
+
+\vfill
+\begin{center}
+\includegraphics[height=1.3cm]{HvA_logo.png}
+\end{center}
+
+
+% =====================================================
+% Onderzoeksvaardigheden
+% =====================================================
+
+\newpage
+\noindent\textbf{\Large Onderzoeksvaardigheden}\hfill
+\vspace{2 mm}
+
+\noindent\textbf{a. Analytische vaardigheden} \\
+\noindent\textbf{Doel:} De student kan vragen en deelvragen van een onderzoek formuleren eventueel in samenwerking met een opdrachtgever en daarbij gebruik maken van relevante bronnen.
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{A1pp} & \textbf{G}: \myCheckBox{A1p} & \textbf{V}: \myCheckBox{A1o} & \textbf{M}: \myCheckBox{A1m} & \textbf{O}: \myCheckBox{A1mm} & \textbf{NvT}: \myCheckBox{A1nvt} \\
+
+\midrule
+\multicolumn{7}{p{15.2cm}}{%
+\begin{itemize}
+  \item In samenspraak en met afstemming een probleem te analyseren en te vertalen naar de doelstellingen van de stageopdracht.
+  \item Inzicht in het probleem en de vakinhoudelijke aspecten van het onderzoek te verkrijgen door het bestuderen van (zelf)gekozen literatuur of bronnen.
+  \item Deelvragen van het uit te voeren project te formuleren. In overleg met de opdrachtgever doelstellingen te analyseren en om te zetten in het gewenste project.
+\end{itemize}
+} \\
+\bottomrule
+\end{longtable}
+
+\noindent\textbf{b. Modelleervaardigheden} \\
+\noindent\textbf{Doel:} De student kan relatief zelfstandig, met losse sturing, een relatief complex model selecteren, de vergelijkingen afleiden en indien nodig een model te verfijnen en aanpassen aan specifieke situaties.
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{B1pp} & \textbf{G}: \myCheckBox{B1p} & \textbf{V}: \myCheckBox{B1o}& \textbf{M}: \myCheckBox{B1m} & \textbf{O}: \myCheckBox{B1mm} & \textbf{NvT}: \myCheckBox{B1nvt} \\
+\midrule
+\multicolumn{7}{p{15.2cm}}{%
+\begin{itemize}
+  \item Uit aangereikte vakspecifieke modellen de geschikte te selecteren, te controleren, toe te passen en ze te valideren binnen het project.
+  \item Zelfstandig (de vergelijkingen van) een eenvoudig model op hoofdlijnen (zonder details)op te stellen.
+  \item De uitgangspunten en het geldigheidsgebied van een bestaand relatief eenvoudig bestaand model te begrijpen en te hanteren.
+  \item Een eenvoudig aangereikt model zelfstandig aan te passen en toe te passen aan een specifieke situatie binnen de stageopdracht.
+\end{itemize}
+} \\
+\bottomrule
+\end{longtable}
+
+\newpage
+
+\noindent\textbf{c. Experimentele vaardigheden} \\
+\noindent\textbf{Doel:} De student kan een plan opstellen of een bestaand voorschrift aanpassen voor de opgestelde onderzoeksvraag en tijdens het uitvoeren van een experiment nauwkeurig de resultaten bijhouden.
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{C1pp} & \textbf{G}: \myCheckBox{C1p} & \textbf{V}: \myCheckBox{C1o}& \textbf{M}: \myCheckBox{C1m} & \textbf{O}: \myCheckBox{C1mm} & \textbf{NvT}: \myCheckBox{C1nvt} \\
+\midrule
+\multicolumn{7}{p{15.2cm}}{%
+\begin{itemize}
+  \item Een aanpak te kiezen en uit te leggen waarom deze geschikt is om het doel te bereiken.
+  \item Over voldoende kennis en inzicht beschikken van beschikbare methoden en technieken om deze op geschiktheid te beoordelen en de juiste apparatuur en/of apparaat instellingen te kiezen.
+  \item Bij de proefopzet rekening te houden met milieu- en veiligheidsaspecten 
+  \item Een planning te maken voor het uitvoeren van experimenteel werk binnen een (afgebakend) project dat qua tijdsduur van beperkte omvang is (maximaal 20 weken).
+  \item Te motiveren of de aanpak van het experiment verbeteringen nodig heeft en advies voor mogelijke oplossingen kunnen onderbouwen.
+\end{itemize}
+} \\
+\bottomrule
+\end{longtable}
+
+\noindent\textbf{Opmerkingen / toelichting}\\
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{opmerkingen_o}{\linewidth}{3cm}
+\newpage
+
+% % =====================================================
+% % Projectvaardigheden
+% % =====================================================
+
+\newpage
+\noindent\textbf{\Large Projectvaardigheden}\hfill
+\vspace{2 mm}
+
+\noindent\textbf{a. Project opzetten} \\
+\noindent\textbf{Doel:} De student kan de wensen van de opdrachtgever vertalen naar een haalbaar projectplan met een duidelijk tijdspad en taakverdeling.
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{D1pp} & \textbf{G}: \myCheckBox{D1p} & \textbf{V}: \myCheckBox{D1o}& \textbf{M}: \myCheckBox{D1m} & \textbf{O}: \myCheckBox{D1mm} & \textbf{NvT}: \myCheckBox{D1nvt} \\
+\midrule
+\multicolumn{7}{p{15.2cm}}{%
+\begin{itemize}
+  \item De wens van de stageverlener te identificeren.
+  \item In overleg een werkplan (PvA) te maken, zelfstandig de planning op te stellen, rekening houdend met randvoorwaarden binnen het project.
+  \item In overleg met de opdrachtgever de doelen, beoogd(e) eindproduct(en) en criteria aan eindproduct(en)van het project aan te scherpen.
+\end{itemize}
+} \\
+\bottomrule
+\end{longtable}
+
+\noindent\textbf{b. project uitvoeren} \\
+\noindent\textbf{Doel:} De student kan het projectplan uitvoeren en indien nodig, in overleg met het team en opdrachtgever, tussentijds aanpassen.
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{E1pp} & \textbf{G}: \myCheckBox{E1p} & \textbf{V}: \myCheckBox{E1o}& \textbf{M}: \myCheckBox{E1m} & \textbf{O}: \myCheckBox{E1mm} & \textbf{NvT}: \myCheckBox{E1nvt} \\
+\midrule
+\multicolumn{7}{p{15.2cm}}{%
+\begin{itemize}
+  \item Bij uitvoering van de opdracht te werken conform werkplan. Het werkplan efficiënt uit te voeren en zo nodig tussentijds aan te passen.
+  \item Verantwoordelijkheid te nemen voor de uitvoering van de eigen activiteiten en hierover pro-actief te communiceren met oog op de voortgang van het project.
+  \item Verantwoordelijkheid te nemen bij het monitoren van de voortgang van het project, signaleren van knelpunten in de voortgang van het project en deze bespreekbaar maken en zo nodig de planning of activiteiten bij te stellen binnen de gestelde randvoorwaarden.
+  \item Te functioneren als volwaardig teamlid in de eigen werkomgeving waarbij feedback en reflectie leiden tot betere resultaten, beargumenteerde keuzes en goede afstemming in het uitvoeren van het onderzoek. De communicatie over de voortgang te kunnen afstemmen op de situatie.
+\end{itemize}
+} \\
+\bottomrule
+\end{longtable}
+
+% \noindent\textbf{c. Project opleveren} \\
+% \noindent\textbf{Doel:} De student kan de resultaten van het project samenvatten, documentatie van de ontwikkeling van het project opstellen en suggesties doen voor vervolgstappen met een consistente bronvermelding.
+% \renewcommand{\arraystretch}{1.3}
+% \begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+% \toprule
+% \textbf{Score / Indicator} &
+% \textbf{E}: \myCheckBox{F1pp} & \textbf{G}: \myCheckBox{F1p} & \textbf{V}: \myCheckBox{F1o} &
+% \textbf{M}: \myCheckBox{F1m} & \textbf{O}: \myCheckBox{F1mm} & \textbf{NvT}: \myCheckBox{F1nvt} \\
+% \midrule
+% \multicolumn{7}{p{15.2cm}}{%
+% \begin{itemize}
+%   \item (Deel)resultaten samen te vatten en te interpreteren in relatie tot de opdracht/onderzoeksvraag.
+%   \item Een voorstel tot vervolgstappen te doen op basis van de combinatie van deelresultaten.
+%   \item De documentatie van de ontwikkeling en het resultaat op te stellen volgens gedetailleerde richtlijnen.
+% \end{itemize}
+% } \\
+% \bottomrule
+% \end{longtable}
+
+\noindent\textbf{Opmerkingen / toelichting}\\
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{opmerkingen_pr}{\linewidth}{3cm}
+\newpage
+
+
+\newpage
+% % =====================================================
+% % Persoonlijke vaardigheden
+% % =====================================================
+
+\noindent\textbf{\Large Persoonlijke vaardigheden}\hfill
+\vspace{2 mm}
+
+\noindent\textbf{a. Reflectie \& feedback} \\
+\noindent\textbf{Doel:} Je kan je eigen persoonlijke leerdoelen formuleren, op de geformuleerde leerdoelen reflecteren, proactief feedback vragen aan teamgenoten en constructieve feedback geven aan je teamgenoten.
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{F1pp} & \textbf{G}: \myCheckBox{F1p} & \textbf{V}: \myCheckBox{F1o}& \textbf{M}: \myCheckBox{F1m} & \textbf{O}: \myCheckBox{F1mm} & \textbf{NvT}: \myCheckBox{F1nvt} \\
+\midrule
+\multicolumn{7}{p{15.2cm}}{%
+\begin{itemize}
+  \item In overleg/zelfstandig eigen leerdoel en leerstrategie te bepalen en op het resultaat te reflecteren.
+  \item Feedback op eigen functioneren te gebruiken voor aanpassing aan de werkomgeving.
+  \item Kritiek op geleverd werk te verwerken en eigen functioneren met collega’s te bespreken.
+\end{itemize}
+} \\
+\bottomrule
+\end{longtable}
+
+\noindent\textbf{b. Interpersoonlijke vaardigheden} \\
+\noindent\textbf{Doel:} De student kan als een proactief teamlid functioneren door ervoor te zorgen dat de gemaakte werkafspraken nagekomen worden, contact met de opdrachtgever te initiëren en te onderhouden en tijdig een hulpvraag te communiceren.
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{J1pp} & \textbf{G}: \myCheckBox{J1p} & \textbf{V}: \myCheckBox{J1o}& \textbf{M}: \myCheckBox{J1m} & \textbf{O}: \myCheckBox{J1mm} & \textbf{NvT}: \myCheckBox{J1nvt} \\
+\midrule
+\multicolumn{7}{p{15.2cm}}{%
+\begin{itemize}
+  \item Actief te luisteren en relevante vragen te stellen om de behoefte van de opdrachtgever in kaart te brengen.
+  \item Te functioneren als volwaardig teamlid in de eigen werkomgeving (d.m.v. reflectie en feedback).
+  \item Aanspreekbaar en bereikbaar te zijn voor medewerkers, mede- studenten en docenten.
+  \item Eerlijk en betrouwbaar te handelen naar medewerkers, medestudenten en andere steunen in hun initiatieven.
+\end{itemize}
+} \\
+\bottomrule
+\end{longtable}
+
+\noindent\textbf{Algemene Opmerkingen}\\
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{opmerkingen_persoonlijk}{\linewidth}{3cm}
+
+% \noindent\textbf{c. Loopbaan ontwikkeling} \\
+% \noindent\textbf{Doel:} Je kan zelfstandig informatie zoeken over mogelijke loopbaan richtingen en je vormt daarbij een mening over mogelijke ethische dilemma's.
+% \renewcommand{\arraystretch}{1.3}
+% \begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+% \toprule
+% \textbf{Score / Indicator} &
+% \textbf{E}: \myCheckBox{G1pp} & \textbf{G}: \myCheckBox{G1p} & \textbf{V}: \myCheckBox{G1o}& \textbf{M}: \myCheckBox{G1m} & \textbf{O}: \myCheckBox{G1mm} & \textbf{NvT}: \myCheckBox{G1nvt} \\
+% \midrule
+% \multicolumn{7}{p{15.2cm}}{%
+% \begin{itemize}
+%   \item Zich bewust te zijn van het belang van voortdurende deskundigheidsontwikkeling. 
+%   \item Eventuele beroepsmatige en ethische dilemma’s te constateren en daarover een onderbouwde mening te geven.
+% \end{itemize}
+% } \\
+% \bottomrule
+% \end{longtable}
+
+\newpage
+
+\noindent\textbf{\Huge Zelfreflectie Student}\\
+
+\noindent\textbf{\Large Onderzoeksvaardigheden}\hfill\\
+\noindent\textbf{a. Analytische vaardigheden}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{zoa1pp} & \textbf{G}: \myCheckBox{zoa1p} & \textbf{V}: \myCheckBox{zoa1o} & \textbf{M}: \myCheckBox{zoa1m} & \textbf{O}: \myCheckBox{zoa1mm} & \textbf{NvT}: \myCheckBox{zoa1nvt} \\
+\bottomrule
+\end{longtable}
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{ZR_OV_a}{\linewidth}{2cm}\\
+
+\noindent\textbf{b. Modelleervaardigheden}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{zob1pp} & \textbf{G}: \myCheckBox{zob1p} & \textbf{V}: \myCheckBox{zob1o}& \textbf{M}: \myCheckBox{zob1m} & \textbf{O}: \myCheckBox{zob1mm} & \textbf{NvT}: \myCheckBox{zob1nvt} \\
+\bottomrule
+\end{longtable}
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{ZR_OV_b}{\linewidth}{2cm}\\
+
+\noindent\textbf{c. Experimentele vaardigheden}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{zoc1pp} & \textbf{G}: \myCheckBox{zoc1p} & \textbf{V}: \myCheckBox{zoc1o}& \textbf{M}: \myCheckBox{zoc1m} & \textbf{O}: \myCheckBox{zoc1mm} & \textbf{NvT}: \myCheckBox{zoc1nvt} \\
+\bottomrule
+\end{longtable}
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{ZR_OV_c}{\linewidth}{2cm}\\
+
+\vspace{3mm}
+
+\noindent\textbf{\Large Project vaardigheden}\hfill\\
+\noindent\textbf{a. Project opzetten}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{zpa1pp} & \textbf{G}: \myCheckBox{zpa1p} & \textbf{V}: \myCheckBox{zpa1o} & \textbf{M}: \myCheckBox{zpa1m} & \textbf{O}: \myCheckBox{zpa1mm} & \textbf{NvT}: \myCheckBox{zpa1nvt} \\
+\bottomrule
+\end{longtable}
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{ZR_PV_a}{\linewidth}{2cm}\\
+
+\noindent\textbf{b. Project uitvoeren}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{zpb1pp} & \textbf{G}: \myCheckBox{zpb1p} & \textbf{V}: \myCheckBox{zpb1o}& \textbf{M}: \myCheckBox{zpb1m} & \textbf{O}: \myCheckBox{zpb1mm} & \textbf{NvT}: \myCheckBox{zpb1nvt} \\
+\bottomrule
+\end{longtable}
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{ZR_PV_b}{\linewidth}{2cm}\\
+
+\newpage
+
+\noindent\textbf{\Large Persoonlijke vaardigheden}\hfill\\
+\noindent\textbf{a. Reflectie \& feedback}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{zpea1pp} & \textbf{G}: \myCheckBox{zpea1p} & \textbf{V}: \myCheckBox{zpea1o} & \textbf{M}: \myCheckBox{zpea1m} & \textbf{O}: \myCheckBox{zpea1mm} & \textbf{NvT}: \myCheckBox{zpea1nvt} \\
+\bottomrule
+\end{longtable}
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{ZR_PeV_a}{\linewidth}{2cm}\\
+
+\noindent\textbf{b. Interpersoonlijke vaardigheden}
+\begin{longtable}{p{6cm}|*{5}{p{1.1cm}}|p{1.8cm}}
+\toprule
+\textbf{Score / Indicator} &
+\textbf{E}: \myCheckBox{zpeb1pp} & \textbf{G}: \myCheckBox{zpeb1p} & \textbf{V}: \myCheckBox{zpeb1o}& \textbf{M}: \myCheckBox{zpeb1m} & \textbf{O}: \myCheckBox{zpeb1mm} & \textbf{NvT}: \myCheckBox{zpeb1nvt} \\
+\bottomrule
+\end{longtable}
+\textField[
+  \Ff{\FfMultiline}      % <-- multiline aan
+  \BC{0 0 0}             % border color (zwart)
+  \BG{1 1 1}             % background (wit)
+  \textSize{11}          % lettergrootte
+]{ZR_PeV_b}{\linewidth}{2cm}\\
+
+\end{document}

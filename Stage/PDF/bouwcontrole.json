@@ -1,0 +1,22 @@
+{
+  "Criterium_Gericht_Interview": {
+    "pages": 5,
+    "fields": 43,
+    "widgets": 76
+  },
+  "Feedback_NLD_week15": {
+    "pages": 5,
+    "fields": 51,
+    "widgets": 51
+  },
+  "Feedback_NLD_week5": {
+    "pages": 7,
+    "fields": 99,
+    "widgets": 99
+  },
+  "Zelfreflectie_NLD_week15": {
+    "pages": 8,
+    "fields": 74,
+    "widgets": 74
+  }
+}

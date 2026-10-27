@@ -1,0 +1,216 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[dutch]{babel}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{pdflscape}
+% \usepackage{geometry}
+
+\renewcommand{\arraystretch}{1.3}
+
+% Kolomtypes (m{..} = verticaal midden in de cel)
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
+
+\newcommand{\XX}{\bfseries\large X}
+
+\usepackage[a4paper,
+    left=1.0cm,
+    right=1.0cm,
+    top=0cm,
+    bottom=0cm]{geometry}
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{landscape}
+\small
+
+\begin{longtable}{
+L{2.cm}    % Beroepsvaardigheid
+L{5cm}      % Doel
+L{5cm}||     % Handelingsindicatoren
+C{0.7cm}|     % PVA
+C{0.9cm}|   % Eindverslag
+C{0.8cm}|     % Poster
+C{1.5cm}||   % Poster-presentatie
+C{1.2cm}|   % Stagebezoek week 5
+C{1.2cm}|   % SLBgesprek + zelfreflectie
+C{1.7cm}|   % Praktijk
+C{1.7cm}||      % Logboek
+C{1.3cm}
+}
+
+\textbf{Beroeps-vaardigheid} &
+\textbf{Doel voor dit jaar} &
+\textbf{Handelingsindicatoren} &
+\textbf{\scriptsize
+ PVA} &
+\textbf{\scriptsize
+Eind\-verslag} &
+\textbf{\scriptsize
+Poster} &
+\textbf{\scriptsize
+Poster\-presentatie} &
+\textbf{\scriptsize
+Feedback week 5} &
+\textbf{\scriptsize
+Feedback week 15} &
+\textbf{\scriptsize
+Labjournaal \& logboek} &
+\textbf{\scriptsize
+Criterium Gericht Interview} &
+\textbf{\scriptsize
+SLB-gesprek}  \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Beroeps-vaardigheid} &
+\textbf{Doel voor dit jaar} &
+\textbf{Handelingsindicatoren} &
+\textbf{\scriptsize
+ PVA} &
+\textbf{\scriptsize
+Eind\-verslag} &
+\textbf{\scriptsize
+Poster} &
+\textbf{\scriptsize
+Poster\-presentatie} &
+\textbf{\scriptsize
+Feedback week 5} &
+\textbf{\scriptsize
+Feedback week 15} &
+\textbf{\scriptsize
+Labjournaal / logboek} &
+\textbf{\scriptsize
+Criterium Gericht Interview} &
+\textbf{\scriptsize
+SLB-gesprek} \\
+\midrule
+\endhead
+
+%====================================================
+\rowcolor{gray!20}
+\multicolumn{3}{l}{\textbf{ONDERZOEKSVAARDIGHEDEN}} &
+\multicolumn{4}{>{\cellcolor{green!80!black}}l}{} &
+\multicolumn{4}{>{\cellcolor{orange!90}}l}{} &
+\multicolumn{1}{>{\cellcolor{blue!60}}l}{} \\
+\midrule
+
+Analytische vaardigheden &
+Je kan vragen en deelvragen van een onderzoek formuleren en relevante bronnen gebruiken. &
+In samenspraak een probleem analyseren en vertalen naar doelstellingen van de onderzoeksopdracht. &
+\XX & & & \XX & \XX & & & & \\
+
+\midrule
+Modelleer vaardigheden &
+Je kan een geschikt model selecteren, opstellen en aanpassen aan de situatie. &
+Uit aangereikte modellen de juiste selecteren, aannames formuleren en het model valideren. &
+\XX & \XX & &\XX  & \XX & \XX & \XX& \XX &\\
+
+\midrule
+Experimentele vaardigheden &
+Je kan een experimentele aanpak opstellen en resultaten zorgvuldig registreren. &
+Een geschikte methode kiezen, experiment uitvoeren en reproduceerbare resultaten documenteren. &
+\XX & \XX & &\XX  & \XX & \XX & \XX & \XX &\\
+
+%====================================================
+\rowcolor{gray!20}
+\multicolumn{12}{l}{\textbf{PROJECTVAARDIGHEDEN}} \\
+\midrule
+
+Project opzetten &
+Projectplan maken met planning en taakverdeling. &
+Werkplan opstellen rekening houdend met randvoorwaarden en PvE. &
+\XX & & & & \XX& \XX & \XX& \XX &\XX\\
+
+\midrule
+Project uitvoeren &
+Project volgens plan uitvoeren en waar nodig bijstellen. &
+Voortgang monitoren, knelpunten signaleren en communiceren. &
+ & & & & \XX& \XX & \XX & \XX & \XX\\
+
+\midrule
+Project opleveren &
+Resultaten samenvatten en vervolgstappen formuleren. &
+Conclusies trekken en documentatie opleveren volgens richtlijnen. &
+ & \XX & \XX & \XX & & & \XX& &\XX\\
+
+%====================================================
+\rowcolor{gray!20}
+\multicolumn{12}{l}{\textbf{DATAVAARDIGHEDEN}} \\
+\midrule
+
+Data verzamelen en bewerken &
+Data genereren en bewerken. &
+Meetresultaten verwerken en beoordelen op realisme. &
+ & \XX & & & & \XX& \XX& \XX &\\
+
+\midrule
+Data analyse en statistiek &
+Statistische analyse uitvoeren. &
+Betrouwbaarheid beoordelen en validatie uitvoeren. &
+ & \XX & \XX & \XX & & & &  &\\
+
+\midrule
+Data visualiseren en interpreteren &
+Data visualiseren en interpreteren. &
+Resultaten grafisch weergeven en fysisch interpreteren. &
+ & \XX & \XX & \XX & & & \XX& &\\
+
+\newpage
+%====================================================
+\rowcolor{gray!20}
+\multicolumn{3}{l}{\textbf{PERSOONLIJKE VAARDIGHEDEN}} &
+\multicolumn{4}{>{\cellcolor{green!80!black}}l}{} &
+\multicolumn{4}{>{\cellcolor{orange!90}}l}{} &
+\multicolumn{1}{>{\cellcolor{blue!60}}l}{} \\
+\midrule
+
+Reflectie en feedback &
+Leerdoelen formuleren en reflecteren. &
+Feedback vragen en verwerken. &
+ & & & & \XX & \XX & &  &\XX\\
+
+\midrule
+Interpersoonlijke vaardigheden &
+Actief functioneren in een team. &
+Communiceren met opdrachtgever en teamleden. &
+ & & & & \XX & \XX & & & \XX\\
+
+\midrule
+Loopbaan-ontwikkeling &
+Oriëntatie op professionele ontwikkeling. &
+Bewust zijn van professionele en ethische aspecten. &
+ & & & & \XX & \XX & & & \XX\\
+
+%====================================================
+\rowcolor{gray!20}
+\multicolumn{12}{l}{\textbf{IMPACT}} \\
+\midrule
+
+Boodschap structureren &
+Onderzoeksresultaten logisch presenteren. &
+Resultaten structureren en koppelen aan onderzoeksvraag. &
+ & \XX & \XX & & & & &  &\\
+
+\midrule
+Mondeling presenteren &
+Gestructureerde presentatie geven. &
+Duidelijk en passend bij publiek presenteren. &
+ & & & \XX & & & & & \\
+
+\midrule
+Schriftelijk rapporteren &
+Rapport volgens professionele standaard opleveren. &
+Resultaten integreren in één consistent document. &
+ \XX & \XX & & & & & &  &\\
+
+\bottomrule
+\end{longtable}
+
+\end{landscape}
+\end{document}

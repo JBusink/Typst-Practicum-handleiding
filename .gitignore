@@ -80,3 +80,6 @@ venv/
 /Project/.venv-build/
 /Project/build/
 /Project/dist/
+
+# Lokale conversiehulpmiddelen en visuele PDF-controles
+/tmp/

@@ -1,0 +1,2 @@
+#import "../../Practica/styl.typ": *
+
