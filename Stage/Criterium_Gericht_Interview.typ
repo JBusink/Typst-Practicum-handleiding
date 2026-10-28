@@ -1,4 +1,4 @@
-#import "formulier.typ": *
+#import "ondersteuning/formulier.typ": *
 #show: body => formulier(body, interview: true)
 #titel[Praktijkgericht interview Stages -- Week 15]
 
@@ -21,7 +21,7 @@ Bespreek de beoordeling met de student en zorg ervoor dat dit formulier #strong[
 #v(8mm)
 
 #align(center)[
-#image("HvA_logo.png", height: 13mm)
+#image("ondersteuning/HvA_logo.png", height: 13mm)
 ]
 
 #pagebreak(weak: true)

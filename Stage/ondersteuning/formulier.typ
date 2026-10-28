@@ -1,5 +1,4 @@
-// Gedeelde LaTeX-achtige opmaak. Bouw interactieve PDF's met build_stage.py.
-// Latin Modern is meegeleverd in Fonts/ en ingesteld voor de VS Code-preview.
+// Gedeelde formulieropmaak. Gebruik Maak invulbare PDFs.cmd voor invulvelden.
 #let formulier(body, interview: false) = {
   set page(paper: "a4",
     margin: (left: 22mm, right: 22mm, top: 16mm, bottom: 22mm),
@@ -15,28 +14,38 @@
         align(center, text(size: 11pt, counter(page).display("1")))
       }
     })
-  set text(font: "Latin Modern Roman", size: if interview { 11pt } else { 12pt },
+  set text(font: ("TeX Gyre Heros", "Helvetica", "Arial", "Liberation Sans"), size: 11pt,
     lang: "nl", hyphenate: true)
-  set par(justify: true, leading: 0.45em, spacing: 0.65em)
-  set list(indent: 12pt, body-indent: 5pt, spacing: 2pt)
+  set par(justify: true, leading: 0.52em, spacing: 0.65em)
+  set list(indent: 24pt, body-indent: 5pt, spacing: 8pt)
   set heading(numbering: none)
   show heading.where(level: 1): it => block(above: 5mm, below: 2mm,
     text(size: 17.2pt, weight: "bold", it.body))
   show heading.where(level: 2): it => block(above: 4mm, below: 1mm,
-    text(weight: "bold", it.body))
+    text(size: 11pt, weight: "bold", it.body))
   body
+}
+
+// Alleen het bouwscript gebruikt tijdelijke markeringen. De gewone preview
+// en een directe Typst-export hebben geen klikbare webkoppelingen in de vakken.
+#let veldmarkering(kind, name, body) = {
+  if sys.inputs.at("stage-form-build", default: "false") == "true" {
+    link("https://typst-form.invalid/" + kind + "/" + name, body)
+  } else {
+    body
+  }
 }
 
 #let veld(name, width: 100%, height: 8mm, multiline: false, score: "") = {
   let kind = if score != "" { "score/" + score } else if multiline { "multi" } else { "text" }
-  link("https://typst-form.invalid/" + kind + "/" + name,
+  veldmarkering(kind, name,
     box(width: width, height: height, stroke: 0.65pt, fill: white, inset: 0pt))
 }
-#let vink(name) = link("https://typst-form.invalid/check/" + name,
+#let vink(name) = veldmarkering("check", name,
   box(width: 10pt, height: 10pt, stroke: 0.65pt, fill: white))
 
 // Vaste kolommen en booktabs-achtige regels zoals in de LaTeX-originelen.
-#let scores(names, label: [Score / Indicator]) = block(width: 100%, above: 3mm, below: 2mm,
+#let scores(names, label: [Score / Indicator]) = block(width: 100%, above: 4mm, below: 4mm,
   table(columns: (1fr, ..(17mm,) * 6),
     inset: (x: 4pt, y: 4pt), stroke: none, align: left + horizon,
     table.hline(stroke: 0.7pt),
@@ -56,7 +65,7 @@
   #veld(name, height: height, multiline: true)
 ]
 
-#let titel(body) = block(below: 16mm)[
+#let titel(body) = block(width: 100%, below: 16mm)[
   #v(12mm)
   #align(center)[
     #text(size: 20.7pt, weight: "bold", body)
@@ -97,3 +106,22 @@
     text(size: 10pt, weight: "bold")[Subtotaal #lower(title):],
     veld(score-name, width: 15mm, height: 5mm, score: bereik))
 ]
+
+
+#let scores-compact(names) = {
+  grid(
+    columns: (1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
+    row-gutter: 3pt,
+    column-gutter: 0pt,
+
+    ..names.enumerate().map(((i, name)) => {
+      box[
+        #text(size: 10pt)[
+          #("E:", "G:", "V:", "M:", "O:", "NvT:").at(i)
+        ]
+        #h(4pt)
+        #vink(name)
+      ]
+    })
+  )
+}

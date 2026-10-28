@@ -1,7 +1,9 @@
 """Bouw bewerkbare Typst-bronnen tot invulbare PDF's, zonder LaTeX.
 
-python -m pip install -r Stage/requirements.txt
-python Stage/build_stage.py
+Start vanuit Stage: Maak invulbare PDFs.cmd
+
+De Typst-preview is alleen voor de opmaak. Vul de PDF's in Stage/PDF in;
+het bouwscript voegt de echte velden toe en verwijdert alle veldmarkeringen.
 """
 from __future__ import annotations
 
@@ -18,7 +20,8 @@ from pypdf.generic import (
     FloatObject, NameObject, NumberObject, TextStringObject,
 )
 
-ROOT = Path(__file__).resolve().parent
+SUPPORT = Path(__file__).resolve().parent
+ROOT = SUPPORT.parent
 PREFIX = 'https://typst-form.invalid/'
 
 
@@ -130,7 +133,7 @@ def add_forms(pdf, source):
             scripts = scripts.get_object()
         scripts[NameObject('/JavaScript')] = dictionary(Names=ArrayObject([
             TextStringObject('StageFormulier'),
-            writer._add_object(action((ROOT/'beoordeling.js').read_text(encoding='utf-8'))),
+            writer._add_object(action((SUPPORT/'beoordeling.js').read_text(encoding='utf-8'))),
         ]))
     result = io.BytesIO()
     writer.write(result)
@@ -166,17 +169,18 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     paths=[ROOT/(name+'.typ') for name in args.documents] if args.documents else sorted(
         path for path in ROOT.glob('*.typ') if path.stem!='formulier')
-    report={}
     for path in paths:
         source=path.read_text(encoding='utf-8')
-        compiled=typst.compile(str(path), root=str(ROOT), font_paths=[str(ROOT/'Fonts')])
+        compiled=typst.compile(str(path), root=str(ROOT),
+                               sys_inputs={'stage-form-build': 'true'})
         pdf, fields, widgets=add_forms(compiled,source)
         pages=validate(pdf,fields,widgets)
         destination=args.output/(path.stem+'.pdf')
-        destination.write_bytes(pdf)
-        report[path.stem]={'pages':pages,'fields':fields,'widgets':widgets}
+        try:
+            destination.write_bytes(pdf)
+        except PermissionError:
+            raise SystemExit(f'Sluit eerst de geopende PDF {destination.name} en start de bouw opnieuw.')
         print(f'{destination.name}: {pages} pagina\'s, {fields} velden, {widgets} widgets')
-    (args.output/'bouwcontrole.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 
 
 if __name__=='__main__':

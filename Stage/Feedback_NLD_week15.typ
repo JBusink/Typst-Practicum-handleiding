@@ -1,4 +1,4 @@
-#import "formulier.typ": *
+#import "ondersteuning/formulier.typ": *
 #show: formulier
 #titel[Feedback Werkveld Stages -- Week 15]
 
@@ -20,7 +20,9 @@ Technische Natuurkunde van de student worden verwacht, inclusief bijbehorende
 criteria en indicatoren. Deze vormen de leidraad voor zowel de beoordeling als de
 inhoudelijke terugkoppeling. De inhoudelijke competenties worden beoordeeld via scores, uiteenlopend van Excelent (#strong[E]) tot Onvoldoende (#strong[O]).
 
- Naast het invullen van dit document is het van groot belang dat de feedback
+#v(3mm)
+
+Naast het invullen van dit document is het van groot belang dat de feedback
 ook mondeling met de student wordt besproken, zodat observaties, aandachtspunten
 en ontwikkelkansen verder kunnen worden toegelicht. Zorg ervoor dat dit feedbackdocument #strong[vóór] het stagebezoek al is ingevuld.
 
@@ -31,7 +33,7 @@ en ontwikkelkansen verder kunnen worden toegelicht. Zorg ervoor dat dit feedback
 #v(1fr)
 
 #align(center)[
-#image("HvA_logo.png", height: 13mm)
+#image("ondersteuning/HvA_logo.png", height: 13mm)
 ]
 
 #pagebreak(weak: true)

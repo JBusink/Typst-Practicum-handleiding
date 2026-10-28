@@ -1,4 +1,4 @@
-#import "formulier.typ": *
+#import "ondersteuning/formulier.typ": *
 #show: formulier
 #titel[Feedback Werkveld Stages -- Week 5]
 
@@ -20,7 +20,9 @@ Technische Natuurkunde van de student worden verwacht, inclusief bijbehorende
 criteria en indicatoren. Deze vormen de leidraad voor zowel de beoordeling als de
 inhoudelijke terugkoppeling. De inhoudelijke competenties worden beoordeeld via scores, uiteenlopend van Excelent (#strong[E]) tot Onvoldoende (#strong[O]).
 
- Naast het invullen van dit document is het van groot belang dat de feedback
+#v(3mm)
+
+Naast het invullen van dit document is het van groot belang dat de feedback
 ook mondeling met de student wordt besproken, zodat observaties, aandachtspunten
 en ontwikkelkansen verder kunnen worden toegelicht. Zorg ervoor dat dit feedbackdocument #strong[vóór] het stagebezoek al is ingevuld.
 
@@ -31,7 +33,7 @@ en ontwikkelkansen verder kunnen worden toegelicht. Zorg ervoor dat dit feedback
 #v(1fr)
 
 #align(center)[
-#image("HvA_logo.png", height: 13mm)
+#image("ondersteuning/HvA_logo.png", height: 13mm)
 ]
 
 #pagebreak(weak: true)
@@ -145,56 +147,3 @@ en ontwikkelkansen verder kunnen worden toegelicht. Zorg ervoor dat dit feedback
 
 #pagebreak(weak: true)
 
-= Zelfreflectie Student
-
-= Onderzoeksvaardigheden
-
-== a. Analytische vaardigheden
-
-#scores(("zoa1pp", "zoa1p", "zoa1o", "zoa1m", "zoa1mm", "zoa1nvt",))
-
-#veld("ZR_OV_a", width: 100%, height: 2cm, multiline: true)
-
-== b. Modelleervaardigheden
-
-#scores(("zob1pp", "zob1p", "zob1o", "zob1m", "zob1mm", "zob1nvt",))
-
-#veld("ZR_OV_b", width: 100%, height: 2cm, multiline: true)
-
-== c. Experimentele vaardigheden
-
-#scores(("zoc1pp", "zoc1p", "zoc1o", "zoc1m", "zoc1mm", "zoc1nvt",))
-
-#veld("ZR_OV_c", width: 100%, height: 2cm, multiline: true)
-
-#v(3mm)
-
-= Project vaardigheden
-
-== a. Project opzetten
-
-#scores(("zpa1pp", "zpa1p", "zpa1o", "zpa1m", "zpa1mm", "zpa1nvt",))
-
-#veld("ZR_PV_a", width: 100%, height: 2cm, multiline: true)
-
-== b. Project uitvoeren
-
-#scores(("zpb1pp", "zpb1p", "zpb1o", "zpb1m", "zpb1mm", "zpb1nvt",))
-
-#veld("ZR_PV_b", width: 100%, height: 2cm, multiline: true)
-
-#pagebreak(weak: true)
-
-= Persoonlijke vaardigheden
-
-== a. Reflectie \& feedback
-
-#scores(("zpea1pp", "zpea1p", "zpea1o", "zpea1m", "zpea1mm", "zpea1nvt",))
-
-#veld("ZR_PeV_a", width: 100%, height: 2cm, multiline: true)
-
-== b. Interpersoonlijke vaardigheden
-
-#scores(("zpeb1pp", "zpeb1p", "zpeb1o", "zpeb1m", "zpeb1mm", "zpeb1nvt",))
-
-#veld("ZR_PeV_b", width: 100%, height: 2cm, multiline: true)

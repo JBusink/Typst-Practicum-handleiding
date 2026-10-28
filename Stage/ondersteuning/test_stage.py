@@ -1,6 +1,6 @@
 """Controleer veldstructuur, opslaan/heropenen en PDF JavaScript.
 
-python -m unittest discover -s Stage -p test_stage.py
+python -m unittest discover -s Stage/ondersteuning -p test_stage.py
 Voor de JavaScript-test moet node op PATH staan, of stel STAGE_NODE in.
 """
 import io
@@ -14,11 +14,11 @@ import unittest
 import unicodedata
 
 from pypdf import PdfReader, PdfWriter
+import typst
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parent.parent
 EXPECTED={
     'Criterium_Gericht_Interview': (43,76),
-    'Das_Competenties': (0,0),
     'Feedback_NLD_week15': (51,51),
     'Feedback_NLD_week5': (99,99),
     'Zelfreflectie_NLD_week15': (74,74),
@@ -26,10 +26,19 @@ EXPECTED={
 
 
 class StageForms(unittest.TestCase):
+    def test_preview_fields_do_not_open_webpages(self):
+        preview=typst.compile(str(ROOT/'Zelfreflectie_NLD_week15.typ'),
+                              root=str(ROOT))
+        reader=PdfReader(io.BytesIO(preview))
+        for page in reader.pages:
+            for ref in page.get('/Annots',[]):
+                annotation=ref.get_object()
+                self.assertNotEqual(annotation.get('/A',{}).get('/S'),'/URI')
+
     def test_all_original_indicators_present(self):
         def normalize(text):
             return re.sub(r'[^\w]','',unicodedata.normalize('NFKC',text)).lower()
-        originals=sorted((ROOT/'Archief').glob('*.tex'))
+        originals=sorted(path for path in (ROOT/'Archief').glob('*.tex') if path.stem in EXPECTED)
         self.assertEqual(len(originals),len(EXPECTED))
         for path in originals:
             source='\n'.join(re.split(r'(?<!\\)%',line)[0] for line in path.read_text(encoding='utf-8').splitlines())
