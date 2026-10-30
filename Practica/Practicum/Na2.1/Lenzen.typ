@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Lenzen", kop: "Natuurkunde 2.1 Practicum — Week 2")
 
 
