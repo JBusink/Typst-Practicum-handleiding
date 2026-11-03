@@ -1,257 +1,331 @@
 #import "../../styl.typ": *
 #show: stijl.with(titel: "Aero pendulum PID", kop: "Technische Natuurkunde — Na2.2")
 
-#praktikumtitle[Practicum: PID-regeling van een aeropendulum]
+#show: vergelijking_refs
+#praktikumtitle[PID-regeling van een aeropendulum]
 
 #heading(level: 1, numbering: none)[Leerdoelen]
 
 #[
 #set list(marker: leerdoel-teken)
-- Je kunt uitleggen hoe terugkoppeling de hoek van een aeropendulum regelt.
+- Je kunt uitleggen hoe terugkoppeling wordt gebruikt om de hoek van het aeropendulum te regelen.
 
-- Je kunt de invloed van de P-, I- en D-term experimenteel onderzoeken.
+- Je kunt de invloed van P, D en I op de beweging experimenteel onderzoeken.
 
-- Je kunt een regelaar stapsgewijs afstellen en beoordelen op insteltijd, overshoot en stationaire fout.
+- Je kunt verschillende vormen van demping herkennen en een PID-regelaar stapsgewijs afstellen.
 
-- Je kunt meetgegevens uit de Arduino verwerken in Python en de beperkingen van de regeling herkennen.
+- Je kunt meetgegevens in Python weergeven en de regeling beoordelen op overshoot, insteltijd en blijvende afwijking.
 
-- Je kunt in stap 5 veiligheidsbegrenzingen toevoegen en hun werking aantonen.
-
+- Je kunt uitleggen wat softwarematige begrenzingen doen en waarom ook hardwarematige beveiliging nodig is.
 ]
 
 #v(1fr)
 
 #veiligheid(title: [Veiligheid])[
-+ Gebruik dezelfde gecontroleerde opstelling en voedingsinstellingen als bij het open-looppracticum. Laat het toegestane hoekbereik en de maximale motoruitgang vaststellen door de practicumbegeleider.
++ Houd voldoende afstand van de draaiende propeller. Zorg dat handen, haar en losse voorwerpen buiten het bewegingsbereik blijven.
 
-+ Schakel de motorvoeding uit voordat je bedrading, sensor of programma aanpast. De sketch wacht na uploaden of resetten op configuratie en een expliciet startcommando vanuit Python.
++ Schakel de motorvoeding uit voordat je de bedrading, sensor of het Arduino-programma aanpast. Laat de opstelling en voedingsinstellingen controleren door de practicumbegeleider.
 
-+ Houd handen, haar en losse voorwerpen buiten het bewegingsbereik van arm en propeller. Pak de arm niet vast terwijl de motorvoeding is ingeschakeld.
++ Houd de uitschakeling van de motorvoeding bereikbaar. Schakel direct uit als de uitslagen steeds groter worden of de arm richting een mechanische aanslag beweegt.
 
-+ Houd de uitschakeling van de motorvoeding bereikbaar. Schakel direct uit bij toenemende oscillaties, een onjuiste hoekmeting of beweging richting een mechanische aanslag. Wacht tot de propeller stilstaat voordat je de opstelling benadert.
-
++ Wacht tot de propeller stilstaat voordat je de opstelling benadert. Twijfel je over een handeling? Vraag dit aan de practicumbegeleider.
 ]
 
 #pagebreak(weak: true)
 
 #heading(level: 1, numbering: none)[Introductie]
 
-In het open-looppracticum heb je onderzocht welke hoek ontstaat bij een ingestelde motoruitgang. Die hoek kan veranderen door bijvoorbeeld wrijving of een verandering van de belasting. De besturing merkt zo'n afwijking niet op.
+In het open-looppracticum heb je onderzocht hoe het aeropendulum reageert op een ingestelde motoruitgang. Je koos een PWM-waarde en mat welke hoek de arm aannam. Voor een andere gewenste hoek moest je zelf een nieuwe instelling kiezen. Ook als de arm door een verstoring van positie veranderde, bleef de ingestelde motoruitgang gelijk.\
+\
+Veel technische systemen moeten hun uitgang juist automatisch op een gewenste waarde houden. Denk aan de cruisecontrol van een auto. Wanneer de auto een helling oprijdt, is meer aandrijfkracht nodig om dezelfde snelheid te behouden. De cruisecontrol vergelijkt de gemeten snelheid met de ingestelde snelheid en past de aandrijving aan. Het steeds opnieuw meten, vergelijken en bijsturen noemen we #emph[terugkoppeling].\
+\
+Bij het aeropendulum kunnen we hetzelfde principe gebruiken. We kiezen nu een gewenste hoek. De hoeksensor meet waar de arm zich bevindt en de regelaar past de motoruitgang aan. Staat de arm te laag, dan moet de propeller meer stuwkracht leveren. Nadert de arm de gewenste hoek, dan moet de regelaar op tijd terugregelen. De arm en motor reageren immers niet onmiddellijk: te laat terugregelen kan ervoor zorgen dat de arm doorschiet.\
+\
+In dit practicum onderzoek je hoe je die correctie kunt verbeteren. Je begint met een eenvoudige P-regelaar, die reageert op het verschil tussen de gewenste en gemeten hoek. Daarna voeg je D toe om de beweging te dempen en I om een blijvende afwijking te verkleinen. Met je eigen metingen onderzoek je of de arm snel en rustig tot stilstand komt bij 30, 60 en 90 graden. Tot slot bekijk je hoe begrenzingen het regelgedrag en de veiligheid beïnvloeden.
 
-In dit practicum koppelen we de gemeten hoek terug naar de Arduino. De Arduino vergelijkt de hoek met de gewenste waarde en past het PWM-signaal aan. Zo ontstaat een gesloten regelkring. Je onderzoekt eerst een proportionele regelaar, voegt vervolgens een integrerende term toe en onderzoekt ten slotte of een differentiërende term de respons verbetert.
+#pagebreak(weak: true)
 
 #heading(level: 1, numbering: none)[Theorie]
 
-#heading(level: 2, numbering: none)[Terugkoppeling en regelfout]
+#heading(level: 2, numbering: none)[Van open loop naar terugkoppeling]
 
-De gewenste hoek heet het #emph[setpoint], $r \( t \)$. De gemeten hoek is $theta \( t \)$. De regelfout is #math.equation(block: true, numbering: "(1)", $e \( t \) = r \( t \) - theta \( t \) .$) Bij een positieve fout staat de arm onder de gewenste hoek. Voor de gebruikte instelling `DIRECT` moet een grotere motoruitgang leiden tot een grotere gemeten hoek. Controle van dit teken is noodzakelijk voordat je de regeling inschakelt.
+De opstelling blijft hetzelfde als bij open loop: een propeller beweegt de arm omhoog en de zwaartekracht trekt de arm naar beneden. Het verschil zit in de aansturing. De motoruitgang wordt nu voortdurend aangepast aan de gemeten hoek. @aero_pendulum_pid--fig:aeropid_regelkring laat deze gesloten regelkring zien.
 
 #figure(
-  [
-#include "Figuren/pid_regelkring.typ"
-  ],
-  caption: [Gesloten regelkring van het aeropendulum. De sensor levert de gemeten hoek voor de terugkoppeling.],
+  [#include "Figuren/pid_regelkring.typ"],
+  caption: [Gesloten regelkring van het aeropendulum. De gemeten hoek wordt teruggekoppeld en vergeleken met de gewenste hoek.],
   kind: image,
-) #label("aero_pendulum_pid--fig:aeropid_regelkring")
+) <aero_pendulum_pid--fig:aeropid_regelkring>
 
-#heading(level: 2, numbering: none)[De drie bijdragen]
+De gewenste hoek noemen we het #emph[setpoint], $r(t)$. De gemeten hoek schrijven we als $theta(t)$. Beide hoeken meten we vanaf de verticale ruststand. Het verschil is de #emph[regelfout]:
 
-Een ideale PID-regelaar kan worden geschreven als #math.equation(block: true, numbering: "(1)", $u^(*) \( t \) = K_p e \( t \) + K_i integral_0^t e \( tau \) thin upright(d) tau + K_d frac(upright(d) e, upright(d) t) .$) Hier is $u^(*)$ de berekende uitgang vóór begrenzing. In deze opstelling drukken we de uitgang uit in PWM-telwaarden en de hoek in graden. De eenheden van $K_p$, $K_i$ en $K_d$ zijn daarom respectievelijk PWM-telwaarden per graad, per graad per seconde en maal seconde per graad.
+$ e(t) = r(t) - theta(t). $
 
-- #strong[P: reactie op de huidige fout.] Een grotere $K_p$ geeft bij dezelfde fout meer motoruitgang. Dit kan de respons versnellen, maar ook overshoot of oscillaties veroorzaken. Omdat een niet-nul motoruitgang nodig is om de arm omhoog te houden, kan een P-regelaar zonder extra basisuitgang een blijvende fout hebben.
+Bij een gewenste hoek van 60 graden en een gemeten hoek van 50 graden is de fout dus +10 graden. De arm staat nog te laag. Staat de arm op 65 graden, dan is de fout −5 graden en staat de arm te hoog.
 
-- #strong[I: reactie op de opgebouwde fout.] Een aanhoudende fout bouwt een extra bijdrage op. Hiermee kan de stationaire fout afnemen. Te veel integrerende werking kan leiden tot overshoot en langzaam herstel.
 
-- #strong[D: reactie op snelle verandering.] Deze bijdrage kan de beweging afremmen en overshoot verminderen, maar is gevoelig voor meetruis.
+#heading(level: 2, numbering: none)[P: reageren op de afwijking]
 
-De gebruikte bibliotheek `PID_v1` berekent de D-bijdrage uit de verandering van de #emph[gemeten hoek]: $- K_d thin upright(d) theta \/ upright(d) t$. Bij een constant setpoint komt dit overeen met de ideale formule. Bij een setpointsprong wordt zo een directe D-piek door die sprong vermeden. De bibliotheek begrenst ook de opgebouwde integratorbijdrage; langdurige verzadiging kan desondanks de respons beïnvloeden. Zie de #link("https://github.com/br3ttb/Arduino-PID-Library/blob/master/PID_v1.cpp")[broncode van PID\_v1] voor de implementatie.
+Een proportionele regelaar maakt de motoruitgang evenredig met de fout:
 
-#heading(level: 2, numbering: none)[Begrenzing en bemonstering]
+$ u_P(t) = K_p e(t). $
 
-Voor een maximale PWM-uitgang $u_max$ geldt #math.equation(block: true, numbering: "(1)", $u \( t \) = min #scale(x: 120%, y: 120%)[\(] u_max \, max \( 0 \, u^(*) \( t \) \) #scale(x: 120%, y: 120%)[\)] \, #h(2em) D approx u / 255 .$) De motoruitgang is een PWM-instelling, geen gemeten spanning of stuwkracht. De regelaar kan in deze sketch geen negatieve stuwkracht vragen. Om de arm te laten zakken, vermindert hij de motoruitgang en werkt de zwaartekracht mee. Daarom hoeven opgaande en neergaande responsen niet gelijk te zijn.
+De factor $K_p$ bepaalt hoe sterk de regelaar corrigeert. Bij dezelfde fout geeft een grotere P-waarde meer motoruitgang. De arm kan daardoor sneller omhoog bewegen, maar ook verder doorschieten en gaan oscilleren.
 
-De regelperiode wordt via Python ingesteld met `--interval` (standaard 100 ms, nominaal 10 Hz). De Arduino gebruikt dezelfde periode voor PID en meetuitvoer op 115200 baud. Controleer de werkelijke intervallen met de tijdstempels.
+Met alleen P kan een blijvende afwijking ontstaan. Om de arm omhoog te houden is voortdurend stuwkracht nodig. Als de fout nul is, is de P-bijdrage ook nul. Een P-regelaar zonder extra basisuitgang heeft daarom een fout nodig om een niet-nul motoruitgang te leveren.
+
+#heading(level: 2, numbering: none)[D: de beweging dempen]
+
+De D-term reageert op hoe snel de hoek verandert. Beweegt de arm snel omhoog, dan vermindert deze bijdrage de motoruitgang al voordat de gewenste hoek is bereikt. Dat kan het doorschieten verminderen. In de gebruikte regeling geldt:
+
+$ u_D(t) = -K_d frac(upright(d) theta, upright(d) t). $
+
+Een grotere D-waarde geeft meer tegenwerking bij dezelfde hoeksnelheid. Te veel D kan de respons traag maken en kleine schommelingen in de hoekmeting sterk laten doorwerken in de motoruitgang.
+
+#heading(level: 2, numbering: none)[I: een blijvende afwijking wegwerken]
+
+De I-term telt de fout in de tijd op:
+
+$ u_I(t) = K_i integral_0^t e(tau) thin upright(d) tau. $
+
+Blijft de arm onder het setpoint, dan groeit deze bijdrage totdat er voldoende motoruitgang is. De opgebouwde bijdrage kan daarna aanwezig blijven, ook wanneer de fout nul is. Zo kan I de blijvende afwijking van de P-regelaar verkleinen. Een te grote I-waarde kan echter opnieuw overshoot en oscillaties veroorzaken: een opgebouwde bijdrage verdwijnt niet meteen wanneer de arm het setpoint bereikt.
+
+De PID-regelaar combineert deze drie bijdragen: $u(t) = u_P(t) + u_D(t) + u_I(t)$. In het experiment stel je ze in die volgorde af. Zo kun je bij iedere stap zien wat de toegevoegde bijdrage verandert.
 
 #pagebreak(weak: true)
 
-#heading(level: 1, numbering: none)[Opstelling en bestanden]
+#heading(level: 2, numbering: none)[De respons beoordelen]
 
-In dit practicum voer je eerst de PID-regeling uit en stel je P, I en D af. Daarna onderzoek je met dezelfde Arduino-sketch en dezelfde Python-functie de invloed van een ingestelde maximale werkhoek.
+Een grafiek van de hoek tegen de tijd laat zien hoe de arm naar een nieuwe doelhoek beweegt. We noemen dit de #emph[respons]. Om verschillende instellingen te vergelijken, kijken we naar drie eigenschappen:
 
-Gebruik dezelfde gecontroleerde opstelling en aansluitingen als bij open-loop. D9 gaat naar ENA, D10 naar IN1 en D11 naar IN2; A4 en A5 gaan naar SDA en SCL. Gebruik de aansluittabel uit de open-loophandleiding voor de draadkleuren en sensorvoeding.
+- *Overshoot:* hoeveel graden de arm maximaal boven de doelhoek uitkomt.
+- *Insteltijd:* de tijd die nodig is voordat de hoek binnen een afgesproken band rond het setpoint komt en daar gedurende de rest van de meting blijft.
+- *Stationaire fout:* het verschil tussen het setpoint en de gemiddelde hoek nadat de beweging tot rust is gekomen.
 
-Alle programmabestanden staan onder `Arduino`:
+Ook de vorm van de beweging is belangrijk. Een ondergedempte respons heeft uitdovende oscillaties. Bij kritische demping bereikt een ideaal tweedeordesysteem zijn eindwaarde zo snel mogelijk zonder overshoot. Een overgedempte respons nadert die eindwaarde langzamer, eveneens zonder oscillaties. Kritische demping is iets anders dan de grens van instabiliteit: bij die grens doven oscillaties juist niet meer uit.
 
-```text
-Arduino/
-  OpenLoop/
-    Stap_1_Sensor/Stap_1_Sensor.ino
-    Stap_2_PWM_en_sensor/Stap_2_PWM_en_sensor.ino
-    Stap_3_Python_aansturing/Stap_3_Python_aansturing.ino
-  ClosedLoop/
-    Stap_4_PID/Stap_4_PID.ino
-    Stap_5_PWM_begrenzing/Stap_5_PWM_begrenzing.ino
-  Python/
-    open_loop.py
-    closed_loop.py
-```
+#figure(
+  image("Arduino/ClosedLoop/figuren/Niet_Critisch.pdf", width: 85%),
+  caption: [Ondergedempte respons bij een doelhoek van 60 graden. De arm schiet door en oscilleert met afnemende amplitude. De onderste grafiek laat zien hoe de PWM daarbij verandert.],
+  kind: image,
+) <aero_pendulum_pid--fig:ondergedempt>
 
-Open iedere sketch vanuit de eigen gelijknamige map. Selecteer Arduino Uno R4 Minima en installeer `AS5600` van Rob Tillaart en `PID` van Brett Beauregard. Installeer in de gebruikte Python-omgeving `pyserial`, `pandas` en `matplotlib`. Sluit Serial Monitor en Serial Plotter voordat je Python start. De gevonden poort is `COM4`; controleer deze opnieuw wanneer je de opstelling op een andere computer aansluit.
+#pagebreak(weak: true)
+
+In @aero_pendulum_pid--fig:ondergedempt blijft de arm lange tijd heen en weer bewegen. In @aero_pendulum_pid--fig:bijna-kritisch nadert de arm dezelfde doelhoek veel rustiger. De tweede respons noemen we hier bijna kritisch gedempt: er is nog een kleine overshoot zichtbaar. De meting is daarmee een praktisch voorbeeld van rustig regelgedrag, geen bewijs van exact kritische demping. Het aeropendulum met motor en PID is bovendien ingewikkelder dan een ideaal tweedeordesysteem.
+
+#figure(
+  image("Arduino/ClosedLoop/figuren/Critisch.pdf", width: 85%),
+  caption: [Bijna kritisch gedempte respons bij een doelhoek van 60 graden: weinig overshoot en een snelle benadering van de doelhoek. Vergelijk zowel de hoek als de PWM met de ondergedempte respons.],
+  kind: image,
+) <aero_pendulum_pid--fig:bijna-kritisch>
+
+In opdracht 2 probeer je deze twee soorten respons zelf te maken. Het gaat om het herkennen en beïnvloeden van het gedrag; de precieze meetcurve hangt af van jouw opstelling en instellingen. De appendix geeft de verdere afleiding van de beweging en de invloed van motorvertraging op stabiliteit.
 
 #voorbereiding(title: [Voorbereiding])[
-+ Teken de regelkring en benoem setpoint, meetwaarde, regelfout, regelaar, actuator en sensor.
++ Installeer de Arduino IDE en de Python-omgeving op je laptop. Controleer of de Arduino Uno R4 Minima wordt herkend en dat de juiste poort kan worden geselecteerd #link("https://www.arduino.cc/en/software/")[*Link naar Arduino IDE*]. 
 
-+ Gebruik de open-loopmetingen om een haalbare doelhoek, voedingsinstellingen en een toegestane maximale PWM te kiezen. Bepaal de ruwe sensorhoek bij de verticale ruststand.
++ Installeer de bibliotheek `AS5600` in de Arduino IDE. Controleer of de bibliotheek correct is geïnstalleerd door een voorbeeldsketch te openen en te uploaden naar de Arduino.
 
-+ De Arduino berekent `werkhoek = sensorhoek - beginhoek` en vouwt deze terug naar het bereik van -180 tot 180 graden. Dit past bij de omgekeerde sensormontage: de sensorhoek neemt toe wanneer de arm omhoog beweegt. Controleer met de motorvoeding uit of nulstand, teken en verloop kloppen. Bij `DIRECT` moet meer motorvermogen een grotere werkhoek opleveren.
++ Clone or download the github repository of the practicum guide. Controleer of de bestanden correct zijn gedownload en dat je toegang hebt tot de arduino- en pythonbestanden in de map. #link("+ https://github.com/HvA-TN/Practica/tree/main
+")[*Link naar github repository*]
++ Leg in eigen woorden @aero_pendulum_pid--fig:aeropid_regelkring uit. Welke signalen worden gemeten en welke worden aangestuurd? 
 
-+ Voorspel de invloed van P, I en D op stationaire fout, overshoot en insteltijd. Maak een meetplan met gelijke begincondities en minimaal drie herhalingen per instelling.
++ Leg in eigen woorden uit wat P, D en I doen en hoe ze elkaar beïnvloeden. Gebruik de bewegingsvergelijking en de drie bijdragen van de PID-regelaar om dit te onderbouwen.
 
++ Welke risico's voorzie je bij het experimenteren met een PID-regelaar? Beschrijf één concrete situatie waarbij actieve feedback gevaarlijk kan zijn. Welke voorzorgsmaatregelen kun je nemen? Wat heeft jouw voorkeur: softwarematige of hardwarematige beveiliging? Beschrijf hoe je deze voorzorgsmaatregelen kunt gebruiken om jouw systeem veilig te houden.
 ]
 
 #pagebreak(weak: true)
-#heading(level: 1, numbering: none)[Deel 1 - Stap 4: PID uitvoeren]
 
-In stap 4 staat het uitvoeren en afstellen van PID centraal. Gebruik `Stap_4_PID.ino` en de Python-functie `voer_pid_stap4_uit`.
+#heading(level: 1, numbering: none)[Experiment]
 
-#opdracht(title: [Stap 4: PID uitvoeren en afstellen])[
-+ Open `Arduino/ClosedLoop/Stap_4_PID/Stap_4_PID.ino` en upload met uitgeschakelde motorvoeding. Lees de PID-variabelen, `SetTunings`, `SetOutputLimits`, `SetSampleTime` en `Compute`. Leg uit hoe de gemeten hoek de PWM-uitgang verandert.
+Je werkt tijdens dit practicum in de meegeleverde notebook `script.ipynb` voor de closed-loopregeling. Gebruik de cellen voor het instellen, meten en tekenen van de grafieken. Leg iedere gewijzigde instelling en je waarnemingen vast in je labjournaal.
 
-+ Voer eerst een communicatieproef uit met `max_pwm=0` en de motorvoeding uit. Gebruik de hieronder beschreven Python-aanroep. Vul bij `beginhoek` de gemeten ruwe rusthoek in; 90 is alleen een voorbeeld.
+#opdracht(title: [Opdracht 0: opstelling opbouwen en controleren])[
++ Bouw de opstelling op, net als de vorige keer, gebruik hiervoor de aansluittabel @aero_pendulum_PID--tab:aansluitingen. 
 
-+ Kies met de begeleider de maximale PWM en een haalbare doelhoek. Schakel de gecontroleerde motorvoeding in terwijl de Arduino wacht en start de proef vanuit Python. Python configureert de regelaar en verstuurt daarna `START`. De tijdstempels in het meetbestand beginnen bij dit commando.
++ Controleer de opstelling en en de voedingsinstellingen. Noteer de voedingsspanning en stroomlimiet. Controleer of de arm vrij kan bewegen en dat de propeller niet tegen een mechanische aanslag komt.
 
-+ Begin met P: houd `ki=0` en `kd=0`. Onderzoek minimaal drie kleine, stapsgewijs gekozen waarden van `kp`. Vergelijk de stationaire fout, oscillaties en snelheid. Stop bij toenemende oscillaties of beweging naar een aanslag.
++ Upload `Stap_4_PID.ino` met uitgeschakelde motorvoeding. Open `script.ipynb` en voer de eerste cel uit met de juiste Arduino-poort. Sluit eerst Serial Monitor en Serial Plotter.
 
-+ Voeg bij een bruikbare P-instelling een kleine `ki` toe en vergelijk minimaal drie waarden. Onderzoek of de stationaire fout kleiner wordt en of overshoot of insteltijd toenemen.
++ Gebruik de cel voor het meten van de ruwe hoek. Laat de arm in de verticale ruststand hangen en noteer de sensorhoek als `beginhoek`. Beweeg de arm met uitgeschakelde motorvoeding langzaam omhoog en controleer of de meting vloeiend verandert.
 
-+ Vergelijk vervolgens `kd=0` met minimaal twee kleine positieve D-instellingen. Bekijk ook het PWM-signaal: een lagere overshoot kan samengaan met meer gevoeligheid voor meetruis.
++ Vul de gemeten beginhoek in bij de PID-meting en voer een proef uit met `max_pwm=0`. Controleer dat de weergegeven werkhoek in rust ongeveer nul is en positief wordt bij optillen. Bekijk de grafiek voordat je de motor inschakelt.
 
-+ Herhaal iedere instelling minimaal drie keer, met dezelfde beginhoek en voeding. Gebruik per proef een nieuwe bestandsnaam. De integrator wordt bij een nieuwe start opnieuw ingesteld. Kies een eindinstelling en test die bij een tweede haalbare doelhoek. Een PI-instelling met `kd=0` is ook een geldige uitkomst.
-
++ Spreek met de begeleider de maximale voltage af. Noteer de voedingsspanning en beginhoek; gebruik deze bij de volgende opdrachten.
 ]
 
-#heading(level: 2, numbering: none)[PID uitvoeren vanuit Python]
 
-Gebruik in de notebook `script.ipynb` de functie uit `closed_loop/meting.py`. Upload voor beide onderdelen dezelfde sketch `Stap_4_PID.ino`. Vul de gemeten beginhoek en de gekozen instellingen in:
+#figure(
+  table(
+    columns: (1.2fr, 0.8fr, 1fr, 0.8fr),
+    align: left + horizon,
+    inset: (x: 8pt, y: 5pt),
+    stroke: none,
+    fill: none,
+    table.hline(y: 0, stroke: 0.8pt),
+    table.header([*Van Arduino*], [*Draadkleur*], [*Naar component*], [*Aansluiting*]),
+    table.hline(y: 1, stroke: 0.4pt),
+    [GND (Analog)], [Zwart], [Hoeksensor], [GND],
+    [3.3 V], [Rood], [Hoeksensor], [VCC],
+    [A4], [Groen], [Hoeksensor], [SDA],
+    [A5], [Wit], [Hoeksensor], [SCL],
+    table.hline(y: 5, stroke: 0.4pt),
+    [D9 (digitaal, PWM)], [Paars], [H-brug], [ENA],
+    [D10 (digitaal)], [Oranje], [H-brug], [IN1],
+    [D11 (digitaal)], [Geel], [H-brug], [IN2],
+    table.hline(y: 8, stroke: 0.8pt),
+  ),
+  caption: [Aansluitingen van de Arduino naar de AS5600-hoeksensor en de L298N H-brug..],
+  kind: table,
+  supplement: [Tabel],
+) #label("aero_pendulum_PID--tab:aansluitingen")
 
-#jupytercode([PID-meting])[
-```python
-from closed_loop.meting import voer_pid_stap4_uit
 
-metingen, csv_pad = voer_pid_stap4_uit(
-    com_poort=com_poort, beginhoek=beginhoek,
-    doelhoek=doelhoek, kp=kp, ki=ki, kd=kd,
-    max_pwm=max_pwm, meetduur=meetduur,
-    delta_t=delta_t, mode="fixed", toon_metingen=True,
-)
-```
-]
-
-De meetfunctie slaat meetgegevens en instellingen op in een eigen CSV-bestand per proef. Bekijk de hoek, het setpoint en de motoruitgang en vergelijk P, PI en PID met dezelfde begincondities.
 
 #pagebreak(weak: true)
-#heading(level: 1, numbering: none)[Vervolgopdracht: de maximale hoek aanpassen]
 
-Je gebruikt opnieuw `voer_pid_stap4_uit` en dezelfde geuploade Arduino-sketch. De functie gebruikt standaard `max_hoek=180`, ook wanneer dit argument niet in de aanroep staat. Python verstuurt deze grens bij iedere configuratie naar de Arduino. Je verlaagt de grens nu bijvoorbeeld naar 120 graden.
+#opdracht(title: [Opdracht 1: P-regeling onderzoeken])[
++ Kies in `script.ipynb` een doelhoek van 30 graden. Zet `ki=0` en `kd=0` en begin met een kleine P-waarde, bijvoorbeeld `kp=0.1`. Gebruik de afgesproken maximale PWM. Voorspel eerst of de arm met deze instelling de doelhoek zal bereiken.
 
-#opdracht(title: [Dezelfde PID-regeling met een lagere hoekgrens])[
-+ Voeg `max_hoek=120` toe aan dezelfde Python-aanroep. Kies een doelhoek binnen het toegestane bereik en houd de overige instellingen gelijk voor een vergelijking.
++ Start vanuit de verticale ruststand en meet de hoek tegen de tijd. Bekijk waar de arm tot stilstand komt en of hij doorschiet. Maak een grafiek met de gemeten hoek en het setpoint, met daaronder de PWM.
 
-+ Zoek in Python waar `max_hoek` wordt meegestuurd en in de Arduino waar de werkhoek wordt gecontroleerd. De controle vindt plaats voor het starten en voor iedere PID-aansturing. Alleen een werkhoek groter dan `max_hoek` veroorzaakt deze hoekstop; sensorstatus en een lagere werkhoek veroorzaken geen hoekstop.
++ Verhoog P stapsgewijs en onderzoek minstens vijf waarden, voor zover dit veilig kan. Houd de overige instellingen en de beginstand gelijk. Leg na iedere proef vast wat verandert in snelheid, overshoot en blijvende afwijking.
 
-+ Test met de motorvoeding uit en `max_pwm=0` een bewust klein gekozen grens, ruim voor een mechanische aanslag. Beweeg de arm voorzichtig over deze grens. Controleer dat de motoruitgang nul wordt, de meting stopt en `ERROR:HOEKBEREIK` wordt gemeld. Test ook een start buiten het bereik.
++ Zet de hoekresponsen ook samen in één grafiek, met de P-waarden in de legenda. Welke instelling geeft een rustige respons? Bij welke instelling blijven de oscillaties langer aanwezig? Zie onderstaande code voor een voorbeeld van meerdere grafieken in één figuur.
 
-+ Controleer de foutvergrendeling: opnieuw `START` is na een fout niet voldoende. De Python-functie verstuurt bij een nieuwe proef opnieuw een configuratie; daarna wordt de maximale werkhoek opnieuw gecontroleerd.
++ Zoek met kleinere stappen het omslaggebied naar aanhoudende of groeiende oscillaties. Stop direct als de uitslagen te hard toenemen. Noteer de laatste stabiele instelling en de eerste instelling waarbij de oscillaties niet duidelijk uitdoven. Als de veilige grens eerder bereikt wordt, vermeld dan dat het omslagpunt niet is vastgesteld.
 
-+ Leg de grens, testsituatie, verwachte reactie en waargenomen reactie vast in een tabel. Herhaal na controle een gewone PID-proef met dezelfde afstelling als eerder. Lok geen overschrijding uit met draaiende propeller.
-
++ Vergelijk je waarnemingen met je voorspelling. Gebruik de appendix, in het bijzonder de onderdelen *Invloed van een vertraagde kracht* en *Kritische proportionele versterking* bij @eq:kritische-versterking, om uit te leggen waarom een steeds grotere P niet vanzelf een betere regeling geeft.
 ]
 
-#jupytercode([Dezelfde functie met een grens van 120 graden])[
+#jupytercode([Subplots met meerdere grafieken])[
 ```python
-metingen_begrensd, csv_pad_begrensd = voer_pid_stap4_uit(
-    com_poort=com_poort, beginhoek=beginhoek,
-    doelhoek=doelhoek, kp=kp, ki=ki, kd=kd,
-    max_pwm=max_pwm, meetduur=meetduur,
-    delta_t=delta_t, mode="fixed", toon_metingen=True,
-    max_hoek=120,
-)
-```
-]
+from matplotlib import pyplot as plt
 
-De gezamenlijke sketch gebruikt de maximale werkhoek als hoekstop en behoudt de PWM-grens, heartbeat, eindige meetduur en `STOP`. De magneetstatus wordt niet als stopvoorwaarde gebruikt. Het sluiten van een venster is geen stopcommando. De Python-functie stuurt ook bij een fout of onderbreking `STOP`; houd de fysieke uitschakeling bereikbaar.
+Fig, axes = plt.subplots(2, 1, figsize=(8, 6))
+axes[0].set_title("Hoek en setpoint")
+axes[0].set_xlabel("Tijd (s)")
+axes[0].set_ylabel("Hoek (°)")
+axes[0].scatter(data["tijd"], data["hoek"], label="P=x_1", color="blue", s=10)
+axes[0].scatter(data["tijd"], data["hoek"], label="P=x_2", color="blue", s=10)
 
-#pagebreak(weak: true)
-#heading(level: 1, numbering: none)[Stap 5: de maximale PWM-sprong begrenzen]
+axes[1].set_title("PWM")
+axes[1].set_xlabel("Tijd (s)")
+axes[1].set_ylabel("PWM")
+axes[1].scatter(data["tijd"], data["pwm"], label="P=x_1", color="blue", s=10)
+axes[1].scatter(data["tijd"], data["pwm"], label="P=x_2", color="blue", s=10)
 
-Gebruik `Stap_5_PWM_begrenzing.ino` en `voer_pid_stap5_uit` in `script.ipynb`. Met `max_pwm_stap=20` verandert de werkelijk aangeboden PWM per regelstap maximaal 20 telwaarden omhoog. Dalende PWM wordt direct overgenomen, zonder stapbegrenzing. Kleinere veranderingen worden direct overgenomen. Zonder argument wordt geen begrenzer ingesteld. Een vraag van 0 naar 255 wordt zo bijvoorbeeld 0, 20, 40, 60, enzovoort.
-
-#opdracht(title: [Stap 5: begrens grote PWM-sprongen])[
-+ Neem dezelfde PID-instellingen, doelhoek en beginstand als bij stap 4. Maak een referentiemeting met `voer_pid_stap5_uit` zonder argument `max_pwm_stap`.
-
-+ Herhaal met `max_pwm_stap=20` en vergelijk daarna bijvoorbeeld 10 en 40 telwaarden per regelstap. Houd het regelinterval en de overige instellingen gelijk en herhaal iedere instelling drie keer.
-
-+ Plot de werkhoek en de werkelijk aangeboden PWM. Vergelijk de grootte van de PWM-sprongen, overshoot, insteltijd en stationaire fout. Onderzoek de extra vertraging bij een grote gevraagde verandering. Bij een ander regelinterval verandert ook de maximale verandering per seconde.
-
-+ Controleer met de motorvoeding uit dat STOP, de maximale hoek, de meetduur en de heartbeat-stop de uitgang direct op nul zetten. Deze stops omzeilen de begrenzer.
-
-]
-
-#jupytercode([PID met een maximale PWM-sprong])[
-```python
-metingen, csv_pad = voer_pid_stap5_uit(
-    com_poort=com_poort, beginhoek=beginhoek,
-    doelhoek=doelhoek, kp=kp, ki=ki, kd=kd,
-    max_pwm=max_pwm, meetduur=meetduur,
-    delta_t=delta_t, mode="fixed", toon_metingen=True,
-    max_pwm_stap=20,
-)
-```
-]
-
-Gebruik een geheel getal van 1 tot 255 voor de maximale sprong. Weglaten schakelt de begrenzer uit; 0 schakelt hem expliciet uit. `max_pwm` is de maximale uitgang en staat los van `max_pwm_stap`. Bij `max_pwm=0` blijft de motor uit. Python controleert of de bijgewerkte stap-5-sketch is aangesloten.
-
-#heading(level: 1, numbering: none)[Meetgegevens verwerken]
-
-De notebookfunctie bewaart instellingen als commentaarregels en daarna de kolommen `tijd_s,hoek_deg,pwm`. `hoek_deg` is de gecorrigeerde werkhoek; het setpoint staat in de instellingen. Er zijn geen kolommen `running` of `sensor_ok`; een fout stopt de proef en wordt als foutmelding getoond. Bewaar die foutmelding en de gebruikte instellingen bij de meetgegevens.
-
-#jupytercode([Closed-loopmetingen bekijken])[
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-df = pd.read_csv(csv_pad, comment='#')
-if df.empty:
-    raise ValueError('Geen meetpunten opgeslagen')
-df['t_s'] = df['tijd_s']
-print(df['tijd_s'].diff().describe())
-fig, ax = plt.subplots(2, 1, sharex=True)
-ax[0].plot(df['t_s'], df['hoek_deg'], label='Werkhoek')
-ax[0].axhline(doelhoek, linestyle='--', label='Setpoint')
-ax[0].set_ylabel('Hoek (graden)')
-ax[0].legend()
-ax[1].plot(df['t_s'], df['pwm'])
-ax[1].set_ylabel('PWM')
-ax[1].set_xlabel('Tijd sinds START (s)')
-for a in ax:
-    a.grid()
+plt.tight_layout()
 plt.show()
 ```
 ]
+#pagebreak(weak: true)
 
-Vergelijk P, PI en PID met dezelfde analysemethode: stationaire fout en standaarddeviatie over een stabiel eindinterval, maximale overshoot, insteltijd binnen een vooraf gekozen tolerantieband en tijd tegen de PWM-grens. Rapporteer wanneer geen stationaire toestand wordt bereikt. Geef de spreiding over de herhalingen. Leg voor de vervolgopdracht daarnaast in een testtabel de ingestelde grens, testsituatie, verwachte reactie en waargenomen reactie vast.
+#opdracht(title: [Opdracht 2: P, D en I afstellen en de voorbeeldfiguren namaken])[
++ Stel de doelhoek in op 60 graden, zoals in @aero_pendulum_pid--fig:ondergedempt en @aero_pendulum_pid--fig:bijna-kritisch. Begin met alleen P en kies een waarde onder het omslaggebied uit opdracht 1. Controleer opnieuw of de respons stabiel is bij deze nieuwe doelhoek. Bewaar deze eerste grafiek als referentie.
 
-#afronding(title: [Afronding])[
-+ Schakel de motorvoeding uit en wacht tot de propeller stilstaat.
++ Houd P vast en voeg D toe; laat I nog op nul. Vergelijk `kd=0` met minstens twee positieve D-waarden. Wat gebeurt er met de overshoot en de oscillaties? Kies een PD-instelling waarbij de arm rustig naar zijn eindstand beweegt. Bekijk ook of de PWM onrustiger wordt.
 
-+ Laat PID-afstelling en begrenzingstests controleren door de practicumbegeleider.
++ Houd P en D vast en voeg een kleine I-term toe. Vergelijk minstens twee positieve I-waarden met de meting zonder I. Vul onderstaande tabel in en zet deze in je labjournaal.
 
-+ Bewaar de gebruikte sketches, instellingen, ruwe meetgegevens en Python-analyse bij elkaar. Beschrijf apart de resultaten van stap 4 (regelgedrag) en de vervolgopdracht (lagere hoekgrens).
++ *Maak nu de twee voorbeeldresponsen na met je eigen metingen.* Zoek bij 60 graden een instelling met duidelijk uitdovende oscillaties, zoals in @aero_pendulum_pid--fig:ondergedempt, en een instelling met weinig overshoot en een korte insteltijd, zoals in @aero_pendulum_pid--fig:bijna-kritisch. 
+
++ Maak van beide instellingen een figuur met dezelfde opbouw als de voorbeelden: boven de hoek en het setpoint, onder de PWM, beide tegen de tijd. Gebruik voor beide figuren gelijke asschalen. Vermeld P, D en I in de onderschriften. Bepaal de overshoot en insteltijd en leg uit welke parameterwijzigingen het verschil veroorzaakten. Is je rustige respons eerder ondergedempt, bijna kritisch gedempt of overgedempt?
+
++ Stabiliseer de aeropendulum op 90 graden. Wat maakt dit moeilijker dan bij 60 graden? ]
+
+
+#figure(
+  table(
+    columns: (0.5fr, 0.8fr, 0.8fr, 0.8fr, 0.8fr, 0.9fr, 0.8fr, 0.8fr, 0.8fr, 1.6fr),
+    align: center + horizon,
+    inset: (x: 4pt, y: 6pt),
+    stroke: none,
+    fill: none,
+
+    table.hline(y: 0, stroke: 0.8pt),
+
+    table.header(
+      [*Proef*],
+      [*Max. PWM*],
+      [*Tijdstap* (s)],
+      [*Meetduur* (s)],
+      [*Max. hoek* (°)],
+      [*Max. PWM-stap*],
+      [*Eindfout* (°)],
+      [*Overshoot* (°)],
+      [*Insteltijd* (s)],
+      [*Waarnemingen*],
+    ),
+
+    table.hline(y: 1, stroke: 0.4pt),
+
+    [1], […], […], […], […], [Uit], […], […], […], […],
+    [2], […], […], […], […], […], […], […], […], […],
+    [3], […], […], […], […], […], […], […], […], […],
+    […], […], […], […], […], […], […], […], […], […],
+    table.hline(y: 5, stroke: 0.8pt),
+  ),
+  caption: [Overzicht van de ingestelde regelparameters en de gemeten prestaties van de P-regelaar.],
+  kind: table,
+  supplement: [Tabel],
+) <aero_pendulum_PID--tab:proeven>
+
+Spreek voor alle proeven dezelfde tolerantieband af. Neem de overshoot als nul als de arm niet boven het setpoint komt. Als de hoek niet tot rust komt, noteer je bij stationaire fout en insteltijd niet bereikt. Bewaar bij ieder proefnummer de bijbehorende meetgegevens en grafieken.
+
+#pagebreak(weak: true)
+
+#heading(level: 1, numbering: none)[Veiligheid bij PID-regeling]
+
+Een regeling die uiteindelijk de juiste waarde bereikt, kan onderweg toch een gevaarlijke situatie veroorzaken. Denk aan een drukinstallatie: als een pomp te lang blijft toevoeren, kan de druk boven de toegestane waarde uitkomen. Het later herstellen van de druk maakt die overschrijding niet ongedaan. Ook bij het aeropendulum kan overshoot ongewenst zijn, bijvoorbeeld wanneer de arm een mechanische aanslag raakt.\
+\
+
+*Softwarematige beveiliging* gebruikt metingen om in te grijpen. Je kunt bijvoorbeeld de motor uitschakelen wanneer een maximale hoek wordt gemeten, of voorkomen dat de motoruitgang te snel toeneemt. Dit werkt alleen als de sensor, het programma en de aansturing correct functioneren. Bovendien verdwijnt de beweging niet meteen als de motor wordt uitgeschakeld: de arm kan door zijn snelheid nog verder bewegen. Verder zit er een tijdsverschil in de detectie en aansturing, dit wordt de *latency* genoemd, dit maakt softwarematige beveiliging minder effectief en soms problematisch.\
+\
+
+*Hardwarematige beveiliging* kan onafhankelijk van het regelprogramma ingrijpen. Voorbeelden zijn een noodstop die de motorvoeding onderbreekt, een afzonderlijke eindschakelaar of afscherming van de propeller. Bij drukinstallaties kan een geschikt veiligheidsventiel overdruk afvoeren (overdukventiel). Welke voorziening nodig is, hangt af van het gevaar en de opgeslagen energie. Mocht je ooit PID moeten toepassen, dan is het aan *jou* om hier over na te denken.\
+\
+
+In de volgende opdrachten onderzoek je twee softwarematige maatregelen. We starten met een maximale hoekbeveiliging, gevolgd door een maximale PWM toename uit te testen. Beoordeel telkens zowel de invloed op de beweging als de beperkingen van de maatregel.
+
+#opdracht(title: [Opdracht 3: maximale hoek van 100 graden])[
++ Gebruik in `script.ipynb` het onderdeel voor de maximale hoek en stel `max_hoek=100` in. Behoud de doelhoek van 90 graden en je PID-instellingen uit opdracht 2. Zet je code nog niet aan. 
+
++ Test de hoekstop eerst met uitgeschakelde motorvoeding en `max_pwm=0`. Beweeg de arm voorzichtig tot boven 100 graden, mits dit binnen het mechanische bereik ligt. Controleer of de proef stopt en een melding over de hoekgrens verschijnt. Noteer de verwachte en waargenomen reactie.
+
++ Breng de arm terug naar de ruststand en herstel de afgesproken maximale PWM. Meet opnieuw bij 90 graden. Verklein de overshoot door telkens één PID-parameter te veranderen. Vergelijk de beste respons met die uit opdracht 2 en controleer ook of de insteltijd en eindfout acceptabel blijven. Lok met draaiende propeller geen overschrijding van de stopgrens uit.
+
++ Leg uit waarom een hoekstop op 100 graden niet garandeert dat de arm nooit verder komt dan 100 graden. Waarom is alleen softwarematig beveiligen ongeschikt? Bespreek een foutieve hoekmeting en de beweging na uitschakeling. Welke hardwarematige voorziening zou hierbij helpen?
+]
+
+#pagebreak(weak: true)
+
+#opdracht(title: [Opdracht 4: de PWM-toename per tijdstap verkleinen])[
++ Schakel de motorvoeding uit en upload `Stap_5_PWM_begrenzing.ino`. Werk verder in het onderdeel *Stap 5* van `script.ipynb`. Neem de PID-instellingen en de hoekgrens van 100 graden over. Stel `max_pwm_stap=255` in en maak een referentiemeting bij 60 graden. Bij deze hoge waarde kan de PWM in één stap het hele bereik doorlopen.
+
++ Verlaag `max_pwm_stap` stapsgewijs, bijvoorbeeld naar 100, 40, 20, 10 en 5. Houd P, D, I en de tijdstap eerst gelijk. Deze instelling begrenst hoeveel de PWM per tijdstap mag *stijgen*. Een daling van de PWM wordt direct uitgevoerd. Voorspel voor iedere nieuwe instelling wat er met de hoekrespons zal gebeuren.
+
++ Maak per instelling grafieken van de hoek en de PWM tegen de tijd. Vergelijk overshoot, insteltijd en eindfout met de referentiemeting. Wordt de beweging bij iedere verlaging rustiger, of is er een punt waarop het regelgedrag juist slechter wordt? Vul je meettabellen aan.
+
++ Kies een stapgrens waarbij stabiliseren moeilijker gaat en onderzoek of opnieuw afstellen van P, D en I helpt. Test je beste combinatie vervolgens ook bij 30 en 90 graden. Herhaal de gekozen eindinstellingen minstens drie keer en rapporteer ook wanneer stabilisatie niet lukt.
+
++ Waarom kan een kleinere PWM-stap het juist moeilijker maken om stabiel te regelen? #footnote[Dit effect kan soms optreden als $k_I > 0$, dan spreekt men van Integral wind-up.] Als stabiliseren wel lukt, leg dan uit onder welke omstandigheden.
 
 ]
 
+#afronding(title: [Afronding])[
++ Schakel de motorvoeding uit en wacht tot de propeller stilstaat. Laat de meetresultaten controleren door de practicumbegeleider.
 
++ Voeg de grafieken en parametertabellen toe aan je digitale labjournaal. Geef iedere figuur een duidelijk onderschrift met de gebruikte instellingen.
+
++ Beschrijf in *Resultaten en Discussie* hoe P, D en I de respons beïnvloedden. 
+
++ Bespreek de invloed en beperkingen van de hoekstop en de PWM-stapbegrenzing. Vergelijk je conclusies met je verwachtingen uit de voorbereiding.
+
++ Breek de opstelling af en ruim de werkplek op. Controleer of alle componenten compleet zijn.
+]
 
 #pagebreak(weak: true)
 
@@ -307,8 +381,6 @@ Daarmee wordt de bewegingsvergelijking:
 #math.equation(block: true,numbering: "(1)", eqbox[$J dot.double(theta) + b dot(theta) + m g l sin(theta) = A u$])
 
 Dit is een niet-lineaire differentiaalvergelijking van de tweede orde.
-
-#pagebreak(weak: true)
 
 == De P-regelaar
 
@@ -733,6 +805,321 @@ Voor de eerder aangenomen positieve systeemparameters onderscheiden we drie situ
 
 === Fysische interpretatie
 
-De kritische versterking hangt af van zowel de mechanische eigenschappen van de pendulum als de responstijd van de motor. Het is eigenlijk niet heel zinvol om  @eq:kritische-versterking in te vullen met alle constantens en parameters, dit weten we simpelweg niet. Echter, dat is ook niet het moraal van het verhaal: als de motor te traag reageert, kan een te grote proportionele versterking leiden tot instabiliteit. De motor kan dan op het verkeerde moment energie aan de beweging toevoegen, waardoor de oscillaties toenemen in plaats van afnemen.
+De kritische versterking hangt af van zowel de mechanische eigenschappen van de pendulum als de responstijd van de motor. Zonder gemeten modelparameters kun je @eq:kritische-versterking niet betrouwbaar numeriek invullen. De belangrijkste conclusie is: als de motor te traag reageert, kan een te grote proportionele versterking leiden tot instabiliteit. De motor kan dan op het verkeerde moment energie aan de beweging toevoegen, waardoor de oscillaties toenemen in plaats van afnemen.
 
+#pagebreak(weak: true)
+
+
+== PID-regeling en integral windup
+Voor meer informatie over Laplace-transformaties, zie Brightspace.
+
+=== De PID-regelaar in het Laplacedomein
+
+We definiëren de regelafwijking als het verschil tussen de gewenste hoek $r(t)$ en de gemeten hoek $theta(t)$:
+
+#math.equation(block: true, numbering: "(1)",
+  $ e(t) = r(t) - theta(t) $
+)
+
+Een PID-regelaar berekent de gewenste motoraansturing uit drie bijdragen:
+
+#math.equation(block: true, numbering: "(1)",
+  $ u_"PID"(t) = u_0
+    + K_p e(t)
+    + K_i integral_0^t e(tau) dif tau
+    + K_d dot(e)(t) $
+)
+
+Hierin is $u_0$ de PWM-waarde die nodig is om de pendulum in de gewenste evenwichtspositie te houden.
+
+We beschouwen vanaf nu afwijkingen ten opzichte van dit evenwicht. Hiervoor definiëren we:
+
+$ delta u_"PID"(t) = u_"PID"(t) - u_0 $
+
+De PID-vergelijking wordt dan:
+
+#math.equation(block: true, numbering: "(1)",
+  $ delta u_"PID"(t)
+    = K_p e(t)
+    + K_i integral_0^t e(tau) dif tau
+    + K_d dot(e)(t) $
+)
+
+We passen de Laplacetransformatie toe. Bij nulbeginvoorwaarden voor de integrator en de regelafwijking geldt:
+
+#math.equation(block: true, numbering: "(1)",
+  $ Delta U_"PID"(s)
+    = K_p E(s) + K_i/s E(s) + K_d s E(s) $
+)
+
+We halen $E(s)$ buiten haakjes:
+
+#math.equation(block: true, numbering: "(1)",
+  $ Delta U_"PID"(s)
+    = (K_p + K_i/s + K_d s) E(s) $
+)
+
+De overdrachtsfunctie van de PID-regelaar is dus:
+
+#math.equation(block: true, numbering: "(1)",
+  $ eqbox(
+    G_c(s) = (Delta U_"PID"(s))/(E(s))
+    = K_p + K_i/s + K_d s
+  ) $
+)
+
+De drie bijdragen hebben elk een andere afhankelijkheid van $s$:
+
+- De P-term heeft een constante versterking $K_p$.
+- De I-term introduceert een factor $1/s$.
+- De D-term introduceert een factor $s$.
+
+De factor $1/s$ is bijzonder belangrijk. Deze komt overeen met integratie in het tijdsdomein en introduceert een pool bij $s = 0$ in de regelaar.
+
+=== Overdrachtsfunctie van de aeropendulum
+
+We beschouwen kleine afwijkingen $epsilon(t)$ rond een evenwichtshoek $theta_0$.
+
+De gelineariseerde bewegingsvergelijking is:
+
+#math.equation(block: true, numbering: "(1)",
+  $ J dot.double(epsilon) + b dot(epsilon)
+    + B epsilon = q(t) $
+)
+
+met:
+
+$ B = m g l cos(theta_0) $
+
+en $q(t)$ de afwijking van het motorkoppel ten opzichte van het evenwicht.
+
+Met de lokale benadering $q(t) = A delta u(t)$, waarbij $A = l_T k_u$, volgt:
+
+#math.equation(block: true, numbering: "(1)",
+  $ J dot.double(epsilon) + b dot(epsilon)
+    + B epsilon = A delta u(t) $
+)
+
+Na Laplacetransformatie:
+
+#math.equation(block: true, numbering: "(1)",
+  $ (J s^2 + b s + B) Epsilon(s)
+    = A Delta U(s) $
+)
+
+De overdrachtsfunctie van de pendulum, van PWM-afwijking naar hoekafwijking, is:
+
+#math.equation(block: true, numbering: "(1)",
+  $ eqbox(
+    G_p(s) = Epsilon(s)/(Delta U(s))
+    = A/(J s^2 + b s + B)
+  ) $
+)
+
+=== Gesloten overdrachtsfunctie met PID
+
+Voor negatieve eenheidsterugkoppeling geldt:
+
+#math.equation(block: true, numbering: "(1)",
+  $ T(s) = (G_c(s) G_p(s))/(1 + G_c(s) G_p(s)) $
+)
+
+We vullen de overdrachtsfuncties in:
+
+#math.equation(block: true, numbering: "(1)",
+  $ T(s) =
+    (A (K_p + K_i/s + K_d s))/
+    (J s^2 + b s + B
+    + A (K_p + K_i/s + K_d s)) $
+)
+
+Door teller en noemer met $s$ te vermenigvuldigen vinden we:
+
+#math.equation(block: true, numbering: "(1)",
+  $ eqbox(
+    T(s) =
+    (A (K_d s^2 + K_p s + K_i))/
+    (J s^3 + (b + A K_d) s^2
+    + (B + A K_p) s + A K_i)
+  ) $
+)
+
+De karakteristieke vergelijking van het ideale gesloten PID-systeem is:
+
+#math.equation(block: true, numbering: "(1)",
+  $ J s^3 + (b + A K_d) s^2
+    + (B + A K_p) s + A K_i = 0 $
+)
+
+De integrerende term verhoogt de orde van het gesloten systeem van twee naar drie.
+
+Voor positieve coëfficiënten volgt uit het Routh-Hurwitz-criterium dat asymptotische stabiliteit vereist:
+
+#math.equation(block: true, numbering: "(1)",
+  $ (b + A K_d)(B + A K_p) > J A K_i $
+)
+
+Daarnaast moeten de coëfficiënten van de karakteristieke vergelijking positief zijn. Dit resultaat geldt voor het ideale lineaire model, waarin de gewenste PWM-correctie onmiddellijk wordt uitgevoerd.
+
+=== De integrator als dynamische toestand
+
+Om integral windup te begrijpen, moeten we expliciet kijken naar de interne toestand van de integrator.
+
+We definiëren de integrale actie:
+
+#math.equation(block: true, numbering: "(1)",
+  $ z(t) = integral_0^t e(tau) dif tau $
+)
+
+Hieruit volgt:
+
+#math.equation(block: true, numbering: "(1)",
+  $ eqbox(dot(z)(t) = e(t)) $
+)
+
+De PID-regelaar kan nu worden geschreven als:
+
+#math.equation(block: true, numbering: "(1)",
+  $ delta u_"PID"(t)
+    = K_p e(t) + K_i z(t) + K_d dot(e)(t) $
+)
+
+De grootheid $z(t)$ is een interne toestand van de regelaar. Deze toestand bevat de opgetelde regelafwijking uit het verleden.
+
+Wanneer de regelafwijking gedurende een tijdsinterval positief blijft, neemt $z(t)$ toe. Wanneer de regelafwijking negatief is, neemt $z(t)$ af.
+
+=== Begrenzing van de PWM-verandersnelheid
+
+In de werkelijke regeling kan de gevraagde PWM-waarde niet altijd onmiddellijk worden uitgevoerd.
+
+We beschouwen een begrenzer waarbij de PWM per tijdstap maximaal $Delta u_"max"$ mag toenemen:
+
+#math.equation(block: true, numbering: "(1)",
+  $ eqbox(
+    u_k = min(u_("PID",k), u_(k-1) + Delta u_"max")
+  ) $
+)
+
+De maximale PWM-toename per seconde is:
+
+#math.equation(block: true, numbering: "(1)",
+  $ R_u = (Delta u_"max")/(Delta t) $
+)
+
+De begrenzer zorgt ervoor dat de toegepaste PWM $u(t)$ kan achterlopen op de gewenste PWM $u_"PID"(t)$.
+
+We definiëren het verschil tussen beide als:
+
+#math.equation(block: true, numbering: "(1)",
+  $ delta u_"lim"(t) = u_"PID"(t) - u(t) $
+)
+
+Wanneer de begrenzer actief is, geldt bij een begrensde toename:
+
+$ delta u_"lim"(t) > 0 $
+
+De regelaar vraagt dan meer PWM dan daadwerkelijk wordt toegepast.
+
+=== Integral windup
+
+We beschouwen een tijdsinterval waarin de pendulum onder de gewenste hoek blijft.
+
+De regelafwijking is dan positief:
+
+$ e(t) > 0 $
+
+De integrator blijft daardoor toenemen:
+
+#math.equation(block: true, numbering: "(1)",
+  $ dot(z)(t) = e(t) > 0 $
+)
+
+Voor een constante regelafwijking $e(t) = e_0 > 0$ vinden we:
+
+#math.equation(block: true, numbering: "(1)",
+  $ z(t) = z(0) + e_0 t $
+)
+
+De bijdrage van de integrator aan de gewenste PWM wordt:
+
+#math.equation(block: true, numbering: "(1)",
+  $ u_I(t) = K_i z(0) + K_i e_0 t $
+)
+
+De gewenste PWM neemt door de I-term dus lineair toe zolang de regelafwijking constant en positief blijft.
+
+Wanneer de PWM-snelheidsbegrenzer actief is, kan de toegepaste PWM echter niet sneller toenemen dan $R_u$.
+
+Gedurende een interval waarin de PWM vanaf $u(0)$ met de maximale toegestane snelheid stijgt, geldt:
+
+#math.equation(block: true, numbering: "(1)",
+  $ u(t) = u(0) + R_u t $
+)
+
+Om het mechanisme inzichtelijk te maken, nemen we tijdelijk aan dat de P- en D-bijdragen constant blijven.
+
+De gewenste PWM kan dan worden geschreven als:
+
+#math.equation(block: true, numbering: "(1)",
+  $ u_"PID"(t) = C + K_i e_0 t $
+)
+
+Hierin bevat $C$ de constante bijdragen van de regelaar.
+
+Het verschil tussen de gewenste en de toegepaste PWM wordt:
+
+#math.equation(block: true, numbering: "(1)",
+  $ delta u_"lim"(t)
+    = C - u(0) + (K_i e_0 - R_u)t $
+)
+
+Daaruit volgt:
+
+#math.equation(block: true, numbering: "(1)",
+  $ eqbox(
+    (dif delta u_"lim")/(dif t) = K_i e_0 - R_u
+  ) $
+)
+
+Wanneer:
+
+#math.equation(block: true, numbering: "(1)",
+  $ K_i e_0 > R_u $
+)
+
+groeit het verschil tussen de gewenste en de toegepaste PWM in dit vereenvoudigde scenario.
+
+De integrator blijft dus een steeds grotere correctie vragen, terwijl de motor deze correctie niet met dezelfde snelheid kan uitvoeren. Dit is het mechanisme achter integral windup.
+
+=== Van wind-up naar overshoot
+
+Stel dat de pendulum na enige tijd de gewenste hoek bereikt.
+
+Op dat moment geldt:
+
+$ e(t_1) = 0 $
+
+De integrator heeft echter de eerdere regelafwijking opgeteld:
+
+#math.equation(block: true, numbering: "(1)",
+  $ z(t_1) = z(0) + integral_0^(t_1) e(tau) dif tau $
+)
+
+Hoewel de actuele regelafwijking nul is, hoeft de integrator dus niet nul te zijn.
+
+De integrerende bijdrage aan de PWM blijft:
+
+#math.equation(block: true, numbering: "(1)",
+  $ u_I(t_1) = K_i z(t_1) $
+)
+
+De regelaar kan daardoor nog steeds een grote positieve PWM-correctie vragen wanneer de gewenste hoek al is bereikt. Om de opgebouwde integraalterm weer te verminderen, moet de regelafwijking gedurende enige tijd negatief worden.
+
+Uit:
+
+#math.equation(block: true, numbering: "(1)",
+  $ z(t_2) = z(t_1) + integral_(t_1)^(t_2) e(tau) dif tau $
+)
+
+volgt dat de opgebouwde integraal pas verdwijnt wanneer de negatieve oppervlakte onder de foutcurve de eerder opgebouwde positieve integraal compenseert. Hierdoor kan de pendulum voorbij de gewenste hoek bewegen voordat de integrerende bijdrage voldoende is afgenomen. Dit kan leiden tot grotere overshoot, langere insteltijden en in combinatie met de overige systeemdynamica tot aanhoudende of groeiende oscillaties. Een simpel naïef idee om de PWM te begrenzen is dus niet voldoende het systeem stabieler te krijgen. Om Integral Windup te voorkomen, zijn er verschillende strategieën mogelijk, zoals het beperken van de integratoruitgang, het resetten van de integrator bij verzadiging of het gebruik van anti-windup technieken die de integrator aanpassen op basis van de werkelijke actuatoruitgang, dit gaat echter veel te ver voor dit practicum.
 

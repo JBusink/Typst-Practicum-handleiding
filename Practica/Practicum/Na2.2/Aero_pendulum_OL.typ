@@ -3,7 +3,7 @@
 
 #show: vergelijking_refs
 
-#praktikumtitle[Practicum: Open-loop regeling van een aeropendulum]
+#praktikumtitle[Open-loop regeling van een aeropendulum]
 
 #heading(level: 1, numbering: none)[Leerdoelen]
 
@@ -72,7 +72,7 @@ waarbij $J$ het massatraagheidsmoment van het aeropendulum rond het draaipunt is
 
 #figure(
   [
-#box(image("Figuren/aeropendulum.png", width: 65.0%))
+#box(image("Figuren/aeropendulum.pdf", width: 55.0%))
   ],
   caption: [Schematische weergave van het aeropendulum en de relevante krachten.],
   kind: image,
@@ -167,6 +167,11 @@ De positie van de magneet ten opzichte van de sensor is belangrijk. Wanneer de m
 #voorbereiding(title: [Voorbereiding])[
 + Installeer de Arduino IDE en de Python-omgeving op je laptop. Controleer of de Arduino Uno R4 Minima wordt herkend en dat de juiste poort kan worden geselecteerd #link("https://www.arduino.cc/en/software/")[*Link naar Arduino IDE*]. 
 
++ Installeer de bibliotheek `AS5600` in de Arduino IDE. Controleer of de bibliotheek correct is geïnstalleerd door een voorbeeldsketch te openen en te uploaden naar de Arduino.
+
++ Clone or download the github repository of the practicum guide. Controleer of de bestanden correct zijn gedownload en dat je toegang hebt tot de arduino- en pythonbestanden in de map. #link("+ https://github.com/HvA-TN/Practica/tree/main
+")[*Link naar github repository*]
+
 + Bekijk de geometrie van het aeropendulum. Onder welke voorwaarde geldt $l = l_T$? Leg in woorden uit wat deze aanname fysisch betekent.
 
 + In de stationaire toestand staat de arm stil en zijn de momenten rond het draaipunt in evenwicht. Laat zien dat dan geldt: #math.equation(block: true, numbering: "(1)", $l_T F_T = m g l sin theta .$)
@@ -190,7 +195,7 @@ Werk de opdrachten in onderstaande volgorde uit. Open iedere sketch vanuit zijn 
 #opdracht(title: [Opdracht 0: opbouw van de opstelling en aansluitschema])[
 + Zet de Arduino Uno R4 Minima, AS5600-hoeksensor, L298N H-brug, motor en externe voeding klaar. Bekijk hoe de arm en de magneet bij het draaipunt zijn gemonteerd. Controleer of de arm vrij kan bewegen.
 
-+ Bouw de opstelling op met uitgeschakelde externe voeding en losgekoppelde USB-kabel. Sluit de hoeksensor en de stuuringangen van de H-brug aan volgens tabel~#ref(label("aero_pendulum_ol--tab:aansluitingen"), supplement: none). Controleer per draad de Arduino-pin, draadkleur en aansluiting op de component.
++ Bouw de opstelling op met uitgeschakelde externe voeding en losgekoppelde USB-kabel. Sluit de hoeksensor aan volgens tabel~#ref(label("aero_pendulum_ol--tab:aansluitingen"), supplement: none). Controleer per draad de Arduino-pin, draadkleur en aansluiting op de component. De H-brug gaan we in de volgende opdracht aansluiten.
 
 + Laat de aansluiting van motor en de externe voeding op de H-brug aansluiting controleren door de practicumbegeleider. Spreek de voedingsspanning en stroomlimiet af en noteer deze in je labjournaal.
 
@@ -213,12 +218,9 @@ Werk de opdrachten in onderstaande volgorde uit. Open iedere sketch vanuit zijn 
     [A4], [Groen], [Hoeksensor], [SDA],
     [A5], [Wit], [Hoeksensor], [SCL],
     table.hline(y: 5, stroke: 0.4pt),
-    [D9 (digitaal, PWM)], [Paars], [H-brug], [ENA],
-    [D10 (digitaal)], [Oranje], [H-brug], [IN1],
-    [D11 (digitaal)], [Geel], [H-brug], [IN2],
-    table.hline(y: 8, stroke: 0.8pt),
+
   ),
-  caption: [Aansluitingen van de Arduino naar de AS5600-hoeksensor en de L298N H-brug.],
+  caption: [Aansluitingen van de Arduino naar de AS5600-hoeksensor.],
   kind: table,
   supplement: [Tabel],
 ) #label("aero_pendulum_ol--tab:aansluitingen")
@@ -234,8 +236,6 @@ Werk de opdrachten in onderstaande volgorde uit. Open iedere sketch vanuit zijn 
 
 + Beweeg de arm langzaam met de hand. Controleer of de gemeten hoek vloeiend verandert en noteer de sensorhoek bij de verticale ruststand en bij enkele bekende armstanden. Onderzoek in welke richting de sensorhoek toeneemt en waar de overgang tussen 359 en 0 graden ligt.
 
-+ Leg vast hoe je de ruwe sensorhoek omzet naar de werkhoek $theta$ uit het theoretische model, met nul bij de verticale ruststand. Voor deze sensormontage geldt `werkhoek = sensorhoek - beginhoek`, waarbij `beginhoek` de ruwe sensorhoek bij de verticale ruststand is. Vouw het verschil terug naar -180 tot 180 graden: trek bij een waarde boven 180 graden 360 graden af en tel bij een waarde onder -180 graden 360 graden op. De scripts van stap 1 tot en met 3 leveren de ruwe sensorhoek; de hoekoffset wordt bij de verwerking toegepast.
-
 + Bewaar je waarnemingen in het labjournaal. Laat een constante waarde, onverwachte sprongen of een onjuiste hoek eerst controleren voordat je de motor aansluit. Deze scripts controleren de sensorstatus niet automatisch.
 
 ]
@@ -244,147 +244,65 @@ Werk de opdrachten in onderstaande volgorde uit. Open iedere sketch vanuit zijn 
 #pagebreak(weak: true)
 
 #opdracht(title: [Opdracht 2: vaste PWM en stationaire hoek])[
-+ Open `Stap_2_PWM_en_sensor/Stap_2_PWM_en_sensor.ino`. Schakel de voeding uit en controleer de in opdracht 0 aangesloten H-brug en motor. Gebruik de aansluittabel voor D9, D10 en D11. Laat de motorvoeding, de gemeenschappelijke massa en de ENA-aansluiting controleren door de begeleider.
++  Sluit de voeding en de H-brug aan volgens het schema @aero_pendulum_ol--tab:aansluitingen2. 
+
++ Open `Stap_2_PWM_en_sensor/Stap_2_PWM_en_sensor.ino`. Schakel de voeding uit en controleer de in opdracht 0 aangesloten H-brug en motor. Laat de motorvoeding en  de ENA-aansluiting controleren door de begeleider.
 
 + Zoek `pwm_waarde` en de drie motorpinnen op in de code. Leg uit hoe D9 het PWM-signaal levert en hoe D10 en D11 de draairichting vastleggen. Bereken de duty cycle bij de ingestelde waarde met $D = upright("pwm_waarde") / 255$.
 
-+ Spreek met de begeleider een veilig PWM-bereik, voedingsspanning en stroomlimiet af. Het codebereik 0-255 is geen vastgesteld veilig werkbereik. Begin met `pwm_waarde = 0` en upload met uitgeschakelde motorvoeding.
++ Spreek met de begeleider een veilige voedingsspanning en stroomlimiet af. Het codebereik voor de PWM (0-255) is geen vastgesteld veilig werkbereik, dit hangt af van de voedingsspanning. Verder volgt de stroom uit de belasting van de motor en de propeller.  
 
-+ Kies vervolgens een afgesproken PWM-waarde en upload opnieuw met de motorvoeding uit. Houd afstand en schakel daarna de motorvoeding in. De sketch stuurt de motor direct na uploaden of resetten aan met `pwm_waarde`. Ook het openen van een seriele verbinding kan een reset veroorzaken. Er is geen startcommando, automatische meetduur of softwarematige stop in dit script; stop door de motorvoeding uit te schakelen.
++ Kies vervolgens een PWM-waarde en upload opnieuw met de motorvoeding uit. Schakel daarna de motorvoeding in. De sketch stuurt de motor direct na uploaden of resetten aan met `pwm_waarde` #footnote[Je kunt de Arduino resetten (bij bijvoorbeeld een storign) door de resetknop op de Arduino één keer in te drukken. Ook het openen van een seriele verbinding kan een reset veroorzaken.]. Er is geen startcommando, automatische meetduur of softwarematige stop in dit script; stop door de motorvoeding uit te schakelen.
 
 + Bekijk de hoek in Serial Monitor of Serial Plotter. Wacht tot de arm een stationaire positie bereikt, of noteer dat dit niet gebeurt. Noteer de PWM-waarde, duty cycle, stationaire werkhoek, voedingsspanning en motorstroom.
 
-+ Herhaal dit voor meerdere PWM-waarden binnen het afgesproken bereik, met minimaal drie proeven per instelling. Schakel voor iedere wijziging of upload de motorvoeding uit. Houd voedingsspanning en stroomlimiet gelijk.
++ Herhaal dit voor meerdere PWM-waarden, noteer de maximale hoek en de bijbehorende motorstroom. 
 
 + Maak een grafiek van de gemiddelde stationaire werkhoek tegen de PWM-waarde, met foutbalken op basis van de herhalingen. Bepaal de dode zone en onderzoek of de relatie lineair is. Dit script verstuurt alleen `Hoek:`-regels, zonder tijdstempels of CSV-kop.
 
 ]
+
+#figure(
+  table(
+    columns: (1.2fr, 0.8fr, 1fr, 0.8fr),
+    align: left + horizon,
+    inset: (x: 8pt, y: 5pt),
+    stroke: none,
+    fill: none,
+    table.hline(y: 0, stroke: 0.8pt),
+    table.header([*Van Arduino*], [*Draadkleur*], [*Naar component*], [*Aansluiting*]),
+    table.hline(y: 1, stroke: 0.4pt),
+    [D9 (digitaal, PWM)], [Paars], [H-brug], [ENA],
+    [D10 (digitaal)], [Oranje], [H-brug], [IN1],
+    [D11 (digitaal)], [Geel], [H-brug], [IN2],
+    table.hline(y: 4, stroke: 0.8pt),
+  ),
+  caption: [Aansluitingen van de Arduino naar de L298N H-brug.],
+  kind: table,
+  supplement: [Tabel],
+) #label("aero_pendulum_ol--tab:aansluitingen2")
 
 #pagebreak(weak: true)
 
 #opdracht(title: [Opdracht 3: aansturen en meten met Python])[
 + Open `Stap_3_Python_aansturing/Stap_3_Python_aansturing.ino` en upload met uitgeschakelde motorvoeding. De motor begint bij deze sketch met PWM 0. Sluit Serial Monitor en Serial Plotter voordat Python dezelfde poort opent.
 
-+ Installeer in je Python-omgeving `pyserial`, `pandas` en `matplotlib`. Gebruik het voorbeeld hieronder en vul de juiste poort en een met de begeleider afgesproken PWM-waarde in. Start eerst een proef met PWM 0 en de motorvoeding uit om communicatie en hoekmeting te controleren.
++ Installeer in je Python-omgeving `pyserial`, `pandas` en `matplotlib`. 
 
-+ Bestudeer de commando's in de tabel. Elk commando eindigt met een regeleinde. `START` schakelt alleen de meetuitvoer in; `PWM:` stelt de motor afzonderlijk in, ook als er niet wordt gemeten. Verstuur tijdens de proef regelmatig `PING`. Zonder heartbeat of ander commando dat de watchdog bijwerkt stopt de sketch na ruim 3 seconden de motor en de meetuitvoer.
++ Open Practicum2.2/open_loop/script.ipynb en controleer of je de eerste cel kunt runnen.
 
-+ Schakel na de communicatiecontrole de gecontroleerde motorvoeding in en voer een proef uit met de afgesproken PWM. Houd de fysieke uitschakeling bereikbaar. De sketch heeft geen automatische hoek- of sensorbewaking. Het Python-voorbeeld stopt na 30 seconden en verstuurt ook bij een onderbreking `STOP`. Schakel na afloop de motorvoeding uit.
++ Test de nulhoek van de sensor bij PWM 0. Controleer of de gemeten hoek vloeiend verandert wanneer je de arm langzaam met de hand beweegt. Noteer de beginhoek in het labjournaal.
 
-+ Sla iedere proef op onder een eigen bestandsnaam. De Arduino verstuurt meetregels als `tijd_in_ms,hoek_in_graden`, zonder kopregel. De tijd loopt vanaf het starten van de Arduino, niet vanaf `START`. Regels die beginnen met `DEBUG_` zijn geen meetpunten; het Python-voorbeeld herkent deze en schrijft zelf de CSV-kop.
++ Sla iedere proef op onder een eigen bestandsnaam. De Arduino verstuurt meetregels als `tijd_in_ms,hoek_in_graden`, zonder kopregel. De tijd loopt vanaf het starten van de Arduino. 
 
 + Herhaal de metingen minimaal drie keer per PWM-instelling. Noteer de PWM-waarde, voedingsspanning, motorstroom, beginhoek en hoekconversie apart. Maak grafieken van de werkhoek tegen de tijd en bepaal per proef de gemiddelde stationaire hoek en standaarddeviatie over een onderbouwd gekozen tijdvenster.
 
-+ Vergelijk de stationaire werkhoek met de resultaten van opdracht 2 en het theoretische model. Gebruik de gemeten motorstroom voor vergelijking met het model als functie van stroom; een PWM-waarde is geen gemeten spanning of stroom. Bespreek de dode zone, oscillaties, niet-lineariteit en meetonzekerheid.
++ Vergelijk de resultaten met de voorspellingen uit de voorbereiding. Bespreek eventuele afwijkingen en mogelijke oorzaken.
+
++ Maak een fit op basis van de voorbereiding, waarom lukt dat (niet)?
 
 ]
 
-#table(
-  columns: (1fr, 3fr),
-  inset: 7pt,
-  table.header([*Commando*], [*Werking in script 3*]),
-  [`PWM:60`], [Stelt de PWM-waarde in (codebereik 0-255) en vernieuwt de heartbeat.],
-  [`DT:100`], [Stelt het meetinterval in milliseconden in (10-60000 ms).],
-  [`START`], [Start de meetuitvoer en vernieuwt de heartbeat.],
-  [`PING`], [Vernieuwt de heartbeat; verstuur bijvoorbeeld iedere 0,5 seconde.],
-  [`STOP`], [Stopt de meetuitvoer en zet de PWM op 0.],
-)
-
-#jupytercode([Aansturen en opslaan vanuit Python])[
-```python
-import csv
-import time
-import serial
-
-from serial.tools import list_ports
-
-print('Beschikbare poorten:', [(p.device, p.description) for p in list_ports.comports()])
-poort = 'COM4'  # Vul de poort uit de Arduino IDE in.
-pwm = 0         # Eerst testen op 0; daarna afgesproken waarde.
-meetduur_s = 30
-bestandsnaam = f'ol_pwm{pwm}_run1.csv'
-
-with serial.Serial(poort, 115200, timeout=0.1) as arduino:
-    try:
-        time.sleep(2)  # Wacht op een eventuele reset.
-        arduino.reset_input_buffer()
-        print(f'Verbonden met {poort}; ingestelde PWM: {pwm}')
-        if pwm == 0:
-            print('PWM is 0: de motor blijft uit tijdens deze communicatieproef.')
-
-        def stuur(tekst):
-            arduino.write((tekst + '\n').encode('ascii'))
-            arduino.flush()
-
-        stuur('PWM:0')
-        stuur('DT:100')
-        with open(bestandsnaam, 'w', newline='') as bestand:
-            schrijver = csv.writer(bestand)
-            schrijver.writerow(['t_ms', 'angle_deg'])
-            stuur('START')
-            stuur(f'PWM:{pwm}')
-            begin = time.monotonic()
-            laatste_ping = begin
-            laatste_meetpunt = begin
-            aantal = 0
-            print('Meting gestart; onderbreek met Ctrl+C om te stoppen.')
-            while time.monotonic() - begin < meetduur_s:
-                nu = time.monotonic()
-                if nu - laatste_ping >= 0.5:
-                    stuur('PING')
-                    laatste_ping = nu
-                regel = arduino.readline().decode('ascii').strip()
-                if not regel:
-                    if time.monotonic() - laatste_meetpunt > 3:
-                        raise TimeoutError(
-                            'Geen meetgegevens: controleer poort, baudrate en of '
-                            'Stap_3_Python_aansturing is geupload. Sluit Serial Monitor.'
-                        )
-                    continue
-                if regel.startswith('DEBUG_'):
-                    print(regel)
-                    if regel == 'DEBUG_WATCHDOG':
-                        raise RuntimeError('Watchdog: proef gestopt')
-                    continue
-                velden = regel.split(',')
-                if len(velden) == 2:
-                    tijd_ms, hoek = int(velden[0]), float(velden[1])
-                    schrijver.writerow([tijd_ms, hoek])
-                    laatste_meetpunt = time.monotonic()
-                    aantal += 1
-                    if aantal == 1 or aantal % 10 == 0:
-                        print(f'{aantal} meetpunten; sensorhoek: {hoek:.3f} graden')
-                else:
-                    raise ValueError(f'Onverwachte Arduino-uitvoer: {regel!r}')
-            print(f'{aantal} meetpunten opgeslagen in {bestandsnaam}')
-    finally:
-        arduino.write(b'STOP\n')
-        arduino.flush()
-```
-]
-
-#jupytercode([Meetgegevens inlezen])[
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-df = pd.read_csv(bestandsnaam)
-if df.empty:
-    raise ValueError('Geen meetpunten opgeslagen')
-df['t_s'] = (df['t_ms'] - df['t_ms'].iloc[0]) / 1000
-print(df.keys())
-print(df['t_ms'].diff().describe())
-beginhoek = 90.0  # Vul de gemeten ruwe sensorhoek in rust in.
-df['werkhoek_deg'] = (df['angle_deg'] - beginhoek + 180) % 360 - 180
-plt.plot(df['t_s'], df['werkhoek_deg'])
-plt.xlabel('Tijd sinds eerste meetpunt (s)')
-plt.ylabel('Werkhoek (graden)')
-plt.grid()
-plt.show()
-```
-]
-
-De meetfrequentie is bij `DT:100` nominaal 10 Hz. Controleer de werkelijke intervallen met de tijdstempels. Het eerste meetpunt ligt na het startcommando; meet de beginhoek vooraf bij PWM 0 als je de respons op een PWM-stap wilt onderzoeken.
 
 #afronding(title: [Afronding])[
 + Laat de meetresultaten controleren door de practicumbegeleider.
@@ -395,6 +313,7 @@ De meetfrequentie is bij `DT:100` nominaal 10 Hz. Controleer de werkelijke inter
 
 + Reflecteer op de beperkingen van een open-loop systeem en beschrijf waarom terugkoppeling in veel technische toepassingen gewenst is.
 
++Breek de opstelling af en ruim de werkplek op. Controleer of alle componenten compleet zijn en berg deze op in de daarvoor bestemde bakken.
 ]
 
 #pagebreak(weak: true)
