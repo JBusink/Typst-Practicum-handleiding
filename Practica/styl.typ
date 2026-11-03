@@ -290,3 +290,57 @@
   set image(width: 100%)
   block(width: 100%, body)
 }
+
+
+#let eqbox(body) = rect(
+  stroke: 0.8pt,
+  inset: 5pt,
+  body,
+)
+
+
+#let intermezzo(titel, inhoud) = block(
+  width: 100%,
+  breakable: true,
+  fill: rgb("#f0efff"),
+  stroke: (left: 3pt + rgb("#6f2ec4")),
+  inset: (
+    left: 14pt,
+    right: 14pt,
+    top: 12pt,
+    bottom: 12pt,
+  ),
+  radius: (right: 5pt),
+)[
+  #text(
+    fill: rgb("#651dd8"),
+    weight: "bold",
+    size: 11pt,
+  )[Intermezzo — #titel]
+
+  #v(7pt)
+
+  #inhoud
+]
+
+
+#set math.equation(numbering: "(1)")
+#set math.equation(block: true)
+
+
+
+#let vergelijking_refs(body) = {
+  show ref: it => {
+    if it.element != none and it.element.func() == math.equation {
+      let eq = it.element
+      [Eq. #numbering(
+        eq.numbering,
+        ..counter(math.equation).at(eq.location())
+      )]
+    } else {
+      it
+    }
+  }
+  body
+}
+

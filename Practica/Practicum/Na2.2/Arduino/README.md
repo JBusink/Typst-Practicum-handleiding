@@ -1,70 +1,90 @@
-# Aeropendulum: twee practica
+# Aeropendulum: stappen 1-5
+
+De bestanden zijn per practicum en stap geordend. Iedere Arduino-map bevat precies
+een hoofdsketch met dezelfde naam als de map.
 
 ```text
 Arduino/
-  Openloop/
-    Aero_pendulum_OL_CSV/Aero_pendulum_OL_CSV.ino  <- gebruiken
-    Archief/Aero_pendulum_basic/Aero_pendulum_basic.ino
-  PID/
-    Aero_pendulum_PID_CSV/Aero_pendulum_PID_CSV.ino <- gebruiken
-    Archief/Aero_pendulum_PID/Aero_pendulum_PID.ino
+  README.md
+  OpenLoop/
+    Stap_1_Sensor/Stap_1_Sensor.ino
+    Stap_2_PWM_en_sensor/Stap_2_PWM_en_sensor.ino
+    Stap_3_Python_aansturing/Stap_3_Python_aansturing.ino
+  ClosedLoop/
+    Stap_4_PID/Stap_4_PID.ino
+    Stap_5_PWM_begrenzing/Stap_5_PWM_begrenzing.ino
+  Python/
+    open_loop.py
+    closed_loop.py
 ```
 
-De archieven bewaren de oorspronkelijke voorbeelden. De basic-sketch leest alleen
-de sensor uit; de oude PID-sketch kan na reset automatisch de motor starten.
-Gebruik voor het practicum de **CSV-sketches**. Iedere sketch staat in een eigen
-Arduino-map. Zet geen meerdere sketches met setup/loop in dezelfde map.
+## Open-loop: stappen 1-3
 
-## Eenvoudige meetcode
+1. Sensor uitlezen; geen motoraansturing.
+2. Vaste PWM; de motor start direct bij inschakelen/resetten.
+3. Python-aansturing met PWM, meetinterval, START, STOP en heartbeat.
 
-Beide sketches hebben dezelfde opbouw: instellingen, hoek uitlezen, setup, loop.
-Openloop heeft geen PID-bibliotheek of PID-code. Meten, aansturen en loggen gebeurt
-nominaal iedere 20 ms. De CSV heeft alleen de zes kolommen die nodig zijn voor de
-meting. De grenzen en automatische stop blijven aanwezig.
+Zie `../Aero_pendulum_OL.typ`. `Python/open_loop.py` is het voorbeeld uit die
+handleiding. Pas poort, PWM en bestandsnaam bovenaan aan. De standaard-PWM is 0.
+Stap 3 verstuurt twee velden: tijd sinds Arduino-start en ruwe sensorhoek.
 
-## Gebruik vanuit Arduino IDE
+## Closed-loop: een sketch en een functie
 
-1. Kies **Arduino Uno R4 Minima** en de juiste poort. Installeer **AS5600 van Rob
-   Tillaart**; voor PID ook **PID van Brett Beauregard**.
-2. Controleer de aansluitingen: D9 naar ENA, D10/11 naar IN1/IN2, A4/A5 naar
-   SDA/SCL, gemeenschappelijke massa volgens het practicum.
-3. Pas bovenaan de sketch de instellingen aan: bij Openloop `OPEN_LOOP_PWM`,
-   bij PID `setpoint`, `kp`, `ki`, `kd`. Controleer `MAX_PWM`, hoekoffset en
-   hoekgrenzen met de begeleider. De standaardwaarden zijn voorlopig.
-4. Upload met de motorvoeding uit. Open Serial Monitor op **115200 baud**.
-5. Verstuur **C** voor 10 seconden sensorcontrole met de motor uit.
-6. Wis de monitoruitvoer, schakel de gecontroleerde motorvoeding in en houd
-   afstand. Verstuur **S** voor de proef. Die stopt vanzelf na `MEASUREMENT_MS`
-   (standaard 30 seconden). Verstuur **X** om eerder te stoppen.
-7. Schakel de motorvoeding uit. Kopieer de volledige CSV-uitvoer naar een leeg
-   tekstbestand en sla op als `.csv` (in Kladblok: bestandstype Alle bestanden).
+Gebruik `ClosedLoop/Stap_4_PID/Stap_4_PID.ino` voor PID en voor de vervolgopdracht
+met een lagere hoekgrens. De oude aparte stap-5-sketch staat in `Archief`.
 
-Sluiten van Serial Monitor is geen stopcommando. Houd de fysieke uitschakeling
-bereikbaar. Een ongeldige sensorstatus of werkhoek stopt de motor; softwarematige
-stops vereisen dat de microcontroller zijn programma blijft uitvoeren.
+In Practica HvA Github: gebruik `voer_pid_stap4_uit(...)` uit
+`closed_loop/meting.py`. Zonder argument `max_hoek` wordt 180 graden meegestuurd.
+Dezelfde aanroep met `max_hoek=120` gebruikt een lagere grens. Beide aanroepen
+gebruiken hetzelfde CONFIG-formaat met negen velden en dezelfde Arduino-sketch.
 
-Bij S of C moet de vorige opname gestopt zijn. Een geweigerde start geeft een
-melding met `#`: controleer de opstelling en neem die melding niet op in de CSV.
+Het losse CLI-voorbeeld in deze map gebruikt dezelfde sketch:
 
-## CSV
-
-`t_ms,setpoint_deg,angle_deg,pwm,running,sensor_ok`
-
-- `t_ms`: tijd sinds S of C, in ms; nul begint bij het commando.
-- `setpoint_deg`: doelhoek; leeg bij Openloop.
-- `angle_deg`: gemeten werkhoek; leeg bij sensorfout.
-- `pwm`: daadwerkelijk aangeboden gehele PWM-telwaarde (geen spanning).
-- `running`: 1 bij aandrijving, 0 bij sensorcontrole of fout.
-- `sensor_ok`: 1 bij geldige sensorstatus en werkhoek.
-
-Bewaar één opname per bestand, inclusief één kopregel. Controleer of de monitor
-bij langere proeven het begin nog bewaart. Geen SD-kaart nodig: opslaan op de
-computer gebeurt via kopiëren/plakken. Python is alleen voor analyse achteraf.
-Leg de PWM-/PID-instellingen, voeding en kalibratie apart vast in het labjournaal.
-
-```python
-import pandas as pd
-df = pd.read_csv('pid_run1.csv')
-df['t_s'] = df.t_ms / 1000
-print(df.t_ms.diff().describe())
+```text
+python Python/closed_loop.py --poort COM4 --beginhoek 90 --doelhoek 20 --kp 2 --ki 0 --kd 0 --max-pwm 0 --bestand Metingen/pid_test.csv
 ```
+
+Ook hier is de standaardgrens 180 graden; voeg `--max-hoek 120` toe om die te
+verlagen. De ondergrens `minHoek` staat in de Arduino-code (standaard -10).
+Het CLI-voorbeeld schrijft `t_ms,setpoint_deg,angle_deg,pwm`; de notebookfunctie
+schrijft instellingen en `tijd_s,hoek_deg,pwm`. Gebruik de bijbehorende analyse.
+
+## Aansluiten en starten
+
+- Arduino Uno R4 Minima; AS5600 van Rob Tillaart; voor stappen 4-5 ook PID van
+  Brett Beauregard. Python: `python -m pip install pyserial pandas matplotlib`.
+- COM4 was de gevonden poort; controleer de poort opnieuw bij een andere computer.
+  Alle scripts gebruiken 115200 baud. Sluit Serial Monitor/Plotter voor Python.
+- Upload en wijzig bedrading met uitgeschakelde motorvoeding. De volledige
+  aansluittabel staat in de open-loophandleiding.
+- De gezamenlijke sketch heeft een PWM-grens, STOP, eindige proefduur en heartbeat.
+  Alleen overschrijding van maxHoek veroorzaakt de hoekstop; magneetstatus niet. Zonder heartbeat stopt de regeling
+  na ruim 3 seconden. Houd de fysieke uitschakeling bereikbaar.
+- `Metingen/` wordt bij de eerste closed-loopproef aangemaakt. Bewaar instellingen
+  en testresultaten bij de CSV-bestanden in je eigen practicum-map.
+
+## Sensorrichting
+
+Bij deze montage neemt de sensorhoek toe bij optillen van de arm. De werkhoek
+is daarom `sensorhoek - beginhoek`, teruggevouwen naar -180 tot 180 graden.
+Stappen 1-3 leveren ruwe sensorhoeken; stappen 4-5 passen deze omzetting op de
+Arduino toe, zowel bij START als tijdens PID en hoekbewaking.
+
+## Stap 5: PWM-veranderingssnelheid
+
+Upload `ClosedLoop/Stap_5_PWM_begrenzing/Stap_5_PWM_begrenzing.ino`.
+In Practica HvA Github staat de opdracht in `stap_5.ipynb`:
+`voer_pid_stap5_uit(..., max_pwm_stap=20)`.
+Dit begrenst stijgen en dalen tot 20 PWM-telwaarden per regelstap. Gebruik 0 voor
+een vergelijkingsproef zonder limiter. Laat het argument in stap 4 weg.
+Voor het CLI-voorbeeld: voeg `--max-pwm-stap 20` toe.
+De instelling gaat via `PWMSTAP:20` en moet met `PWMSTAP_OK` bevestigd worden voor START.
+STOP, hoekstop, watchdog en meetduur schakelen direct uit en wissen de limiter.
+De bestaande gain-schedulingnotebook is bewaard als `verdieping_pid_afstellen.ipynb`.
+
+De Python-functies zijn expliciet gescheiden: `voer_pid_stap4_uit` en
+`voer_pid_stap5_uit`. Upload de bijbehorende bijgewerkte sketch: Python controleert
+`VERSIE` voor START. Stap 5 verstuurt PWMSTAP alleen als max_pwm_stap expliciet is opgegeven. Zonder argument is de limiter uit; vorige instellingen worden bij een nieuwe proef gewist.
+`max_pwm` bepaalt de maximale uitgang; bij 0 blijft de motor uit, ook als de
+veranderingssnelheid niet nul is. Het stap-5-voorbeeld gebruikt max_pwm=120;
+neem je eigen gekozen grens uit stap 4 over.
