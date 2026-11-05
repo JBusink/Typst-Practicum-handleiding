@@ -1,94 +1,139 @@
-// PCB_schema_V1; module-interne VBUS-verbinding te controleren.
+// Lineaire indeling naar Zonnecel_mosfet_raspberry_PI.pdf.
+// Elektrische verbindingen volgens PCB_schema_V1; VBUS controleren op de module.
 #import "@preview/zap:0.6.0"
 #import "@preview/cetz:0.5.2": draw
 
-#zap.circuit({
+#align(center, zap.circuit({
   import zap: *
   let txt(p, body, anchor: "center") = draw.content(p, text(size: 8pt, body), anchor: anchor)
-  let dot(p) = draw.circle(p, radius: 0.045, fill: black)
+  let dot(p) = draw.circle(p, radius: 0.07, fill: black)
   let supply(name, p) = {
     vcc(name, p)
-    txt((rel: (0, 0.85), to: p), [3V3])
+    txt((rel: (0, 0.8), to: p), [3V3])
   }
-  // Pico en moduleconnectoren; overige componenten en bedrading zijn Zap-symbolen.
-  draw.rect((0, 5), (3.3, 10), fill: white)
-  txt((1.65, 9.6), [*Raspberry Pi Pico*])
-  for (y, label) in ((9, [GP20 / SDA]), (8.3, [GP21 / SCL]),
-    (7.3, [GP26 / ADC0]), (6.6, [GP27 / ADC1]), (5.9, [GP28 / ADC2])) {
-    txt((3.1, y), label, anchor: "east")
+
+
+  // Hoofdrij: Pico — DAC — INA226 — MOSFET — zonnecel.
+  draw.rect((0, 4.1), (3, 6.8), fill: white)
+  txt((1.5, 6.45), [*Pico*])
+  txt((2.8, 6), [GP20 / SDA], anchor: "east")
+  txt((2.8, 5.3), [GP21 / SCL], anchor: "east")
+  txt((0.15, 5.3), [GND], anchor: "west")
+  wire((0, 5.3), (-0.45, 5.3))
+  wire((-0.45, 5.3), (-0.45, 1.8))
+  /* ADC-poorten bij het uitgecommentarieerde NTC-netwerk.
+  for (x, gp) in ((0.5, "28"), (1.5, "27"), (2.5, "26")) {
+    txt((x, 4.25), gp)
+
   }
-  txt((0.2, 8.9), [USB], anchor: "west")
-  txt((1.65, 5.25), [GND])
-  wire((1.65, 5), (1.65, 4.7))
-  ground("g-pico", (1.65, 4.7))
-  txt((1.6, 10), [3V3], anchor: "south")
-  supply("v-pico", (1.6, 10.5))
-  wire((1.6, 10), (1.6, 10.5))
+  */
+  wire((1.5, 6.8), (1.5, 11.2), (8.6, 11.2))
+  txt((1.7, 7.2), [3V3 OUT · 36], anchor: "west")
+  txt((2.9, 11.45), [3,3 V])
 
-  draw.rect((7, 8), (10.3, 10.2), fill: white)
-  txt((8.65, 9.9), [*J2 · INA226*])
-  txt((7.15, 9), [SDA], anchor: "west")
-  txt((7.15, 8.3), [SCL], anchor: "west")
-  txt((10.15, 9.3), [IN+ / VBUS], anchor: "east")
-  txt((10.15, 8.6), [IN−], anchor: "east")
-  supply("v-ina", (8.6, 10.2))
-  ground("g-ina", (8.6, 8))
+  draw.rect((5, 4.8), (7.8, 6.8), fill: white)
+  txt((6.4, 6.05), [*MCP4725*])
+  txt((7.65, 5.4), [OUT], anchor: "east")
+  txt((5.45, 6.75), [SDA], anchor: "north")
+  txt((7.2, 6.75), [SCL], anchor: "north")
+  wire((5.5, 4.8), (5.5, 4.35))
+  txt((5.5, 4.95), [VDD], anchor: "south")
+  wire((7.2, 4.8), (7.2, 1.8))
 
-  draw.rect((7, 5.4), (10.3, 7.3), fill: white)
-  txt((8.65, 7), [*J1 · MCP4725*])
-  txt((7.15, 6.4), [SDA], anchor: "west")
-  txt((7.15, 5.7), [SCL], anchor: "west")
-  txt((10.15, 6.1), [VOUT], anchor: "east")
-  supply("v-dac", (9.7, 7.3))
-  ground("g-dac", (8.6, 5.4))
+  draw.rect((9, 4.8), (11.8, 6.8), fill: white)
+  txt((10.4, 6.05), [*INA226*])
+  txt((9.45, 6.75), [SDA], anchor: "north")
+  txt((11.2, 6.75), [SCL], anchor: "north")
+  txt((11.65, 5.65), [IN+ / VBUS], anchor: "east")
+  txt((11.65, 5.1), [IN−], anchor: "east")
+  wire((9.5, 4.8), (9.5, 4.35))
+  txt((9.5, 4.95), [VCC], anchor: "south")
+  wire((11.2, 4.8), (11.2, 1.8))
 
-  wire((3.3, 9), (7, 9))
-  wire((3.3, 8.3), (7, 8.3))
-  wire((4.4, 9), (4.4, 6.4), (7, 6.4))
-  wire((5.7, 8.3), (5.7, 5.7), (7, 5.7))
-  for p in ((4.4, 9), (5.7, 8.3)) { dot(p) }
-  resistor("R1", (4.4, 9), (4.4, 11))
-  txt((3.8, 10.45), [R1\ 4,7 kΩ], anchor: "east")
-  resistor("R2", (5.7, 8.3), (5.7, 11))
-  txt((6.1, 10.45), [R2\ 4,7 kΩ], anchor: "west")
-  supply("v-r1", (4.4, 11))
-  supply("v-r2", (5.7, 11))
+  // Gemeenschappelijke I²C-bus, boven de modules.
+  wire((3, 6), (3.6, 6), (3.6, 8.6), (9.45, 8.6), (9.45, 6.8))
+  wire((3, 5.3), (4.2, 5.3), (4.2, 8), (11.2, 8), (11.2, 6.8))
+  wire((5.45, 8.6), (5.45, 6.8))
+  wire((7.2, 8), (7.2, 6.8))
+  dot((5.45, 8.6)); dot((7.2, 8))
+  txt((6.4, 8.85), [SDA])
+  txt((10.3, 8.25), [SCL])
 
-  // Vermogenspad via de shunt op de INA226-module.
-  draw.rect((12, 10.4), (14.2, 11.5), fill: white)
-  txt((13.1, 11), [SC1 · zonnecel])
-  txt((12.4, 10.6), [+])
-  txt((13.8, 10.6), [−])
-  wire((12.4, 10.4), (12.4, 9.3), (10.3, 9.3))
-  ground("g-pv", (13.8, 10.4))
-  nmos("Q1", (13, 6.5))
-  wire((10.3, 8.6), (13, 8.6), "Q1.d")
-  wire((10.3, 6.1), (11.2, 6.1), ("Q1.g", "|-", (11.2, 6.1)), "Q1.g")
-  ground("g-q", "Q1.s")
-  txt((14, 6.9), [Q1\ IRLZ44N])
+  nmos("Q1", (14, 5.8))
+  txt((14, 7.1), [Q1\ IRLZ44N])
+  wire((11.8, 5.1), (12.3, 5.1), (12.3, 6.65), (14, 6.65), "Q1.d")
+  wire((7.8, 5.4), (8.2, 5.4), (8.2, 3.75), (12.7, 3.75),
+    ("Q1.g", "|-", (12.7, 3.75)), "Q1.g")
+  wire("Q1.s", (14, 1.8))
 
-  // Analoge kanalen: de bovenste verbinding loopt naar het verste kanaal.
-  for (x, y, th, r) in ((13, 7.3, "TH3", "R5"), (9, 6.6, "TH2", "R3"), (5, 5.9, "TH1", "R4")) {
-    let route = x - 1.4
-    // Nets vermijden kruisingen met de I²C-bedrading boven de sensoren.
-    txt((3.65, y), th, anchor: "west")
-    wire((3.3, y), (3.55, y))
-    supply("v-" + th, (x, 3.1))
-    resistor(r, (x, 3.1), (x, 1.6))
-    txt((x + 0.5, 2.35), [#r\ 10 kΩ], anchor: "west")
-    dot((x, 1.6))
-    wire((x, 1.6), (route, 1.6))
-    txt((route - 0.1, 1.6), th, anchor: "east")
-    resistor(th, (x, 1.6), (x, 0))
-    txt((x + 0.5, 0.8), [#th\ NTC], anchor: "west")
-    draw.line((x - 0.3, 0.55), (x + 0.3, 1.05))
-    ground("g-" + th, (x, 0))
+  draw.rect((15.8, 4.8), (17.8, 6.8), fill: white)
+  txt((16.8, 6.35), [*SC1*])
+  txt((16.8, 5.95), [Zonnecel])
+  txt((16.3, 6.65), [+])
+  txt((16.8, 5), [−])
+  wire((11.8, 5.65), (12, 5.65), (12, 8.6), (16.3, 8.6), (16.3, 6.8))
+  wire((16.8, 4.8), (16.8, 1.8))
+
+  // Pull-ups rechtstreeks op de bus en de 3V3-rail van de Pico.
+  resistor("R1", (5.45, 11.2), (5.45, 8.6))
+  resistor("R2", (7.2, 11.2), (7.2, 8))
+  txt((5.05, 10.1), [R1\ 4,7 kΩ], anchor: "east")
+  txt((7.6, 10.1), [R2\ 4,7 kΩ], anchor: "west")
+  dot((5.45, 11.2))
+
+  // Beide modulevoedingen komen rechtstreeks van Pico-pin 36.
+  wire((4.7, 11.2), (4.7, 4.35), (5.5, 4.35))
+  wire((8.6, 11.2), (8.6, 4.35), (9.5, 4.35))
+  for p in ((4.7, 11.2), (7.2, 11.2), (5.5, 4.35), (9.5, 4.35)) { dot(p) }
+
+  // Ontkoppeling direct aan de voedingspin van iedere module.
+  for (x, c) in ((5.5, "C1"), (9.5, "C2")) {
+    wire((x, 4.35), (x, 3.6))
+    capacitor(c, (x, 3.6), (x, 2.2))
+    txt((x + 0.4, 2.9), [#c\ 100 nF], anchor: "west")
+    wire((x, 2.2), (x, 1.8))
   }
-  // Ontkoppeling.
-  for (x, name) in ((0.5, "C1"), (2.5, "C2")) {
-    supply("v-" + name, (x, 3.1))
-    capacitor(name, (x, 3.1), (x, 0.8))
-    txt((x + 0.4, 2.4), [#name\ 100 nF], anchor: "west")
-    ground("g-" + name, (x, 0.8))
+
+  /* NTC-netwerk tijdelijk niet weergegeven.
+  // ADC-bedrading boven de drie sensorkolommen, zonder kruisingen.
+  for (pin-x, route-y, x, th, r) in (
+    (0.5, 0, 5, "TH1", "R4"),
+    (1.5, 0.6, 10, "TH2", "R3"),
+    (2.5, 1.2, 15, "TH3", "R5"),
+  ) {
+    wire((pin-x, 4.1), (pin-x, route-y), (x - 1, route-y),
+      (x - 1, -3), (x, -3))
+    supply("v-" + th, (x, -1.2))
+    resistor(r, (x, -1.2), (x, -3))
+    txt((x + 0.4, -2.1), [#r\ 10 kΩ], anchor: "west")
+    dot((x, -3))
+    resistor(th, (x, -3), (x, -4.6))
+    txt((x + 0.4, -3.8), [#th\ NTC], anchor: "west")
+    draw.line((x - 0.3, -4.05), (x + 0.3, -3.55))
+    wire((x, -4.6), (x, -5.3))
   }
-})
+  // Onderste massatak hoort bij dit netwerk.
+  wire((17.5, 1.8), (17.5, -5.3), (5, -5.3))
+  for x in (10, 15) { dot((x, -5.3)) }
+  */
+  // Eén doorlopende massaverbinding.
+  wire((-0.45, 1.8), (17.5, 1.8))
+  for x in (5.5, 7.2, 9.5, 11.2, 14, 16.8) { dot((x, 1.8)) }
+  earth("gnd", (17.5, 1.8))
+  txt((16.8, 1.4), [GND], anchor: "east")
+
+  // Draadbrug: horizontale draad passeert de verticale zonder contact.
+  let bridge(x, y) = {
+    draw.line((x - 0.2, y), (x + 0.2, y), stroke: 3pt + white)
+    wire((x, y - 0.32), (x, y + 0.32))
+    draw.bezier((x - 0.2, y), (x + 0.2, y),
+      (x - 0.2, y + 0.3), (x + 0.2, y + 0.3), stroke: 3pt + white)
+    draw.bezier((x - 0.2, y), (x + 0.2, y),
+      (x - 0.2, y + 0.3), (x + 0.2, y + 0.3), stroke: 0.6pt + black)
+  }
+  for (x, y) in ((7.2, 8.6), (5.45, 8), (9.45, 8),
+      (9.5, 3.75), (11.2, 3.75),
+      (4.7, 8.6), (4.7, 8), (8.6, 8.6), (8.6, 8)) {
+    bridge(x, y)
+  }
+}, length: 0.88cm))

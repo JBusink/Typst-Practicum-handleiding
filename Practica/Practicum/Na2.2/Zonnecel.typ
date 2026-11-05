@@ -118,7 +118,7 @@ Het shuntmeetbereik is ongeveer ±81,92 mV. De shunt moet dus voldoen aan $I_"ma
 
 #figure(
   [#include "Figuren/Zonnecel_mosfet.typ"],
-  caption: [Zonnecelmeting volgens PCB V1. Gelijke netlabels zijn verbonden; controleer VBUS op de INA226-module.],
+  caption: [Zonnecelmeting volgens PCB V1. Stip: verbonden knooppunt; draadbrug: kruising zonder contact. Alle GND-aansluitingen delen één massalijn.],
 ) <zonnecel--fig:pcb>
 
 Het vermogenspad loopt van SC1 (PV+) via de shunt op de INA226-module naar de drain van Q1 (pin 2). De source (pin 3) en PV− zijn verbonden met GND. Bij een INA226-module waarvan VBUS met IN+ aan PV+ is verbonden geldt $U_"GS" approx U_"DAC"$, $U_"PV" = U_"BUS"$ en $P_"PV" = U_"PV" I$. Er hoeft dan geen shuntspanning bij de busspanning te worden opgeteld. Het nieuwe schema tekent de module als connector J2, zonder interne schakeling: controleer deze VBUS-verbinding op de gebruikte module.
