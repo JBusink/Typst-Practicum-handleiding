@@ -6,24 +6,22 @@
 #heading(level: 1, numbering: none)[Leerdoelen]
 
 #[
-#set list(marker: leerdoel-teken)
-- De student kan, aan de hand van een zelfstandig opgesteld meetplan, een experiment uitvoeren met een fotovoltaïsche (PV) cel, waarbij de student de opstelling aansluit en de metingen uitvoert.
+  #set list(marker: leerdoel-teken)
+  - De student kan, aan de hand van een zelfstandig opgesteld meetplan, een experiment uitvoeren met een fotovoltaïsche (PV) cel, waarbij de student de opstelling aansluit en de metingen uitvoert.
 
-- De student kan de stroom-voltage karakteristiek (I-V curve) van zonnecellen uitleggen en bepalen.
+  - De student kan de stroom-voltage karakteristiek (I-V curve) van zonnecellen uitleggen en bepalen.
 
-- De student kan het maximale vermogen en de fill factor (FF) van een zonnecel bepalen.
+  - De student kan het maximale vermogen en de fill factor (FF) van een zonnecel bepalen.
 
-- De student kan met een Raspberry Pi Pico, een DAC en een INA226 een meetreeks uitvoeren en de meetgrenzen van de elektronische belasting uitleggen.
-
-- De student kan de drie NTC-meetkanalen uitlezen en met een geschikte kalibratie temperatuurveranderingen tijdens de meting onderzoeken.
+  - De student kan met een Raspberry Pi Pico, een DAC en een INA226 een meetreeks uitvoeren en de meetgrenzen van de elektronische belasting uitleggen.
 ]
 
 #v(1fr)
 
 #veiligheid(title: [Veiligheid])[
-+ Schakel de voeding uit voordat je aansluitingen verandert. Controleer de polariteit van de zonnecel en gebruik alleen de door de begeleider vrijgegeven instellingen van de PCB.
+  + Schakel de voeding uit voordat je aansluitingen verandert. Controleer de polariteit van de zonnecel en gebruik alleen de door de begeleider vrijgegeven instellingen van de PCB.
 
-+ De lamp, MOSFET en shunt kunnen warm worden. Houd de lampopstelling vrij en raak warme onderdelen niet aan. Stop de meting bij overschrijding van de afgesproken stroom-, spannings- of vermogensgrenzen.
+  + De lamp, MOSFET en shunt kunnen warm worden. Houd de lampopstelling vrij en raak warme onderdelen niet aan. Stop de meting bij overschrijding van de afgesproken stroom-, spannings- of vermogensgrenzen.
 
 ]
 
@@ -33,24 +31,24 @@
 
 Zonnecellen vormen een belangrijk toepassingsgebied binnen de technische natuurkunde, waarin halfgeleiderfysica, optica en elektrische netwerkanalyse samenkomen. Een zonnecel, of fotovoltaïsche (PV) cel, zet invallend licht direct om in elektrische energie door middel van het fotovoltaïsche effect. Hierbij komen elektronen vrij wanneer fotonen met voldoende energie het halfgeleidermateriaal raken, meestal silicium. De vrijgekomen ladingsdragers worden vervolgens gescheiden door een intern elektrisch veld, waardoor een meetbare stroom ontstaat.
 
-#figure(
-  [
-#box(image("Figuren/Zonnecel_foto.png", width: 75.0%))
-  ],
-  caption: [Een zonnecelmodule.],
-  kind: image,
-) #label("zonnecel--fig:zonnecel")
+// #figure(
+//   [
+//     #box(image("Figuren/Zonnecel_foto.png", width: 75.0%))
+//   ],
+//   caption: [Een zonnecelmodule.],
+//   kind: image,
+// ) #label("zonnecel--fig:zonnecel")
 
 Zonnecellen spelen een steeds belangrijkere rol in de energietransitie, doordat zij zonlicht direct omzetten in elektrische energie zonder CO#sub[2]-uitstoot. Binnen de technische natuurkunde vormt het begrijpen van de werking, het rendement en het systeemgedrag van zonnecellen een essentieel onderdeel van duurzame technologieontwikkeling. De prestatie van een zonnecel hangt af van factoren zoals de bandkloof, de intensiteit van het licht en interne verliezen, en kan experimenteel worden onderzocht door spanning en stroom te meten bij verschillende belastingen.
 
 #voorbereiding(title: [Voorbereidingsopdracht 1])[
-+ Bekijk de volgende voorbereidingsfilmpjes (#link("https://www.youtube.com/watch?v=xKxrkht7CpY")[video 1], #link("https://www.youtube.com/watch?v=4BX2mEQf09c&t=162s")[video 2] en #link("https://www.youtube.com/watch?v=IkVLQALtdQw")[video 3]).
+  + Bekijk de volgende voorbereidingsfilmpjes (#link("https://www.youtube.com/watch?v=xKxrkht7CpY")[video 1], #link("https://www.youtube.com/watch?v=4BX2mEQf09c&t=162s")[video 2] en #link("https://www.youtube.com/watch?v=IkVLQALtdQw")[video 3]).
 
-+ Maak een meetplan voor bepalen van het vermogen van een zonnecel. #footnote[Zie Brightspace voor een korte uitleg over een meetplan.]. Formuleer het hoofddoel/onderzoeksvraag, geef een theoretische verwachting en maak een meetstrategie.
+  + Maak een meetplan voor bepalen van het vermogen van een zonnecel. #footnote[Zie Brightspace voor een korte uitleg over een meetplan.]. Formuleer het hoofddoel/onderzoeksvraag, geef een theoretische verwachting en maak een meetstrategie.
 
-+ Maak een duidelijke opstelling voor het doormeten van een zonnecel.
+  + Maak een duidelijke opstelling voor het doormeten van een zonnecel.
 
-+ Bedenk voor jezelf al wat voor verdiepend onderzoek je wilt doen bij de zonnecel.
+  + Bedenk voor jezelf al wat voor verdiepend onderzoek je wilt doen bij de zonnecel.
 
 ]
 
@@ -64,7 +62,7 @@ Deze depletion zone bevat wel vaste, geïoniseerde donoren (positief) en accepto
 
 #figure(
   [
-#box(image("Figuren/Zonnecel_schematisch.png", width: 48.0%))
+    #box(image("Figuren/Zonnecel_schematisch.png", width: 48.0%))
   ],
   caption: [Schematische weergave van een zonnecel.],
   kind: image,
@@ -76,7 +74,7 @@ De vorm van de I-V-curve wordt gekarakteriseerd met de #emph[fill factor] (FF): 
 
 #figure(
   [
-#include "Figuren/zonnecel_model.typ"
+    #include "Figuren/zonnecel_model.typ"
   ],
   caption: [Equivalent elektrisch model van een zonnecel met fotostroombron $I_(upright(p h))$, diode $I_D$, uitgangsstroom $I$ en spanning $V$ over de variabele belasting $R$.],
   kind: image,
@@ -88,13 +86,59 @@ De twee uiterste punten van de I-V-curve volgen direct uit dit model. Bij $V = 0
 
 Door de belasting te variëren bemonsteren we de I-V-curve. In dit practicum doet een MOSFET dit elektronisch. Het bereik van de schakeling bepaalt hoe dicht we bij open klem en kortsluiting kunnen meten. Voor het rendement is bovendien een onafhankelijke meting van het invallende optische vermogen nodig.
 
-#block(breakable: false)[Het bovenstaande ideale model verwaarloost serie- en lekweerstanden. Hierin zijn $I_0$ de verzadigingsstroom, $q$ de elementaire lading, $n$ de idealiteitsfactor, $k$ de constante van Boltzmann en $T$ de absolute temperatuur. Voor een module met $N_s$ identieke cellen in serie wordt de noemer in de exponent $n N_s k T$; pas de vergelijking dus niet zonder aanpassing op een module toe.]
+#block(
+  breakable: false,
+)[Het bovenstaande ideale model verwaarloost serie- en lekweerstanden. Hierin zijn $I_0$ de verzadigingsstroom, $q$ de elementaire lading, $n$ de idealiteitsfactor, $k$ de constante van Boltzmann en $T$ de absolute temperatuur. Voor een module met $N_s$ identieke cellen in serie wordt de noemer in de exponent $n N_s k T$; pas de vergelijking dus niet zonder aanpassing op een module toe.]
 
 #heading(level: 1, numbering: none)[Elektronische belasting en uitlezing]
 
 De opstelling volgt PCB_schema_V1 (Figuur~#ref(<zonnecel--fig:pcb-overzicht>, supplement: none)). De meetmethode blijft hetzelfde: we variëren de belasting van de zonnecel en meten bij ieder werkpunt de spanning en stroom. De *MOSFET Q1 (IRLZ44N) vervult de rol van variabele belastingsweerstand*. Via de computer kunnen we deze belasting automatisch veranderen.
 
-De computer geeft via USB opdrachten aan de Raspberry Pi Pico. De Pico stuurt via I²C de *MCP4725* aan. Deze DAC zet een digitaal getal om in een analoge spanning op de gate van Q1. Daardoor verandert de geleiding van de MOSFET en dus de belasting van de zonnecel. De *INA226* meet de spanning en de stroom; via de Pico komen de meetwaarden terug op de computer. Zo maken we opnieuw een I-V-curve en een P-V-curve, nu met een automatisch gevarieerde belasting.
+#heading(level: 2, numbering: none)[De onderdelen en hun taak]
+
+*Zonnecel — levert elektrische energie.* De lamp belicht de zonnecel. We onderzoeken hoeveel spanning, stroom en vermogen de cel kan leveren.
+
+#heading(level: 3, numbering: none)[MOSFET Q1 — de elektronisch instelbare belasting]
+
+De IRLZ44N is een N-kanaal-MOSFET met drie aansluitingen: gate (G, pin 1), drain (D, pin 2) en source (S, pin 3). De gate is elektrisch geïsoleerd van het stroomvoerende kanaal. Het elektrische veld van de gate beïnvloedt de geleiding tussen drain en source. Hiervoor telt de spanning van de gate *ten opzichte van de source*:
+
+$ U_"GS" = U_"G" - U_"S" approx U_"G". $
+
+In onze schakeling ligt de source aan massa. De DAC-spanning is daardoor ongeveer gelijk aan $U_"GS"$. Na het opladen van de gatecapaciteit loopt er vrijwel geen stroom de gate in. De stroom van de zonnecel loopt via de drain en source; de DAC levert alleen de stuurspanning.
+
+*Van vrijwel uit naar sterker geleidend.* Bij een kleine $U_"GS"$ geleidt de MOSFET nauwelijks. De zonnecel is dan vrijwel onbelast: de stroom is klein en de spanning ligt bij de openklemspanning. Boven de drempelspanning $U_"th"$ ontstaat een geleidend kanaal. Als we de gatespanning verder verhogen, kan de MOSFET meer stroom doorlaten. De belasting neemt toe en het werkpunt schuift langs de I-V-curve naar een grotere stroom en een lagere zonnecelspanning. De drempelspanning is dus niet de spanning waarbij de MOSFET al volledig geleidt.
+
+*Wanneer gedraagt hij zich als een weerstand?* Voor een vaste gatespanning en een kleine drain-sourcespanning is de stroom ongeveer evenredig met $U_"DS"$. Dit heet het ohmse gebied. Een eenvoudig MOSFET-model geeft daar:
+
+$ I_D approx beta ((U_"GS" - U_"th") U_"DS" - U_"DS"^2 / 2), $
+
+met $U_"GS" > U_"th"$ en $0 <= U_"DS" < U_"GS" - U_"th"$. Hierin is $I_D$ de drainstroom en $beta$ een parameter die de sterkte van het kanaal beschrijft, in A/V². Als $U_"DS"$ veel kleiner is dan $U_"GS" - U_"th"$, mogen we de kwadratische term verwaarlozen. Dan volgt:
+
+$ R_"MOSFET" = U_"DS" / I_D approx 1 / (beta (U_"GS" - U_"th")). $
+
+Deze benadering laat zien waarom een hogere gatespanning een kleinere weerstand geeft. Het model verklaart het principe; het is geen nauwkeurige kalibratieformule voor onze vermogens-MOSFET.
+
+*Tijdens de sweep is hij niet overal ohms.* Bij een grotere $U_"DS"$ kan de MOSFET in het verzadigingsgebied werken. De stroom hangt dan vooral af van de gatespanning en minder sterk van $U_"DS"$. Hij blijft bruikbaar als regelbare belasting, maar gedraagt zich daar niet als een gewone vaste weerstand. Het werkpunt wordt steeds bepaald door de zonnecel en de MOSFET samen.
+
+*De effectieve belasting uit de meting.* Bij ieder werkpunt met $I > 0$ berekenen we:
+
+$ R_"eff" = U_"PV" / I. $
+
+Dit is de weerstand die een gewone belastingsweerstand op dat ene werkpunt zou moeten hebben. Hij omvat de MOSFET, shunt en bedrading. Verwaarlozen we de draadweerstand, dan geldt $U_"PV" = U_"DS" + I R_"shunt"$ en dus $R_"eff" = U_"DS" / I + R_"shunt"$. Deze verhouding is geen constante materiaaleigenschap en ook niet de helling van de I-V-curve.
+
+Bijvoorbeeld: bij $U_"PV" = 4 "V"$ en $I = 0.10 "A"$ is de effectieve belasting $40 "Ω"$ en het geleverde vermogen $0.40 "W"$. Door de DAC-code te veranderen vinden we andere werkpunten. Gelijke stappen in code geven geen gelijke stappen in weerstand. We bepalen de weerstand daarom uit de gemeten spanning en stroom. Zo blijft de analyse met I-V-, P-V- en P-R-curven dezelfde als bij het practicum met een handmatig ingestelde weerstand.
+
+*MCP4725 (DAC) — maakt de stuurspanning.* De DAC zet een getal om in een spanning op de gate van de MOSFET. Zo veranderen we de belasting met de computer.
+
+*INA226 — meet spanning en stroom.* Deze module meet de zonnecelspanning. De stroom bepaalt hij uit de spanning over een kleine meetweerstand op de module: de shunt.
+
+*Raspberry Pi Pico — voert de opdrachten uit.* De Pico stelt de DAC in en leest de INA226 uit. Hij communiceert met beide modules via twee signaaldraden, SDA en SCL. Deze verbinding heet I²C.
+
+*Computer — bestuurt en bewaart.* Het meetprogramma kiest de instellingen, ontvangt de meetwaarden via USB en maakt de grafieken.
+
+*PCB — verbindt de onderdelen.* De printsporen vervangen losse draden. R1 en R2 helpen de I²C-communicatie; de condensatoren houden de modulevoedingen stabiel.
+
+De computer laat dus via de Pico en DAC de MOSFET-belasting variëren, terwijl de INA226 bij iedere instelling spanning en stroom meet.
 
 #heading(level: 2, numbering: none)[Van DAC-code naar werkpunt]
 
@@ -104,7 +148,7 @@ $ U_"DAC" = d / 4096 U_"DD", quad d in {0, 1, dots, 4095}. $
 
 De voedingsspanning is ook de referentiespanning. De DAC wordt volgens het schema gevoed met 3,3 V. Bij deze voeding is één stap ongeveer 0,806 mV; de hoogste code geeft iets minder dan de voedingsspanning. Schrijf tijdens een meetreeks alleen het DAC-register, niet telkens het EEPROM. De DAC kan bij inschakelen een opgeslagen instelling herstellen: controleer de starttoestand voordat de zonnecel wordt aangesloten.
 
-De gatespanning beïnvloedt de geleiding van de MOSFET via $U_"GS" = U_"G" - U_"S"$. Voor ieder gemeten werkpunt beschrijven we de totale belasting met de effectieve weerstand $R_"eff" = U_"PV" / I$ (voor $I > 0$). Een hogere gatespanning laat een geschikte N-kanaal-MOSFET doorgaans sterker geleiden, zodat de effectieve belastingweerstand afneemt. De relatie tussen DAC-code en weerstand is niet lineair en hangt ook af van het werkpunt en de temperatuur. We stellen daarom een DAC-code in en bepalen de bijbehorende effectieve weerstand uit de meting. Een specifieke weerstand in ohm instellen zou extra terugkoppeling in de software vereisen.
+De DAC-code bepaalt dus de gatespanning; de effectieve belasting volgt uit het gemeten werkpunt. Om rechtstreeks een gewenste weerstand in ohm in te stellen, zou de software de code telkens moeten bijregelen op basis van $U_"PV" / I$. In dit practicum doorlopen we codes en meten we de bijbehorende werkpunten.
 
 #heading(level: 2, numbering: none)[Stroom en spanning meten]
 
@@ -133,27 +177,6 @@ De Pico voedt de modules via 3V3 (pin 36). Alle GND-aansluitingen delen dezelfde
 
 De meetgrens van 36 V van de INA226 is geen grens voor de volledige PCB: die hangt af van alle onderdelen. Gebruik uitsluitend de vrijgegeven meetgrenzen van de opstelling.
 
-#heading(level: 2, numbering: none)[Temperatuur meten met drie NTC's]
-
-Het schema bevat drie NTC-thermistors. Elke NTC vormt met een vaste weerstand van 10 kΩ naar 3,3 V een spanningsdeler. De NTC zit tussen het meetknooppunt en GND. De Pico meet de knooppuntspanning via een analoge ingang:
-
-#table(
-  columns: (1fr, 1fr, 1fr, 1fr),
-  [Sensor], [Vaste weerstand], [Pico-ingang], [Fysieke pin],
-  [TH1], [R4 — 10 kΩ], [GPIO28 / ADC2], [34],
-  [TH2], [R3 — 10 kΩ], [GPIO27 / ADC1], [32],
-  [TH3], [R5 — 10 kΩ], [GPIO26 / ADC0], [31],
-)
-
-Voor ieder kanaal geldt idealiter, met $U_3 = 3.3 "V"$ en $R_f = 10 "kΩ"$:
-
-$ U_"ADC" = U_3 R_"NTC" / (R_f + R_"NTC"), quad
-R_"NTC" = R_f U_"ADC" / (U_3 - U_"ADC"). $
-
-Bij toenemende temperatuur neemt de NTC-weerstand af en daalt de gemeten spanning. Gebruik voor nauwkeurige berekeningen de werkelijke voedingsspanning en weerstand. Een ADC-waarde is nog geen temperatuur: daarvoor zijn de NTC-karakteristiek of een kalibratie met een referentiethermometer nodig. De nominale NTC-weerstand en de temperatuurcoëfficiënten staan niet in dit schema; de waarde 10 kΩ hoort bij de vaste weerstanden en legt het NTC-type niet vast.
-
-Leg vast waar TH1, TH2 en TH3 zijn geplaatst, bijvoorbeeld bij de zonnecel, de MOSFET en de omgeving. Het schema schrijft deze meetlocaties niet voor. Bewaar de drie ruwe ADC-waarden en, indien gekalibreerd, de temperaturen bij ieder werkpunt. Gebruik ze om opwarming tijdens een sweep te herkennen.
-
 #heading(level: 2, numbering: none)[Meetbereik en meetvolgorde]
 
 Bij een uitgeschakelde MOSFET meet je bij benadering open klem. Bij maximale geleiding blijven de weerstand van de MOSFET, shunt en bedrading aanwezig: een hoge DAC-code garandeert geen echte kortsluiting. De gate wordt hier tot maximaal ongeveer 3,3 V aangestuurd. Voor de IRLZ44N is de lage aan-weerstand in de datasheet gespecificeerd bij hogere gatespanningen (vanaf 4 V); volledige geleiding bij 3,3 V is dus niet gegarandeerd. De drempelspanning betekent alleen dat de transistor begint te geleiden. Beoordeel dit aan de gemeten spanning, niet alleen aan de code.
@@ -164,7 +187,7 @@ De meetsoftware voert steeds dezelfde cyclus uit: stel de DAC-code in, laat het 
 
 #figure(
   image("Figuren/PCB_schema_V1.png", width: 100%),
-  caption: [PCB_schema_V1: Raspberry Pi Pico, DAC op J1, INA226-module op J2, IRLZ44N-belasting en drie NTC-meetkanalen. De interne schakelingen van de modules zijn niet getekend.],
+  caption: [PCB_schema_V1: Raspberry Pi Pico, DAC op J1, INA226-module op J2, IRLZ44N-belasting. De overige meetkanalen worden hier niet gebruikt. De interne schakelingen van de modules zijn niet getekend.],
 ) <zonnecel--fig:pcb-overzicht>
 
 #pagebreak(weak: true)
@@ -173,42 +196,45 @@ De meetsoftware voert steeds dezelfde cyclus uit: stel de DAC-code in, laat het 
 
 
 #opdracht(title: [Opdracht 1 — Opstelling en controle])[
-+ Noteer het MOSFET-type, de shuntwaarde, DAC-voeding, I²C-adressen en de door de begeleider opgegeven meetgrenzen. Vergelijk de aansluitingen met het schema: VBUS en IN+ aan PV+, IN− aan drain en source aan GND/PV−. Laat afwijkingen eerst door de begeleider controleren.
-+ Controleer de aansluiting van TH1–TH3 volgens de tabel. Noteer per sensor de meetlocatie en de beschikbare kalibratie. Controleer of opwarming van een sensor een dalende ADC-spanning geeft.
-+ Begin met DAC-code nul en controleer spanning en stroom. Vergelijk de spanning met een multimeter. Test vervolgens enkele kleine stappen en controleer de stroomrichting en de reactie van het werkpunt.
-+ Richt de lamp zo dat de cel zo homogeen mogelijk wordt belicht. Noteer afstand, hoek, actief oppervlak en indien mogelijk temperatuur. Houd deze omstandigheden tijdens een meetreeks constant en laat de lamp eerst stabiliseren.
-+ Meet, indien geschikte apparatuur beschikbaar is, de instraling in het midden en bij de randen. Een luxmeting alleen is geen meting van optisch vermogen in W/m².
+  + Noteer het MOSFET-type, de shuntwaarde, DAC-voeding, I²C-adressen en de door de begeleider opgegeven meetgrenzen. Vergelijk de aansluitingen met het schema: VBUS en IN+ aan PV+, IN− aan drain en source aan GND/PV−. Laat afwijkingen eerst door de begeleider controleren.
+  + Begin met DAC-code nul en controleer spanning en stroom. Vergelijk de spanning met een multimeter. Test vervolgens enkele kleine stappen en controleer de stroomrichting en de reactie van het werkpunt.
+  + Richt de lamp zo dat de cel zo homogeen mogelijk wordt belicht. Noteer afstand, hoek en actief oppervlak. Houd deze omstandigheden tijdens een meetreeks constant en laat de lamp eerst stabiliseren.
+  + Meet, indien geschikte apparatuur beschikbaar is, de instraling in het midden en bij de randen. Een luxmeting alleen is geen meting van optisch vermogen in W/m².
 ]
 
 #opdracht(title: [Opdracht 2 — Een automatische meetreeks])[
-+ Maak een eerste sweep vanaf code nul binnen de vrijgegeven grenzen. Bewaar per punt de tijd, DAC-code, busspanning, shuntspanning, berekende stroom, zonnecelspanning en de drie NTC-kanalen. Bewaar temperaturen alleen met vermelding van de gebruikte kalibratie. Noteer ook de conversietijd, middeling en wachttijd.
-+ Bekijk de I-V-curve tijdens een proefmeting. Verzamel minimaal 20 bruikbare, verschillende werkpunten en voeg extra punten toe rond de knik en het vermogensmaximum. Veel codes kunnen vrijwel hetzelfde werkpunt geven.
-+ Herhaal de sweep in omgekeerde richting. Onderzoek verschillen door opwarming, veranderende belichting of onvoldoende wachttijd. Vergelijk daarbij ook de NTC-metingen tussen beide sweeps. Bewaar herhalingen voor de onzekerheidsanalyse.
-+ Controleer hoe dicht je werkelijk bij $I = 0$ en $U_"PV" = 0$ komt. Leg vast welk deel van de curve buiten het meetbereik blijft. Zet de DAC na afloop op nul.
+  + Maak een eerste sweep vanaf code nul binnen de vrijgegeven grenzen. Bewaar per punt de tijd, DAC-code, busspanning, shuntspanning, berekende stroom en zonnecelspanning. Noteer ook de conversietijd, middeling en wachttijd.
+  + Bekijk de I-V-curve tijdens een proefmeting. Verzamel minimaal 20 bruikbare, verschillende werkpunten en voeg extra punten toe rond de knik en het vermogensmaximum. Veel codes kunnen vrijwel hetzelfde werkpunt geven.
+  + Herhaal de sweep in omgekeerde richting. Onderzoek verschillen door opwarming, veranderende belichting of onvoldoende wachttijd. Bewaar herhalingen voor de onzekerheidsanalyse.
+  + Controleer hoe dicht je werkelijk bij $I = 0$ en $U_"PV" = 0$ komt. Leg vast welk deel van de curve buiten het meetbereik blijft. Zet de DAC na afloop op nul.
 ]
 
 #pagebreak(weak: true)
 #opdracht(title: [Opdracht 3 — Analyse])[
-+ Plot de I-V-curve met eenheden en meetonzekerheden. Bepaal de openklemspanning en kortsluitstroom uit metingen nabij de eindpunten. Gebruik een lokale extrapolatie alleen als de meetpunten dit ondersteunen; vermeld de methode en onzekerheid. Noem een niet bereikbaar eindpunt geen directe meting.
-+ Bereken per meetpunt $P = U_"PV" I$ en maak de P-V-curve. Bepaal $P_"mpp"$, $U_"mpp"$ en $I_"mpp"$. Verfijn de sweep rond het maximum en bespreek de invloed van de stapgrootte.
-+ Bereken de fill factor als beide eindpunten voldoende betrouwbaar bekend zijn. Bespreek de invloed van shuntkalibratie, herhaalbaarheid en eventuele extrapolatie. De fill factor is niet het rendement.
-+ Bepaal alleen bij een gekalibreerde instralingsmeting het rendement. Bij homogene instraling $E$ in W/m² en actief oppervlak $A$ geldt $P_"in" = E A$. Zonder die meting rapporteer je dat het rendement niet bepaald kan worden.
-+ Bereken $R_"eff" = U_"PV" / I$ voor punten met voldoende grote stroom. Plot deze effectieve belasting tegen de DAC-code en maak een P-R-curve. Leg uit hoe de computer de variabele belasting instelt en waarom gelijke stappen in DAC-code geen gelijke stappen in weerstand geven. Bereken bij open klem geen weerstand door te delen door een stroom die binnen de meetonzekerheid nul is.
+  + Plot de I-V-curve met eenheden en meetonzekerheden. Bepaal de openklemspanning en kortsluitstroom uit metingen nabij de eindpunten. Gebruik een lokale extrapolatie alleen als de meetpunten dit ondersteunen; vermeld de methode en onzekerheid. Noem een niet bereikbaar eindpunt geen directe meting.
+  + Bereken per meetpunt $P = U_"PV" I$ en maak de P-V-curve. Bepaal $P_"mpp"$, $U_"mpp"$ en $I_"mpp"$. Verfijn de sweep rond het maximum en bespreek de invloed van de stapgrootte.
+  + Bereken de fill factor als beide eindpunten voldoende betrouwbaar bekend zijn. Bespreek de invloed van shuntkalibratie, herhaalbaarheid en eventuele extrapolatie. De fill factor is niet het rendement.
+  + Bepaal alleen bij een gekalibreerde instralingsmeting het rendement. Bij homogene instraling $E$ in W/m² en actief oppervlak $A$ geldt $P_"in" = E A$. Zonder die meting rapporteer je dat het rendement niet bepaald kan worden.
+  + Bereken $R_"eff" = U_"PV" / I$ voor punten met voldoende grote stroom. Plot deze effectieve belasting tegen de DAC-code en maak een P-R-curve. Leg uit hoe de computer de variabele belasting instelt en waarom gelijke stappen in DAC-code geen gelijke stappen in weerstand geven. Bereken bij open klem geen weerstand door te delen door een stroom die binnen de meetonzekerheid nul is.
 ]
 
 #opdracht(title: [Opdracht 4 — Verdiepend onderzoek])[
-+ Schrijf een kort meetplan van maximaal tien regels voor de invloed van bijvoorbeeld invalshoek, afstand, gedeeltelijke beschaduwing of temperatuur. Kies één variabele en benoem welke omstandigheden je constant houdt.
-+ Voer het onderzoek uit met herhaalde I-V- en P-V-metingen. Vergelijk de maxima en, waar betrouwbaar bepaalbaar, de eindpunten en fill factors. Onderbouw de conclusie met onzekerheden.
+  + Schrijf een kort meetplan van maximaal tien regels voor de invloed van bijvoorbeeld invalshoek, afstand of gedeeltelijke beschaduwing. Kies één variabele en benoem welke omstandigheden je constant houdt.
+  + Voer het onderzoek uit met herhaalde I-V- en P-V-metingen. Vergelijk de maxima en, waar betrouwbaar bepaalbaar, de eindpunten en fill factors. Onderbouw de conclusie met onzekerheden.
 ]
 
 #afronding(title: [Afronding])[
-+ Zet de gevonden figuren in je digitaal labjournaal en maak een duidelijk onderschrift waarin je uitlegt wat de figuren laten zien.
+  + Zet de gevonden figuren in je digitaal labjournaal en maak een duidelijk onderschrift waarin je uitlegt wat de figuren laten zien.
 
-+ Vul de #strong[Resultaat- en Discussie]-sectie aan in je labjournaal. Hierin moet de uiteindelijke waarde van jouw experiment (met onzekerheid) staan en een korte discussie of deze waarde #strong[realistisch] en #strong[betrouwbaar] is.
+  + Vul de #strong[Resultaat- en Discussie]-sectie aan in je labjournaal. Hierin moet de uiteindelijke waarde van jouw experiment (met onzekerheid) staan en een korte discussie of deze waarde #strong[realistisch] en #strong[betrouwbaar] is.
 
 ]
 
+#pagebreak(weak: true)
 
+#include "Zonnecel_bijlagen.typ"
+
+#pagebreak(weak: true)
 
 #heading(level: 1, numbering: none)[Componentdocumentatie]
 
@@ -216,3 +242,6 @@ De meetsoftware voert steeds dezelfde cyclus uit: stel de DAC-code in, laat het 
 - #link("https://www.ti.com/lit/ds/symlink/ina226.pdf")[Texas Instruments INA226-datasheet]: shunt- en busmeting, kalibratie en conversietijden.
 
 - #link("https://www.infineon.com/assets/row/public/documents/24/49/infineon-irlz44n-datasheet-en.pdf")[Infineon IRLZ44N-datasheet]: pinfuncties, gate-aansturing en toelaatbare dissipatie.
+
+- #link("https://www.infineon.com/technology/mosfets")[Infineon: werking van MOSFETs]: gatebesturing en werkgebieden.
+- #link("https://www.nexperia.com/applications/interactive-app-notes/IAN50006_Power_MOSFETs_in_linear_mode")[Nexperia: MOSFETs als elektronische belasting]: verzadigingsgebied en dissipatie.
