@@ -1,0 +1,155 @@
+\documentclass{article}
+\usepackage[a4paper, margin=1.5cm]{geometry}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{pdflscape}
+\usepackage{eforms}
+
+% Macro voor checkbox
+\newcommand{\myCheckBox}[1]{%
+  \checkBox[\symbolchoice{cross}]{#1}{10bp}{10bp}{On}%
+}
+
+% Macro voor numeriek scoreveld
+\newcommand{\myScoreField}[1]{%
+  {\textField[
+    \R{90}
+      \AA{
+        \AAKeystroke{AFNumber_Keystroke(1,1,0,0,"",true)}%
+        \AAFormat{AFNumber_Format(1,1,0,0,"",true)}%
+      }
+    ]{#1}{11bp}{0.4in}}%
+}
+
+\begin{document}
+\begin{landscape}
+\section*{Rubriek Wetenschappelijke Poster – 
+\noindent\textbf{Naam student: }
+\textField[\R{90}]{namefield}{12bp}{8cm}}
+
+\renewcommand{\arraystretch}{1.4}
+\begin{longtable}{p{8cm}|p{6cm}|p{6cm}|p{5cm}|p{1.2in}}
+\textbf{Onderdeel} & \textbf{Uitstekend} & \textbf{Voldoende} & \textbf{Onvoldoende} & \textbf{Score} \\
+\hline\hline
+
+\textbf{Inhoud (30\%)} \newline
+• Alle belangrijke concepten en resultaten aanwezig \newline
+• Doel stage duidelijk \newline
+• Conclusie, discussie en aanbevelingen duidelijk \newline
+• Relevante achtergrond en context van het onderzoek \newline
+• Resultaten correct en volledig weergegeven
+&
+\myCheckBox{goed1} Concepten volledig en correct \newline
+\myCheckBox{goed2} Doel stage helder \newline
+\myCheckBox{goed3} Conclusie, discussie en aanbevelingen duidelijk \newline
+\myCheckBox{goed4} Achtergrond helder en relevant \newline
+\myCheckBox{goed5} Resultaten volledig en correct
+&
+\myCheckBox{vol1} Meeste concepten aanwezig \newline
+\myCheckBox{vol2} Doel stage grotendeels duidelijk \newline
+\myCheckBox{vol3} Conclusie/discussie deels duidelijk \newline
+\myCheckBox{vol4} Achtergrond deels relevant \newline
+\myCheckBox{vol5} Belangrijkste resultaten aanwezig
+&
+\myCheckBox{onv1} Concepten incompleet of fout \newline
+\myCheckBox{onv2} Doel stage onduidelijk \newline
+\myCheckBox{onv3} Conclusie/discussie ontbreekt of fout \newline
+\myCheckBox{onv4} Achtergrond ontbreekt of irrelevant \newline
+\myCheckBox{onv5} Resultaten incompleet of fout
+&
+\myScoreField{score.inhoud} \\
+\hline
+
+\textbf{Structuur (20\%)} \newline
+• Logische indeling van secties \newline
+• Hoofdpunten zijn te volgen \newline
+• Overgangen vloeiend
+&
+\myCheckBox{goed6} Logische opbouw \newline
+\myCheckBox{goed7} Hoofdpunten duidelijk \newline
+\myCheckBox{goed8} Vloeiende overgangen
+&
+\myCheckBox{vol6} Opbouw grotendeels logisch \newline
+\myCheckBox{vol7} Hoofdpunten redelijk duidelijk \newline
+\myCheckBox{vol8} Overgangen soms abrupt
+&
+\myCheckBox{onv6} Opbouw chaotisch \newline
+\myCheckBox{onv7} Hoofdpunten onduidelijk \newline
+\myCheckBox{onv8} Overgangen ontbreken
+&
+\myScoreField{score.structuur} \\
+\hline
+
+\textbf{Vormgeving (20\%)} \newline
+• Lay-out en consistentie \newline
+• Tekst en leesbaarheid \newline
+• Visuals en labels \newline
+• Kleurgebruik en stijl
+&
+\myCheckBox{goed9} Lay-out aantrekkelijk \newline
+\myCheckBox{goed10} Tekst goed leesbaar \newline
+\myCheckBox{goed11} Visuals duidelijk en correct, met eenheden, onderschriften en figuurnummers \newline
+\myCheckBox{goed12} Kleurgebruik ondersteunt boodschap
+&
+\myCheckBox{vol9} Lay-out redelijk consistent \newline
+\myCheckBox{vol10} Tekst soms te klein/te lang \newline
+\myCheckBox{vol11} Meeste visuals duidelijk \newline
+\myCheckBox{vol12} Kleuren soms storend
+&
+\myCheckBox{onv9} Lay-out rommelig \newline
+\myCheckBox{onv10} Tekst slecht leesbaar \newline
+\myCheckBox{onv11} Visuals fout/onzorgvuldig \newline
+\myCheckBox{onv12} Kleuren belemmeren leesbaarheid
+&
+\myScoreField{score.vormgeving} \\
+\hline
+
+\textbf{Visuals \& datavisualisatie (30\%)} \newline
+• Grafieken en figuren duidelijk gelabeld (met eenheden, onderschriften, figuurnummers) \newline
+• Data overzichtelijk gepresenteerd \newline
+• Visuals versterken boodschap \newline
+• Juiste keuze in dataweergave \& kwaliteit van de visualisatie
+&
+\myCheckBox{goed13} Grafieken duidelijk en correct gelabeld \newline
+\myCheckBox{goed14} Data overzichtelijk gepresenteerd \newline
+\myCheckBox{goed15} Visuals versterken boodschap \newline
+\myCheckBox{goed16} Juiste keuze en hoge kwaliteit visualisatie
+&
+\myCheckBox{vol13} Meeste grafieken duidelijk \newline
+\myCheckBox{vol14} Data meestal overzichtelijk \newline
+\myCheckBox{vol15} Visuals ondersteunen deels \newline
+\myCheckBox{vol16} Visualisatiekeuze redelijk
+&
+\myCheckBox{onv13} Grafieken onduidelijk/fout \newline
+\myCheckBox{onv14} Data onoverzichtelijk \newline
+\myCheckBox{onv15} Visuals dragen niet bij \newline
+\myCheckBox{onv16} Slechte keuze visualisatie
+&
+\myScoreField{score.visuals} \\
+\hline
+
+\textbf{Crea Bea bonus} &
+\myCheckBox{crea0} +0  & \myCheckBox{crea05} +0.25 & \myCheckBox{crea1} +0.5 & \myScoreField{score.crea} \\
+\hline
+
+\textbf{Totaal Score} &
+\multicolumn{4}{p{22cm}}{%
+\textField[\R{90}
+\AA{
+\AAKeystroke{%
+var totaal = 0; 
+totaal += Number(this.getField("score.inhoud").value*10/10) * 0.3; 
+totaal += Number(this.getField("score.structuur").value*10/6) * 0.2; 
+totaal += Number(this.getField("score.vormgeving").value*10/8) * 0.2; 
+totaal += Number(this.getField("score.visuals").value*10/8) * 0.3; 
+totaal += Number(this.getField("score.crea").value); 
+event.value = totaal;
+}%
+}
+]{score.totaal}{15bp}{1in}} \\
+\hline
+
+\end{longtable}
+\end{landscape}
+\end{document}

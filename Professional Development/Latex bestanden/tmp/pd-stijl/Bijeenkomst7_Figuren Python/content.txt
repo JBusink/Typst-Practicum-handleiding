@@ -1,0 +1,58 @@
+1 #2 Professional Development 	Technische Stage  Figuren optimaliseren met InkscapeWoensdag 3 december 2025
+1 #19 Je kan vragen stellen via de chat-functie.
+2 #3 Introductie
+2 #2 Check-inPlanningBeoordeling en deadlinesFiguren tekenen	Workflow, tips & trics
+2 #4 2
+3 #3 Hoe gaat de stage?
+3 #10 3
+3 #2 EXPECTATION				    vs 				REALITY
+4 #3 Planning
+4 #10 4
+5 #3 Planning: Gastsprekers
+5 #10 5
+5 #2 Nadia Haider (QuTech) 8 oktober 15:20-16:00 Dima Bederak (QDI systems) 8 oktober 16:20-17:00 (online)Jasper Franse (TNO) 19 november (15:20-16:00)Gideon Langedijk (PhotonFirst) (16:20-17:00) 19 november
+6 #3 Beoordeling
+6 #11 Technische stage (I): presentatie I (25%)memo I (25%), memo II (25%)  Deadline 19 decemberTechnische stage (II): presentatie II (25%)  26 novemberPosterpresentatie (25%)  Deadline 16 januariFeedbackformulier/Experimenteel werk (25%)  Deadline 16 januari
+6 #10 6
+9 #2 Figuren optimaliseren met Inkscape
+10 #10 10
+10 #12 Professionele figuren maken kost tijd!Helpt met verhaal structuren & maakt impactGebruik je bij presentaties, rapporten  overdrachtOefening baart kunst.
+10 #6 Algemeen
+11 #4 11
+11 #3744 Histogram, density, ridgeline, … (1D)Scatter, line, bubble, … (2D)Surface, heatmap, 2D-density, 3D scatter, hexbin, …(3D)Speciale plots: kaarten, netwerken, connection, etc.https://python-graph-gallery.com/
+11 #8 Zo veel mogelijkheden
+12 #10 12
+12 #6 Voorbeeld: methode
+13 #10 13
+13 #9 Voorbeeld: resultaten
+14 #4 14
+14 #3744 Boodschap beter overbrengen? Maak insets, gebruik kleuren, fits, referentiedata, etc.
+14 #2 Informatie dichtheid
+15 #4 15
+15 #3744 Welke data heb ik nodig om mijn verhaal te vertellen? Wat juist niet?  Laat dit weg3D is te ingewikkeld en vaak heel complex netjes weer te geven  2D vaak voldoende, extra dimensies in kleur.Voeg fysische parameters toe in bijschrift (óf als label).Géén titels, minimale labels, duidelijke ticks, etc.Sla op als .PDF of .SVG (en converteer naar shape in inkscape)	 plt.savefig(“filename.svg”) 
+15 #7 Figuren aanpak
+16 #10 16
+16 #12 SVG bestaat uit losse (schaalbare) objecten (wiskundig gedefinieerd)Manipulatie per los objectSoftware  Python matplotlib .svg  Inkscap.
+16 #6 [3] https://medium.com/@g.glasgow91/choosing-your-graphics-wisely-svg-vs-png-9b4655c77c0b
+16 #15 Recap
+17 #4 17
+17 #3744 Julia: een programmeertaal geoptimaliseerd voor modelleren/dataverwerken en visualisatieshttps://julialang.org/  Makie https://docs.makie.org/stable/tutorials/layout-tutorial Plots https://docs.juliaplots.org/stable/gallery/pgfplotsx/ Python:  Plotly https://plotly.com/python/ Bokeh https://bokeh.org/… Seaborn, Holoviews, Vispy, etc.
+17 #6 Matplotlib alternatieven
+18 #4 18
+18 #6 Ga naar één van de volgende websites:https://beautiful.makie.org/dev/examples/datavis/astronautshttps://examples.holoviz.org/gallery/ https://python-graph-gallery.com/Kies per technische stage groepje 1 figuur en leg beschrijvend uit wat je ziet
+18 #2 Opdracht (5 minuten)
+19 #4 19
+19 #2 Opdracht
+20 #4 20
+20 #3744 Gebruik simpele lettertypen: Calibri, Cambria, etc.
+20 #15 Gebruik uitlijnen en verdelen (Shift + Ctrl + A)(on) Groeperen: Ctrl + (Shift) + GOpmaak? Dubbel klik op object (of rechtermuisknop) Selectie aanpassen (Gebruik F1 of S)
+20 #17 Combineer opstellingen met data (1 geheel)
+20 #6 Tips & trics
+21 #4 21
+21 #3744 Boodschap beter overbrengen? Maak insets, gebruik kleuren of referentiedata.Uitlijnen van tics, labels, etc?  Object   uitlijnen & verdelenSymbolen aanpassen (als groep) Object   transformeren
+21 #2 Nog meer tips & trics
+22 #4 22
+22 #6 Aan de slag met Inkscape, open de svg figuren en probeer het figuur zo goed mogelijk na te maken.
+22 #8 Opdracht (1 uur)
+23 #2 Vragen?
+23 #4 23

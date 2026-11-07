@@ -1,0 +1,65 @@
+1 #2 Professional Development 	Technische Stage  Experimentele opstellingen tekenenWoensdag 5 november 2025
+1 #19 Je kan vragen stellen via de chat-functie.
+2 #3 Introductie
+2 #2 Check-inPlanningBeoordeling en deadlinesExperimentele opstellingen voorbeelden Inkscape
+2 #4 2
+3 #3 Hoe gaat de stage?
+3 #10 3
+3 #2 EXPECTATION				    vs 				REALITY
+4 #3 Planning
+4 #10 4
+5 #3 Planning: Gastsprekers
+5 #10 5
+5 #2 Nadia Haider (QuTech) 8 oktober 15:20-16:00 Dima Bederak (QDI systems) 8 oktober 16:20-17:00 (online)Jasper Franse (TNO) 19 november (15:20-16:00)Gideon Langedijk (PhotonFirst) (16:20-17:00) 19 november
+6 #3 Beoordeling
+6 #11 Technische stage (I): presentatie I (25%)memo I (25%), memo II (25%)  Deadline 19 decemberTechnische stage (II): presentatie II (25%)  26 novemberPosterpresentatie (25%)  Deadline 16 januariFeedbackformulier/Experimenteel werk (25%)  Deadline 16 januari
+6 #10 6
+9 #3 Experimentele opstellingen
+9 #10 9
+9 #12 Een goede experimentele opstelling maken kost tijd!Helpt met verhaal structuren & maakt impactGebruik je bij presentaties, rapporten  overdrachtOefening baart kunst.
+10 #3 Voorbeelden
+10 #10 10
+10 #13 Fig 1. Wanneer een dunne glasplaat in één arm van de Michelson-interferometer onder een hoek i wordt geplaatst, verandert het effectieve optische pad door de grotere weglengte binnen het glas. Door de plaat langzaam te roteren en het aantal verschuivende interferentielijnen 𝑀 te tellen, meet je de verandering in optische padlengte. Deze verschuiving hangt af van de brekingsindex 𝑛, de dikte 𝑑 van de plaat, en de rotatiehoek 𝑖. [1]
+10 #14 Fig 2. (a) Geometrie van het metamateriaalmonster met 5 × 5 afwisselende gaten. (b) Vooraf voorgespannen met εₓ = −18 %, waarbij het centrale gat x-gepolariseerd is (grote as d₁, kleine as d₂). (c) Langzame compressie (ε̇ᵧ = 9,25 × 10⁻⁵ s⁻¹) veroorzaakt een snap-through-instabiliteit, waardoor de oriëntatie omschakelt van x- naar y-gepolariseerd. (d) Snelle compressie (ε̇ᵧ = 0,3 s⁻¹) onderdrukt deze instabiliteit, waardoor de x-polarisatie behouden blijft.[2]
+10 #15 [1] Tekst gegenereerd door ChatGPT[2] Dykstra, David & Busink, Joris & Ennis, Bernard & Coulais, Corentin. (2019). Viscoelastic Metamaterials. 
+11 #3 SVG versus PNG
+11 #10 11
+11 #12 SVG bestaat uit losse (schaalbare) objecten (wiskundig gedefinieerd)Manipulatie per los objectSoftware  Photoshop, PPT, Inkscape
+11 #6 [3] https://medium.com/@g.glasgow91/choosing-your-graphics-wisely-svg-vs-png-9b4655c77c0b
+12 #27 Photoshop:
+12 #2 Wordt uitbesteedt aan afdelingenGrotere projecten (projectmanager/PI niveau)
+12 #3 [4] PRL [5]  AMOLF website Interacting Photons
+13 #27 Voorbeelden powerpoint:
+13 #28 [6] Stage eindverslag Gustavo de Rouiville[7] Stage eindverslag Gustavo de Rouiville
+14 #341 Voorbeelden Inkscape:
+14 #348 [8] Figuur van Joris Busink[9] Figuur van Joris Busink
+15 #2 Tekenen algmeen: Tips & Trics
+15 #4 15
+15 #3744 Wat heb ik nodig om mijn verhaal te vertellen? Wat juist niet?  Laat dit weg3D is mooi, maar heel complex  2D vaak voldoendeDeel je opstelling op in stukken (groups)Voeg fysische parameters Sla op als .PDF of .SVG (en converteer naar shape in PPT)
+18 #2 Inkscape: Tips & Trics
+18 #4 18
+18 #15 (on) Groeperen: Ctrl + (Shift) + GGebruik lagen.Opmaak? Dubbel klik op object (of rechtermuisknop) Selectie aanpassen (Gebruik F1 of S)
+19 #2 Inkscape: Tips & Trics
+19 #4 19
+19 #3744 Levendiger maken? Vervagen,dekking, gradient aanpassen.
+20 #2 Uitgewerkt voorbeeld
+20 #4 20
+21 #4 21
+21 #9 Select masker-oppervlak (wit!) + Object (lichaam)  Object  Masker instellen
+21 #10 =
+21 #18 =
+21 #19 +
+21 #20 +
+21 #21 Uitgewerkt voorbeeld
+22 #4 22
+22 #6 Uitgewerkt voorbeeld
+23 #2 Opdracht:	
+23 #4 23
+23 #6 Wat heb ik nodig om mijn verhaal te vertellen? (Pen en papier / 5 minuten)Converteer naar 2DAan de slag met Inkscape, rest van de tijd (max 18:40)
+24 #2 Vragen?
+24 #4 24
+25 #2 Extra slides 
+25 #4 25
+25 #6 Optica opstelling? Gebruik optical table libraryElektrische schakeling? Tikz/Fritzling/Electric Symbols LibraryDruk/Vacuüm/pomp techniek? P&ID (Piping and Instrumentation Diagram), geen library wel gestandaardiseerdEngineering/bouwtekeningen? CADOverigen? Maak zelf een library
+26 #3 Experimentele opstellingen
+26 #10 26
