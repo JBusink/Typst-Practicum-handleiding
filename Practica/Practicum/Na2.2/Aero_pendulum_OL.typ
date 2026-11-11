@@ -9,13 +9,13 @@
 
 #[
 #set list(marker: leerdoel-teken)
-- Je kunt de dynamische respons van een simpel open-loop systeem experimenteel bepalen.
-
 - Je kunt overweg met de Arduino IDE en begrijpt de werking van een H-brug, PWM en een hoeksensor.
+
+- Je begrijpt de basis van I#super[2]C communicatie en weet de functie van SDA en SCL.
 
 - Je kunt vanuit Python de Arduino aansturen, meetgegevens opslaan en deze vervolgens analyseren en visualiseren.
 
-
+- Je kunt de dynamische respons van een simpel open-loop systeem experimenteel bepalen.
 ]
 
 #v(1fr)
@@ -25,7 +25,7 @@
 
 + Controleer vóór iedere meting of het aeropendulum vrij kan bewegen en of zich geen objecten binnen het bewegingsbereik bevinden.
 
-+ De hoeksensor werkt op 3,3 V. Sluit deze nooit rechtstreeks aan op de 5 V van de Arduino.
++ De hoeksensor werkt op *3,3 V*. Sluit deze nooit rechtstreeks aan op de 5 V van de Arduino.
 
 + Twijfel je over een handeling of apparaat? Vraag dit altijd aan de practicumbegeleider.
 
@@ -108,7 +108,7 @@ Het aeropendulum bestaat uit verschillende elektronische en mechanische componen
 
 #heading(level: 2, numbering: none)[Arduino Uno R4 Minima]
 
-Een Arduino is een programmeerbaar microcontrollerbord waarmee elektronische componenten kunnen worden aangestuurd en sensoren kunnen worden uitgelezen. In dit practicum wordt een #strong[Arduino Uno R4 Minima] gebruikt.
+Een Arduino is een programmeerbaar microcontroller waarmee elektronische componenten kunnen worden aangestuurd en sensoren kunnen worden uitgelezen. In dit practicum wordt een #strong[Arduino Uno R4 Minima] gebruikt.
 
 De Arduino voert continu een programma uit waarin twee taken centraal staan: het aansturen van de elektromotor en het meten van de hoek van het aeropendulum. Hiervoor beschikt de Arduino onder andere over digitale aansluitingen, analoge ingangen en verschillende communicatieprotocollen.
 
@@ -138,7 +138,7 @@ Voor een ideale PWM-schakeling is de gemiddelde spanning over één periode
 
 De motor reageert door zijn mechanische en elektrische traagheid niet afzonderlijk op iedere snelle puls. Daardoor kan met de duty cycle het gedrag van de motor worden geregeld.
 
-In onze opstelling genereert pin D9 van de Arduino het PWM-signaal. Dit signaal wordt aangesloten op de #strong[ENA]-ingang van de L298N. De Arduino bepaalt dus wanneer de H-brug de motor inschakelt, terwijl het daadwerkelijke motorvermogen uit de externe voeding komt.
+In onze opstelling genereert pin D9 van de Arduino het PWM-signaal. Dit signaal wordt aangesloten op de ENA-ingang van de L298N. De Arduino bepaalt dus wanneer de H-brug de motor inschakelt, terwijl het daadwerkelijke motorvermogen uit de externe voeding komt.
 
 #figure(
   [
@@ -160,9 +160,13 @@ mogelijke waarden. Een ruwe sensorwaarde kan worden omgerekend naar een hoek vol
 
 #math.equation(block: true, numbering: "(1)", $theta = upright("sensorwaarde") / 4096 thin 360^compose .$)
 
-De sensor wordt digitaal uitgelezen via het #strong[I#super[2]C-protocol]. Hiervoor zijn twee verbindingen nodig: SDA (#emph[Serial Data]) voor het versturen van gegevens en SCL (#emph[Serial Clock]) voor het kloksignaal. In deze opstelling is SDA aangesloten op A4 en SCL op A5 van de Arduino.
-
+De sensor wordt digitaal uitgelezen via het #strong[I#super[2]C-protocol], zie #link(<app:i2c>)[Appendix C] voor uitleg over deze communicatieprotocol. Hiervoor zijn twee verbindingen nodig: SDA (#emph[Serial Data]) voor het versturen van gegevens en SCL (#emph[Serial Clock]) voor het kloksignaal. In deze opstelling is SDA aangesloten op A4 en SCL op A5 van de Arduino. 
+Het volledige schakelschema is te vinden in #link(<app:schema>)[Appendix B] \
+\
 De positie van de magneet ten opzichte van de sensor is belangrijk. Wanneer de magneet te ver van de sensor staat of niet goed boven het midden van de sensor is geplaatst, kan de hoekmeting onbetrouwbaar worden. Controleer daarom voor iedere meting of de sensor correct functioneert. Wanneer de arm langzaam met de hand wordt bewogen, moet de gemeten hoek vloeiend veranderen. Een constante waarde, grote sprongen of een foutmelding kan betekenen dat de magneet niet correct ten opzichte van de sensor staat.
+
+
+#pagebreak(weak:true)
 
 #voorbereiding(title: [Voorbereiding])[
 + Installeer de Arduino IDE en de Python-omgeving op je laptop. Controleer of de Arduino Uno R4 Minima wordt herkend en dat de juiste poort kan worden geselecteerd #link("https://www.arduino.cc/en/software/")[*Link naar Arduino IDE*]. 
@@ -228,7 +232,7 @@ Werk de opdrachten in onderstaande volgorde uit. Open iedere sketch vanuit zijn 
 #pagebreak(weak: true)
 
 #opdracht(title: [Opdracht 1: hoeksensor uittesten met stap 1])[
-+ Gebruik de in opdracht 0 opgebouwde en gecontroleerde opstelling. Laat de motorvoeding uitgeschakeld en sluit alleen USB aan op de Arduino. Open `Arduino/OpenLoop/Stap_1_Sensor/Stap_1_Sensor.ino`: deze sketch leest uitsluitend de hoeksensor uit en stuurt de motor niet aan.
++ Gebruik de in opdracht 0 opgebouwde en gecontroleerde opstelling. Laat de motorvoeding uitgeschakeld en sluit alleen USB aan op de Arduino. Open `Arduino/OpenLoop/Stap_1_Sensor/Stap_1_Sensor.ino`: deze sketch leest uitsluitend de hoeksensor uit en stuurt de motor niet aan. Controleer in de code of je de juiste poorten uitleest.
 
 + Upload het script en open Serial Monitor of Serial Plotter op 115200 baud. Het script geeft iedere 100 ms een regel zoals `Hoek:90.000` weer.
 
@@ -250,7 +254,7 @@ Werk de opdrachten in onderstaande volgorde uit. Open iedere sketch vanuit zijn 
 
 + Zoek `pwm_waarde` en de drie motorpinnen op in de code. Leg uit hoe D9 het PWM-signaal levert en hoe D10 en D11 de draairichting vastleggen. Bereken de duty cycle bij de ingestelde waarde met $D = upright("pwm_waarde") / 255$.
 
-+ Spreek met de begeleider een veilige voedingsspanning en stroomlimiet af. Het codebereik voor de PWM (0-255) is geen vastgesteld veilig werkbereik, dit hangt af van de voedingsspanning. Verder volgt de stroom uit de belasting van de motor en de propeller.  
++ Spreek met de begeleider een veilige voedingsspanning en stroomlimiet af, dit is typisch rond de 5V. Het codebereik voor de PWM (0-255) is geen vastgesteld veilig werkbereik, dit hangt af van de voedingsspanning. Verder volgt de stroom uit de belasting van de motor en de propeller.  
 
 + Kies vervolgens een PWM-waarde en upload opnieuw met de motorvoeding uit. Schakel daarna de motorvoeding in. De sketch stuurt de motor direct na uploaden of resetten aan met `pwm_waarde` #footnote[Je kunt de Arduino resetten (bij bijvoorbeeld een storign) door de resetknop op de Arduino één keer in te drukken. Ook het openen van een seriele verbinding kan een reset veroorzaken.]. Er is geen startcommando, automatische meetduur of softwarematige stop in dit script; stop door de motorvoeding uit te schakelen.
 
@@ -313,12 +317,12 @@ Werk de opdrachten in onderstaande volgorde uit. Open iedere sketch vanuit zijn 
 
 + Reflecteer op de beperkingen van een open-loop systeem en beschrijf waarom terugkoppeling in veel technische toepassingen gewenst is.
 
-+Breek de opstelling af en ruim de werkplek op. Controleer of alle componenten compleet zijn en berg deze op in de daarvoor bestemde bakken.
++ Breek de opstelling af en ruim de werkplek op. Controleer of alle componenten compleet zijn en berg deze op in de daarvoor bestemde bakken.
 ]
 
 #pagebreak(weak: true)
 
-#heading(level: 1, numbering: none)[Appendix: Materialen Lijst Practica]
+#heading(level: 1, numbering: none)[Appendix A: Materialen Lijst Practica]
 - Arduino Uno R4 Minima;
 - L298N H-brug;
 - AS5600 magnetische hoeksensor;
@@ -329,7 +333,135 @@ Werk de opdrachten in onderstaande volgorde uit. Open iedere sketch vanuit zijn 
 - Diverse aansluitdraden (Male-Male, Male-Female, Female-Female);
 - Laptop of computer met Arduino IDE en Python 3.11+;
 
-#heading(level: 1, numbering: none)[Appendix: Afleiding bewegingsvergelijking]
+#heading(level: 1, numbering: none)[Appendix B: Elektrisch schema aeropendulum] <app:schema>
+
+
+#figure(
+  [#include("Figuren/aeropendulum_schema.typ")],
+  caption: [Elektrisch aansluitschema van de aeropendulumopstelling. De Arduino UNO R4 Minima leest de hoekpositie uit via de AS5600-sensor (I²C) en stuurt de elektromotor aan via de L298N H-brug (PWM). De motor wordt gevoed door een externe 12V-voeding. Alle componenten delen een gemeenschappelijke massa (GND).],
+
+) #label("aero_pendulum_ol--fig:schema")
+
+
+#heading(level: 1, numbering: none)[Appendix C: Communicatieprotocollen] <app:i2c>
+Bij digitale communicatie wordt informatie verzonden in de vorm van bits: nullen (0) en enen (1). Een groep van 8 bits noemen we een byte.
+
+Er bestaan twee manieren om deze bits te versturen:
+
+- *Seriële communicatie:* de bits worden één voor één, achter elkaar, over een datalijn verzonden.
+- *Parallelle communicatie:* meerdere bits worden tegelijkertijd over afzonderlijke datalijnen verzonden.
+
+Stel dat we de byte `10110010` willen versturen.
+
+Bij seriële communicatie worden de acht bits achtereenvolgens over dezelfde datalijn verzonden. Bij parallelle communicatie kunnen alle acht bits tegelijkertijd via acht afzonderlijke datalijnen worden verstuurd. Seriële communicatie vereist doorgaans minder aansluitdraden en is daardoor bijzonder geschikt voor communicatie tussen elektronische componenten.
+
+#heading(level: 2, numbering: none)[Communicatieprotocollen]
+
+Een communicatieprotocol is een verzameling afspraken waarmee elektronische apparaten gegevens kunnen uitwisselen. Het protocol beschrijft onder andere hoe informatie wordt verzonden, hoe apparaten elkaar herkennen en hoe wordt gecontroleerd of gegevens correct zijn ontvangen.
+Het I²C-protocol maakt gebruik van seriële communicatie. De bits worden één voor één via de SDA-lijn verzonden, terwijl het kloksignaal op de SCL-lijn bepaalt wanneer de bits worden overgedragen.
+
+
+Bij microcontrollers worden verschillende communicatieprotocollen gebruikt:
+
+- *UART (Universal Asynchronous Receiver/Transmitter):* seriële communicatie tussen twee apparaten via een zend- (TX) en ontvangstlijn (RX). Wordt bijvoorbeeld gebruikt voor communicatie tussen een microcontroller en een computer.
+- *SPI (Serial Peripheral Interface):* een relatief snel serieel protocol waarbij een controller afzonderlijke apparaten selecteert. Wordt onder andere gebruikt voor displays en geheugenchips.
+- *I²C (Inter-Integrated Circuit):* een serieel protocol waarmee meerdere apparaten via slechts twee signaallijnen met elkaar kunnen communiceren.
+
+In dit practicum gebruiken we I²C om de Raspberry Pi Pico te laten communiceren met de digitaal-analoogomzetter (MCP4725) en de stroom- en spanningssensor (INA226).
+
+#heading(level: 2, numbering: none)[Het I²C-protocol]
+
+I²C (uitgesproken als *I-squared-C*) is een communicatieprotocol dat oorspronkelijk door Philips is ontwikkeld. Het maakt het mogelijk om meerdere geïntegreerde schakelingen (IC's) aan te sluiten op dezelfde communicatiebus.
+
+#heading(level: 3, numbering: none)[De twee signaallijnen]
+
+I²C maakt gebruik van twee signaallijnen:
+
+- *SDA (Serial Data):* transporteert de gegevens tussen de apparaten.
+- *SCL (Serial Clock):* transporteert het kloksignaal waarmee de communicatie wordt gesynchroniseerd.
+
+Daarnaast moeten de aangesloten apparaten een gemeenschappelijke elektrische referentie (GND) hebben. De lijnen SDA en SCL worden via zogenaamde pull-upweerstanden verbonden met de voedingsspanning van de communicatiebus, bijvoorbeeld 3,3 V.  Apparaten trekken de lijnen actief naar een lage spanning (logische 0), maar sturen normaal gesproken geen hoge spanning uit. Wanneer geen enkel apparaat een lijn laag trekt, zorgt de pull-upweerstand voor een logische 1.
+
+Dit wordt een open-drain-configuratie genoemd. Hierdoor kunnen meerdere apparaten veilig dezelfde signaallijnen gebruiken.
+
+Bij de meeste microcontrollers (Arduino & Raspberry Pi Pico) zijn pull-upweerstanden geintegreerd binnen de PCB. Echter, extra pull-upweerstanden kan voor stabiliteit geen kwaad. Afhankelijk van de configuratie kunnen soms ook juist pull-downweerstanden nodig zijn. 
+
+#heading(level: 3, numbering: none)[Controller en targets]
+
+Op een I²C-bus bevinden zich één of meerdere controllers en één of meerdere targets.
+
+- *Controller (mother):* initieert de communicatie en genereert het kloksignaal.
+- *Target (slave):* reageert wanneer de controller zijn adres aanspreekt.
+
+In ons practicum is de Raspberry Pi Pico de controller. De MCP4725 en INA226 zijn targets.
+
+Beide IC's zijn op dezelfde SDA- en SCL-lijnen aangesloten. De controller bepaalt met welk apparaat wordt gecommuniceerd door het bijbehorende adres te versturen.
+
+#heading(level: 3, numbering: none)[Adressering]
+
+Elk target heeft een I²C-adres (genoteerd als bijvoorbeeld `0x40` of `0x30`). Meestal wordt hiervoor een adres van 7 bits gebruikt. Daarmee zijn theoretisch $2^7$ = 128 verschillende adreswaarden mogelijk, hoewel een deel hiervan gereserveerd is.
+
+Voorbeelden van adressen zijn:
+
+- MCP4725: vaak `0x60`;
+- INA226: standaard `0x40`.
+
+De notatie `0x` betekent dat het getal hexadecimaal is weergegeven.
+
+Een hexadecimaal cijfer vertegenwoordigt vier bits. Het adres `0x40` komt bijvoorbeeld overeen met de binaire waarde `1000000` (7 bits)
+#footnote[`0x40` is een hexadecimaal getal (grondtal 16) en komt overeen met $64 = 4 dot 16^1 + 0 dot 16^0$ in het decimale stelsel en `1000000` in het binaire stelsel (7 bits).]
+.
+
+Op dezelfde bus 
+#footnote[Een bus is een verzameling gedeelde elektrische verbindingen waarmee meerdere elektronische componenten kunnen communiceren. Bij I²C bestaat de communicatiebus uit twee signaallijnen: SDA (gegevens) en SCL (kloksignaal).]
+ kunnen meerdere apparaten worden aangesloten, zolang hun adressen niet conflicteren. 
+
+#heading(level: 3, numbering: none)[Hoe verloopt de communicatie?]
+
+Een typische I²C-transactie bestaat uit de volgende stappen:
+
++ *START-conditie:* de controller trekt SDA van hoog naar laag terwijl SCL hoog is. Hiermee begint de communicatie.
++ *Adres:* de controller verstuurt het 7-bits adres van het gewenste apparaat.
++ *Lees-/schrijfbit:* één extra bit geeft aan of de controller gegevens wil lezen (1) of schrijven (0).
++ *Bevestiging (ACK):* het aangesproken apparaat trekt tijdens de negende klokpuls SDA laag om te bevestigen dat het de adressering heeft ontvangen.
++ *Gegevens:* de apparaten wisselen één of meerdere bytes uit. Iedere byte bestaat uit 8 bits en wordt gevolgd door een ACK- of NACK-bit.
++ *STOP-conditie:* de controller laat SDA van laag naar hoog gaan terwijl SCL hoog is. De communicatie is hiermee beëindigd.
+
+Bij I²C worden de bits meestal verzonden met het meest significante bit (*MSB*) eerst.
+
+Tijdens normale gegevensoverdracht verandert SDA wanneer SCL laag is. Terwijl SCL hoog is, blijft SDA stabiel. Uitzonderingen zijn de START- en STOP-condities.
+
+#heading(level: 3, numbering: none)[Kloksnelheid]
+
+De snelheid van I²C wordt bepaald door de frequentie van het kloksignaal op SCL.
+
+Veelgebruikte snelheden zijn:
+
+- *Standard-mode:* maximaal 100 kHz;
+- *Fast-mode:* maximaal 400 kHz;
+- *Fast-mode Plus:* maximaal 1 MHz.
+
+Niet ieder apparaat ondersteunt alle snelheden. De gekozen kloksnelheid moet daarom worden ondersteund door alle apparaten waarmee wordt gecommuniceerd.
+
+Een kloksnelheid van 100 kHz betekent dat een klokperiode 10 µs duurt. Dit betekent echter niet dat er 100.000 gegevensbits per seconde beschikbaar zijn: ook adresbits, bevestigingsbits en andere protocolinformatie kosten tijd.
+
+#heading(level: 3, numbering: none)[Aandachtspunten bij het aansluiten]
+
+Bij het aansluiten van I²C-apparaten moeten we rekening houden met het volgende:
+
+- SDA van alle apparaten wordt met dezelfde SDA-lijn verbonden.
+- SCL van alle apparaten wordt met dezelfde SCL-lijn verbonden.
+- De apparaten delen een gemeenschappelijke GND.
+- De pull-upspanning moet geschikt zijn voor alle aangesloten apparaten.
+- Meerdere modules kunnen al pull-upweerstanden bevatten. Deze komen dan parallel te staan.
+- Apparaten op dezelfde bus mogen geen conflicterende adressen hebben.
+
+De GPIO-pinnen van de Raspberry Pi Pico werken op 3,3 V en zijn niet 5 V-tolerant. De I²C-signaallijnen mogen daarom niet rechtstreeks naar 5 V worden opgetrokken.
+
+#pagebreak()
+
+
+#heading(level: 1, numbering: none)[Appendix D: Afleiding bewegingsvergelijking]
 
 == Bewegingsvergelijking van het aeropendulum (open loop)
 We beschouwen een aeropendulum bestaande uit een roterende arm met een propeller. De propeller levert een stuwkracht waardoor de arm om zijn draaipunt roteert.
