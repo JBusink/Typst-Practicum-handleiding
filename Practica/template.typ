@@ -1,4 +1,4 @@
-#import "Practica/styl.typ": *
+#import "styl.typ": *
 
 #show: stijl.with(studiejaar: "2026-2027")
 

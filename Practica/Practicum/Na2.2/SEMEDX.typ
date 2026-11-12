@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "SEMEDX", kop: "Technische Natuurkunde — Na2.2")
 
 #praktikumtitle[Practicum: SEM-EDX]

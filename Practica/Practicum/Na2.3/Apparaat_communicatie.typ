@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Apparaat communicatie", kop: "Technische Natuurkunde — Na2.3")
 
 #praktikumtitle[Practicum: apparaat communicatie met Python]

@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Kinematische Viscositeit", kop: "Technische Natuurkunde — Na2.4")
 
 #praktikumtitle[Practicum: Viscositeit met de Ubbelohde viscometer]

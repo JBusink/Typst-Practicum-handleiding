@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Regels Veiligheid", kop: "Technische Natuurkunde — Practicum")
 
 = Introductie

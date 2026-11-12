@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Elektronen diffractie", kop: "Technische Natuurkunde — Na2.3")
 
 #praktikumtitle[Practicum: Electronenbundel -- Elektronendiffractie op grafiet]

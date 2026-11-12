@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Verdiepende practica 2026", kop: "Technische Natuurkunde — Planning")
 
 #heading(level: 1, numbering: none)[Motivatie]

@@ -1,4 +1,4 @@
-#import "../Practica/styl.typ": *
+#import "../styl.typ": *
 #show: stijl.with(titel: "PythonLJ2", kop: "Technische Natuurkunde — Python_Cursus")
 
 #hoofdtitelpagina([Handleiding Python], [Leerjaar 2], [])

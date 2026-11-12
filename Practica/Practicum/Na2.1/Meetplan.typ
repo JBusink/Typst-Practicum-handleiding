@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Meetplan", kop: "Natuurkunde 2.1 Practicum — Meetplan")
 
 #page(header: none, footer: none)[

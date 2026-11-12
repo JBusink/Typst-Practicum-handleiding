@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Digitale Viscositeit", kop: "Technische Natuurkunde — Na2.4")
 
 #praktikumtitle[Practicum: Digitale viscosimeter en niet-Newtoniaanse vloeistoffen]

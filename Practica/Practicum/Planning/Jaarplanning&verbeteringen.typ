@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Jaarplanning&verbeteringen", kop: "Technische Natuurkunde — Planning")
 
 #include "Verbeteringen.typ"

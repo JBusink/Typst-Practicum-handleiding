@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Leerdoelen overzicht", kop: "Technische Natuurkunde — Practicum")
 
 #page(flipped: true, margin: 1.5cm, header: none, footer: none)[

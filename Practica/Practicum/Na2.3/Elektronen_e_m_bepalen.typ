@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Elektronen e m bepalen", kop: "Technische Natuurkunde — Na2.3")
 
 #praktikumtitle[Practicum: bepaling van de verhouding $e \/ m_e$ met een elektronenbundel]

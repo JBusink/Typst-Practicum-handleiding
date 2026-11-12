@@ -1,2 +1,2 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 

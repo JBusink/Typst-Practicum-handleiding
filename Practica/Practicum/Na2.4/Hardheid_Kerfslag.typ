@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Hardheid Kerfslag", kop: "Technische Natuurkunde — Na2.4")
 
 #praktikumtitle[Practicum: Hardheid en Kerfslag]

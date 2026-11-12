@@ -1,4 +1,4 @@
-#import "../../Practica/styl.typ": *
+#import "../../styl.typ": *
 #show: stijl.with(titel: "Spectrometer", kop: "Natuurkunde 2.1 Practicum — Week 2 \\& 3")
 
 #praktikumtitle[Practicum: Spectrometer bouwen]

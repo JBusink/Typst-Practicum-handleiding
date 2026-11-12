@@ -1,4 +1,4 @@
-#import "../Practica/styl.typ": *
+#import "../styl.typ": *
 #show: stijl.with(titel: "Code snippets", kop: "Python voor het practicum")
 
 #praktikumtitle[Code snippets]
