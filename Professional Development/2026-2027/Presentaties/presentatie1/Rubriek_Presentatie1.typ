@@ -1,17 +1,15 @@
-  // Printbare invulrubriek. Dit zijn nog geen interactieve PDF-formuliervelden.
-#set document(title: "Rubriek Presentatie 1")
-#set page(paper: "a4", flipped: true, margin: 15mm)
-#set text(font: ("Arial", "Liberation Sans"), size: 8.5pt, lang: "nl")
-#set par(leading: 0.5em)
-#set heading(numbering: none)
-#let veld(label, hoogte: 10mm) = block(width: 100%, height: hoogte,
-  inset: 5pt, stroke: 0.4pt + luma(60%))[*#label*]
+#import "../../../Template Professional Development/template.typ": professional-development, kader, invulveld
 
-#text(size: 18pt, weight: "bold")[Rubriek Presentatie 1]
-\ Week 5 · context, doel en meetopstelling · ongeveer 8 minuten
-#v(3mm)
+#show: professional-development.with(
+  titel: "Rubriek Presentatie 1",
+  documenttype: "Beoordelingsformulier",
+  subtitel: "Week 5 · context, doel en meetopstelling · ongeveer 8 minuten",
+  liggend: true,
+  tekstgrootte: 9pt,
+)
+
 #grid(columns: (1fr, 1fr, 1fr), gutter: 3mm,
-  veld("Student / studentnummer:"), veld("Beoordelaar:"), veld("Datum / stageproject:"))
+  invulveld("Student / studentnummer:"), invulveld("Beoordelaar:"), invulveld("Datum / stageproject:"))
 #v(3mm)
 *Gebruik:* noteer per onderdeel een score van 1 tot 10, volgens dezelfde
 niveaus als bij de memo's. Onderbouw je keuze met een observatie. Gebruik N/B
@@ -61,9 +59,9 @@ Antwoorden correct? Keuzes onderbouwd? Grenzen herkend?],
 )
 #v(3mm)
 #grid(columns: (1fr, 1fr), gutter: 3mm,
-  veld("Sterk punt (met voorbeeld):", hoogte: 12mm),
-  veld("Belangrijkste verbeteractie:", hoogte: 12mm))
+  invulveld("Sterk punt (met voorbeeld):", hoogte: 12mm),
+  invulveld("Belangrijkste verbeteractie:", hoogte: 12mm))
 #v(3mm)
 #grid(columns: (2fr, 1fr), gutter: 3mm,
-  veld("Gestelde kritische vraag en kern van het antwoord:", hoogte: 12mm),
-  veld("Eindoordeel / vervolgafspraak:", hoogte: 12mm))
+  invulveld("Gestelde kritische vraag en kern van het antwoord:", hoogte: 12mm),
+  invulveld("Eindoordeel / vervolgafspraak:", hoogte: 12mm))

@@ -1,11 +1,10 @@
-#set document(title: "Presentatie 1 - Context, doel en meetopstelling")
-#set page(paper: "a4", margin: 22mm, numbering: "1")
-#set text(font: ("Arial", "Liberation Sans"), size: 11pt, lang: "nl")
-#set par(justify: true, leading: 0.6em)
-#set heading(numbering: none)
+#import "../../../Template Professional Development/template.typ": professional-development, kader, invulveld
 
-#text(size: 21pt, weight: "bold")[Presentatie 1]
-\ #text(size: 14pt)[Week 5 · Context, doel en meetopstelling]
+#show: professional-development.with(
+  titel: "Presentatie 1",
+  documenttype: "Opdrachtbeschrijving",
+  subtitel: "Week 5 · Context, doel en meetopstelling",
+)
 
 = Opdracht
 Presenteer in *ongeveer 8 minuten* waar jouw stageproject over gaat,

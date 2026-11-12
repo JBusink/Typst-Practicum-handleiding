@@ -1,82 +1,135 @@
-// Printbare invulrubriek. Dit zijn nog geen interactieve PDF-formuliervelden.
-#set document(title: "Rubriek Presentatie 2")
-#set page(paper: "a4", flipped: true, margin: 15mm)
-#set text(font: ("Arial", "Liberation Sans"), size: 8.5pt, lang: "nl")
-#set par(leading: 0.5em)
-#set heading(numbering: none)
-#let veld(label, hoogte: 10mm) = block(width: 100%, height: hoogte,
-  inset: 5pt, stroke: 0.4pt + luma(60%))[*#label*]
+#import "../../../Template Professional Development/template.typ": professional-development
 
-#text(size: 18pt, weight: "bold")[Rubriek Presentatie 2]
-\ Stageproject in één figuur · pitch van ongeveer 5 minuten
-#v(3mm)
-#grid(columns: (1fr, 1fr, 1fr), gutter: 3mm,
-  veld("Student / studentnummer:"), veld("Beoordelaar:"), veld("Datum / stageproject:"))
-#v(3mm)
-*Gebruik:* noteer per onderdeel een score van 1 tot 10, volgens dezelfde
-niveaus als bij de memo's. Onderbouw je keuze met een observatie. Gebruik N/B
-als beoordeling niet mogelijk was en licht dat toe. De weging en berekening
-van een eindcijfer worden nog vastgesteld; bereken daarom nog geen totaalscore.
-
-#table(
-  columns: (1.6fr, 2.1fr, 2.1fr, 2.1fr, 1fr),
-  inset: 5pt,
-  stroke: 0.5pt,
-  align: left + top,
-  table.hline(stroke: 0.8pt),
-  table.header([*Onderdeel*], [*Goed (8–10)*], [*Voldoende (6–7)*],
-    [*Onvoldoende (1–5)*], [*Score*]),
-  table.hline(stroke: 0.5pt),
-  [*1. Voorbereiding en verhaallijn*
-
-    Onderzoeksvraag en kernboodschap helder? Logische opbouw? Voorbereid en binnen de tijd?],
-  [Doelgerichte, goed geoefende pitch met duidelijke samenhang tussen vraag,
-    opstelling en meting. Uitleg sluit aan bij het publiek en benut de tijd effectief.],
-  [Onderzoeksvraag en kernboodschap zijn herkenbaar. Uitleg volgt een logische
-    lijn en gebruikt de figuur. De pitch duurt ongeveer 5 minuten.],
-  [Onderzoeksvraag of kernboodschap ontbreekt. Uitleg is moeilijk te volgen;
-    de figuur wordt nauwelijks gebruikt. Voorbereiding of tijdsbewaking schiet tekort.],
-  [Score: ............\ Observatie:\ \ \ ],
-  table.hline(stroke: 0.3pt + luma(70%)),
-  [*2. Kwaliteit visual*
-
-    Opstelling correct en begrijpelijk? Onderdelen en meetpunten herkenbaar? Labels en eenheden leesbaar?],
-  [De visual maakt de werking en meetketen direct inzichtelijk. Selectie van
-    details, labels, pijlen en contrast ondersteunt de kernboodschap zonder ruis.],
-  [De opstelling is inhoudelijk correct en leesbaar. Belangrijkste onderdelen,
-    verbindingen en meetpunten zijn aangegeven; labels en relevante eenheden ondersteunen de uitleg.],
-  [De opstelling is onjuist, onvolledig of slecht leesbaar. Belangrijke
-    onderdelen, verbindingen of meetpunten zijn niet herkenbaar.],
-  [Score: ............\ Observatie:\ \ \ ],
-  table.hline(stroke: 0.3pt + luma(70%)),
-  [*3. Onderschrift*
-
-    Zelfstandig begrijpelijk? Meetfunctie en afkortingen toegelicht? Bron vermeld waar nodig?],
-  [Bondig en zelfstandig leesbaar. Verbindt de onderdelen en meetfunctie
-    duidelijk met het onderzoeksdoel; termen en bronvermelding zijn zorgvuldig.],
-  [Beschrijft wat te zien is en wat wordt gemeten. Belangrijke afkortingen
-    worden verklaard; een bron staat vermeld indien van toepassing.],
-  [Ontbreekt of geeft onvoldoende informatie om de figuur te begrijpen.
-    Essentiële termen of gebruikte bronnen blijven onduidelijk.],
-  [Score: ............\ Observatie:\ \ \ ],
-  table.hline(stroke: 0.3pt + luma(70%)),
-  [*4. Kritische vragen*
-
-    Antwoorden correct en onderbouwd? Keuzes en beperkingen toegelicht?],
-  [Onderbouwt antwoorden met fysische of meetkundige argumenten, weegt
-    alternatieven af en bespreekt gevolgen van onzekerheden en beperkingen.],
-  [Beantwoordt vragen inhoudelijk correct en licht belangrijke keuzes toe.
-    Herkent beperkingen en geeft aan wat nog onbekend is.],
-  [Antwoorden missen de kern of bevatten wezenlijke fouten. Keuzes en
-    beperkingen kunnen onvoldoende worden toegelicht.],
-  [Score: ............\ Observatie:\ \ \ ],
-  table.hline(stroke: 0.8pt),
+#show: professional-development.with(
+  titel: "Rubriek Presentatie 2",
+  subtitel: "~ week 13 · Wetenschappelijke illustratie op één slide · 6 minuten",
+  documenttype: "Beoordelingsformulier",
+  liggend: true,
+  tekstgrootte: 9pt,
+  toon-header: false,
+  titelruimte: 1mm,
 )
-#v(3mm)
-#grid(columns: (1fr, 1fr), gutter: 3mm,
-  veld("Sterk punt (met voorbeeld):", hoogte: 12mm),
-  veld("Belangrijkste verbeteractie:", hoogte: 12mm))
-#v(3mm)
-#grid(columns: (2fr, 1fr), gutter: 3mm,
-  veld("Gestelde kritische vraag en kern van het antwoord:", hoogte: 12mm),
-  veld("Eindoordeel / vervolgafspraak:", hoogte: 12mm))
+
+// Printbare vakjes; per subcriterium wordt één niveau aangekruist.
+#let niveau(body) = grid(
+  columns: (8pt, 1fr), column-gutter: 5pt, align: left + top,
+  box(width: 7.5pt, height: 7.5pt, stroke: 0.6pt + black), body,
+)
+#let invullijn(label, hoogte: 10mm) = block(width: 100%, height: hoogte)[
+  #text(size: 9pt, weight: "bold", label)
+  #v(1fr)
+  #line(length: 100%, stroke: 0.35pt + black)
+]
+#let onderdeel(titel, weging) = table.cell(colspan: 4, inset: (x: 6pt, y: 7pt))[
+  *#titel* #h(0.7em)
+  #h(1fr) *Score: ........ *
+]
+#let criterium(titel, uitstekend, voldoende, onvoldoende) = (
+  [*#titel*], niveau(uitstekend), niveau(voldoende), niveau(onvoldoende),
+)
+#let beoordeling(..rijen) = table(
+  columns: (23%, 26%, 26%, 25%),
+  inset: (x: 6pt, y: 6pt),
+  stroke: (x: none, y: 0.3pt + black),
+  table.hline(y: 0, stroke: 0.8pt + black),
+  table.header(
+    [*Subcriterium*], [*Uitstekend *],
+    [*Voldoende*], [*Onvoldoende*],
+  ),
+  table.hline(y: 1, stroke: 0.5pt + black),
+  ..rijen.pos(),
+  table.hline(stroke: 0.8pt + black),
+)
+
+#grid(columns: (1.5fr, 1fr, 1fr), gutter: 3mm,
+  invullijn("Student / studentnummer:"),
+  invullijn("Beoordelaar:"),
+  invullijn("Datum:"),
+)
+// *Gebruik:* kruis per subcriterium één niveau aan. Geef op basis daarvan per
+// hoofdonderdeel een score van uitstekend tot onvoldoende.
+// Een projectoverzicht of onderzoeksresultaten zijn niet vereist.
+
+#beoordeling(
+  onderdeel("1. Technische inhoud en samenhang", 30),
+  ..criterium([1.1 Afbakening en context],
+    [Eén scherp afgebakend technisch onderwerp; functie binnen de stage direct duidelijk.],
+    [Onderwerp afgebakend; functie binnen de stage voldoende duidelijk.],
+    [Onderwerp te breed of onduidelijk; functie binnen de stage niet herkenbaar.]),
+  ..criterium([1.2 Technische werking en relaties],
+    [Werking en relevante fysische principes correct; relaties tussen onderdelen helder zichtbaar.],
+    [Werking grotendeels correct; belangrijkste onderdelen en relaties herkenbaar.],
+    [Essentiële technische fouten of ontbrekende onderdelen; werking blijft onduidelijk.]),
+  ..criterium([1.3 Technische kernboodschap],
+    [Belangrijkste technische inzicht en relevantie direct herkenbaar in de illustratie.],
+    [Technisch inzicht herkenbaar, maar vraagt enige mondelinge toelichting.],
+    [Geen duidelijke technische kernboodschap of onvoldoende verband met het onderwerp.]),
+
+  onderdeel("2. Mondelinge uitleg en tijdgebruik", 20),
+  ..criterium([3.1 Verhaallijn en gebruik van de visual],
+    [Goed voorbereide uitleg; gerichte verwijzingen naar de illustratie; heldere afsluitende kernboodschap.],
+    [Logische uitleg die de illustratie benut; kernboodschap herkenbaar.],
+    [Uitleg moeilijk te volgen of nauwelijks verbonden met de illustratie; kernboodschap ontbreekt.]),
+  ..criterium([2.2 Aansluiting bij medestudenten],
+    [Projectspecifieke begrippen helder verklaard; uitleg sluit doelgericht aan op natuurkundige basiskennis.],
+    [Belangrijke projectspecifieke begrippen uitgelegd; verhaal begrijpelijk voor medestudenten.],
+    [Jargon of onverklaarde technieken belemmeren het begrip bij medestudenten.]),
+  ..criterium([2.3 Tijdgebruik: 6 minuten],
+    [Evenwichtige verdeling tussen context, technische uitleg en kernboodschap; afgerond in circa 6 minuten.],
+    [Presentatie duurt circa 6 minuten; verdeling tussen onderdelen kan beter.],
+    [Duidelijk te kort of te lang, of essentiële uitleg wordt door gebrekkige planning afgebroken.]),
+  onderdeel("3. Beantwoording van vragen", 10),
+  ..criterium([3.1 Technisch inzicht en onderbouwing],
+    [Antwoorden correct; technische werking en gemaakte keuzes overtuigend onderbouwd.],
+    [Belangrijkste vragen correct beantwoord; werking en technische keuzes voldoende toegelicht.],
+    [Essentiële vragen onjuist of onvoldoende beantwoord; werking of keuzes niet uit te leggen.]),
+  ..criterium([3.2 Grenzen van kennis en aanpak],
+    [Herkent aannames en beperkingen; benoemt gericht hoe open vragen kunnen worden onderzocht.],
+    [Herkent belangrijke beperkingen en geeft eerlijk aan wat nog onbekend is.],
+    [Herkent belangrijke beperkingen niet of presenteert onbekende zaken als vaststaand.]),
+)
+
+#pagebreak()
+#text(size: 13pt, weight: "bold")[Rubriek Presentatie 2 — vervolg]
+#v(2mm)
+
+#beoordeling(
+
+  onderdeel("3. Vormgeving en visuele communicatie", 30),
+  ..criterium([3.1 Eigen digitale illustratie; één slide],
+    [Eigen digitaal uitgewerkte illustratie; titel, onderschrift en eventuele bronnen vormen één geheel op één slide.],
+    [Eigen digitale illustratie met titel, onderschrift en eventuele bronnen op één slide.],
+    [Geen eigen digitale uitwerking, of presentatie verspreid over meerdere slides.]),
+  ..criterium([3.2 Visuele structuur en selectie],
+    [Heldere leesrichting en hiërarchie; visuele elementen verklaren de werking zonder overbodige details.],
+    [Logische indeling en herkenbare verbanden; weinig overbodige tekst of details.],
+    [Rommelige of onduidelijke structuur; tekstblokken of details overheersen de illustratie.]),
+  ..criterium([3.3 Consistentie en technische notatie],
+    [Symbolen, lijnen en typografie consequent; grootheden, eenheden en benamingen correct waar relevant.],
+    [Vormgeving grotendeels consistent; notatie correct met kleine onvolkomenheden.],
+    [Inconsistente vormgeving of ontbrekende of onjuiste essentiële labels, symbolen of eenheden.]),
+  ..criterium([3.4 Leesbaarheid op schermformaat],
+    [Alle relevante details en labels duidelijk leesbaar; deelfiguren en eventuele grafieken doelgericht gekozen.],
+    [Belangrijkste onderdelen en labels leesbaar; eventuele grafieken voldoende begrijpelijk.],
+    [Essentiële onderdelen, labels of eventuele grafieken onvoldoende leesbaar of begrijpelijk.]),
+
+
+  onderdeel("5. Onderschrift en bronvermelding", 10),
+  ..criterium([5.1 Zelfstandig begrijpelijk onderschrift],
+    [Bondig onderschrift verklaart wat wordt getoond, symbolen, afkortingen en technische kernboodschap.],
+    [Onderschrift verklaart de inhoud en belangrijkste symbolen en afkortingen; kleine onduidelijkheden.],
+    [Onderschrift ontbreekt of geeft onvoldoende uitleg om de illustratie te begrijpen.]),
+  ..criterium([5.2 Herkomst van materiaal],
+    [Bronnen zorgvuldig vermeld; eigen uitwerking en overgenomen of bewerkte onderdelen duidelijk onderscheiden.],
+    [Noodzakelijke bronnen vermeld; herkomst van gebruikt materiaal voldoende duidelijk.],
+    [Noodzakelijke bronvermeldingen ontbreken of overgenomen materiaal wordt als eigen werk gepresenteerd.]),
+
+
+)
+#v(2mm)
+*Eindcijfer:* score / 44 #footnote[Exacte norm kan aangepast naar inzicht van de docent.]
+#grid(columns: (1fr, 1fr, 0.6fr), gutter: 3mm,
+  invullijn("Sterke punten (met voorbeeld):", hoogte: 13mm),
+  invullijn("Belangrijkste verbeteractie:", hoogte: 13mm),
+  invullijn("Eindcijfer:", hoogte: 13mm),
+)

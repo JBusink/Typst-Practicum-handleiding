@@ -1,42 +1,9 @@
+#import "../../Template Professional Development/template.typ": professional-development, kader, invulveld
 
-#set page(
-  paper: "a4",
-  margin: (
-    top: 2.5cm,
-    bottom: 2.5cm,
-    left: 2cm,
-    right: 2cm,
-  ),
-  footer: context {
-    line(length: 100%, stroke: 0.4pt)
-    v(3mm)
-    grid(
-      columns: (1fr, 1fr, 1fr),
-      align(left)[TN High-Tech Physics],
-      align(center)[#datetime.today().display("[day]-[month]-[year]")],
-      align(right)[2025-2026],
-    )
-  },
+#show: professional-development.with(
+  titel: "Memo 1 - Technische Stage",
+  documenttype: "Opdrachtbeschrijving",
 )
-
-#set text(
-  size: 11pt,
-  lang: "nl",
-)
-
-#set par(
-  first-line-indent: 0pt,
-)
-
-#set list(
-  indent: 1.5cm,
-  body-indent: 0.5em,
-  spacing: 2pt,
-)
-
-#heading(level: 1, numbering: none)[
-  Opdrachtbeschrijving Memo 1 – Technische Stage
-]
 
 #heading(level: 2, numbering: none)[
   Introductie van de technologie *\(20%\)*
@@ -86,6 +53,9 @@ Denk na over het gebruik van een (digitaal) labjournaal:
 - koppeling tussen labjournaal en dataopslag voor reproduceerbaarheid.
 
 *Criterium:* De lezer moet kunnen volgen hoe de planning van de stage verloopt, hoe de werkzaamheden overdraagbaar zijn en hoe experimentele handelingen worden genoteerd in het labjournaal.
+
+// Begin de volgende sectie op een nieuwe pagina; houd tekst en lijst bij elkaar.
+#pagebreak()
 
 #heading(level: 2, numbering: none)[
   Opstelling en eerste resultaten *\(20%\)*

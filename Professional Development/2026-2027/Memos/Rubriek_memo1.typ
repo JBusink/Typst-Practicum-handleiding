@@ -1,26 +1,14 @@
+#import "../../Template Professional Development/template.typ": professional-development, kader, invulveld
 
-#set page(
-  paper: "a4",
-  flipped: true,
-  margin: 1.5cm,
+#show: professional-development.with(
+  titel: "Rubriek Memo 1",
+  documenttype: "Beoordelingsformulier",
+  liggend: true,
+  tekstgrootte: 9pt,
 )
-
-#set text(
-  size: 9pt,
-  lang: "nl",
-)
-
-#set par(
-  first-line-indent: 0pt,
-)
-
-#heading(level: 1, numbering: none)[Rubriek Memo 1]
 
 #table(
   columns: (3.5fr, 2.5fr, 2.5fr, 2.5fr, 0.7fr),
-  inset: 6pt,
-  stroke: 0.5pt,
-  align: left + top,
 
   table.header(
     [*Onderdeel*],

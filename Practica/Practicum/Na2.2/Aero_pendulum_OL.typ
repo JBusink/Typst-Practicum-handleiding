@@ -54,7 +54,7 @@ Een aeropendulum bestaat uit een draaibare arm met aan het uiteinde een elektrom
 
 In dit practicum wordt het systeem in open-loop onderzocht. Dit betekent dat het vermogen van de motor vooraf wordt ingesteld en niet automatisch wordt aangepast op basis van de gemeten hoek. Voor iedere instelling wordt vervolgens onderzocht hoe het aeropendulum reageert.
 
-De propeller levert een stuwkracht $F_T$ op een afstand $l_T$ van het draaipunt. Het bijbehorende moment is
+De propeller levert een stuwkracht $F_T$ op een afstand $l_T$ van het draaipunt. Het bijbehorende moment (soms ook uitgedrukt als $tau$ voor #emph[torque]) is
 
 #math.equation(block: true, numbering: "(1)", $M_T = l_T F_T .$)
 
@@ -66,9 +66,9 @@ waarbij $m$ de massa van het bewegende systeem is, $g$ de zwaartekrachtsversnell
 
 Volgens de tweede wet van Newton voor rotatie wordt de beweging bepaald door de som van deze momenten:
 
-#math.equation(block: true, numbering: "(1)", $J dot.double(theta) = l_T F_T - m g l sin theta \,$)
+#math.equation(block: true, numbering: "(1)", $J alpha = J dot.double(theta) = l_T F_T - m g l sin theta \,$)
 
-waarbij $J$ het massatraagheidsmoment van het aeropendulum rond het draaipunt is.
+waarbij $J$ het massatraagheidsmoment van het aeropendulum en $alpha equiv dot.double(theta)$ rond het draaipunt is.
 
 #figure(
   [
@@ -541,6 +541,95 @@ Wanneer het motorkoppel groter wordt dan dit maximale zwaartekrachtsmoment,
 )
 
 kan de zwaartekracht het motorkoppel niet meer compenseren. Er bestaat dan geen statische evenwichtshoek meer. De arm blijft in de richting van het motorkoppel versnellen zolang de hoeksnelheid voldoende klein is.
+
+#pagebreak()
+
+#heading(level: 1, numbering: none)[Appendix E: Arduino basisfuncties]
+
+In deze appendix worden de belangrijkste functies van de Arduino IDE toegelicht. De Arduino IDE wordt gebruikt om code te schrijven, te controleren en naar de Arduino te uploaden.
+
+#heading(level: 2, numbering: none)[De Arduino IDE]
+
+Bovenaan de Arduino IDE staan verschillende knoppen en menu's.
+
+- *Vinkje (Verify):* controleert de code op fouten en compileert deze, zonder de code naar de Arduino te uploaden.
+- *Pijltje (Upload):* compileert de code en uploadt deze naar de aangesloten Arduino.
+- *Board Selector:* selecteer hier het juiste Arduino-board en de bijbehorende COM-poort.
+- *Serial Monitor:* opent een venster waarin tekst en meetwaarden van de Arduino worden weergegeven.
+- *Serial Plotter:* toont numerieke meetwaarden als grafieken.
+
+#heading(level: 2, numbering: none)[Arduino aansluiten]
+
+1. Sluit de Arduino met een USB-datakabel aan op de computer.
+2. Open de Arduino IDE.
+3. Selecteer bij *Tools → Board* het juiste board, bijvoorbeeld Arduino UNO R4 Minima.
+4. Selecteer bij *Tools → Port* de COM-poort waarop de Arduino is aangesloten.
+5. Controleer of het geselecteerde board en de poort overeenkomen met de aangesloten Arduino.
+
+#heading(level: 2, numbering: none)[Bibliotheken installeren]
+
+Voor het gebruik van bepaalde sensoren zijn aanvullende bibliotheken nodig.
+
+1. Open de Library Manager via het bibliotheek-icoon aan de linkerkant van de Arduino IDE.
+2. Zoek naar de naam van de benodigde bibliotheek.
+3. Selecteer de juiste bibliotheek en klik op Install.
+4. Installeer eventuele aanvullende afhankelijkheden wanneer hierom wordt gevraagd.
+
+Voor het practicum met de aeropendulum wordt bijvoorbeeld de AS5600-bibliotheek gebruikt voor het uitlezen van de magnetische hoeksensor. Controleer welke bibliotheek in de meegeleverde code wordt gebruikt.
+
+#heading(level: 2, numbering: none)[Code uploaden]
+
+1. Open het meegeleverde `.ino`-bestand in de Arduino IDE.
+2. Controleer of het juiste board en de juiste COM-poort geselecteerd zijn.
+3. Klik één keer op *Verify* (vinkje) om de code te controleren.
+4. Klik één keer op *Upload* (pijltje) om de code naar de Arduino te sturen.
+5. Wacht totdat de IDE aangeeft dat het uploaden is voltooid.
+
+Na een succesvolle upload start de Arduino normaal gesproken automatisch met het uitvoeren van de nieuwe code.
+
+#heading(level: 2, numbering: none)[Serial Monitor]
+
+De Serial Monitor wordt gebruikt om tekst en meetgegevens van de Arduino te bekijken en eventueel commando's naar de Arduino te sturen.
+
+1. Open Tools → Serial Monitor.
+2. Stel de juiste baudrate in, bijvoorbeeld `115200`.
+3. Controleer of meetwaarden of berichten verschijnen.
+4. Gebruik indien nodig het invoerveld om een commando naar de Arduino te sturen.
+
+De baudrate moet overeenkomen met de waarde in de Arduino-code, bijvoorbeeld `Serial.begin(115200)`.
+
+#heading(level: 2, numbering: none)[Serial Plotter]
+
+Met de Serial Plotter kun je numerieke meetgegevens direct grafisch weergeven.
+
+1. Open Tools → Serial Plotter.
+2. Selecteer de juiste baudrate.
+3. Controleer of de Arduino numerieke waarden via de seriële verbinding verstuurt.
+4. De ontvangen waarden worden automatisch als functie van de tijd weergegeven.
+
+De Serial Plotter is handig om bijvoorbeeld de hoek van de aeropendulum tijdens een meting te volgen.
+
+
+#heading(level: 2, numbering: none)[RESET-knop op de Arduino]
+
+Op de Arduino UNO R4 Minima bevindt zich een fysieke RESET-knop. Deze heeft twee belangrijke functies:
+
+- *Eén keer indrukken (Reset):* de Arduino start opnieuw op en voert de geüploade code vanaf het begin uit.
+- *Twee keer snel indrukken (Bootloader-modus):* de Arduino schakelt over naar de bootloader. In deze modus kan nieuwe code worden geüpload, ook wanneer het bestaande programma niet meer goed functioneert.
+
+Wanneer het uploaden van code niet lukt, kun je proberen de RESET-knop twee keer snel achter elkaar in te drukken. Selecteer vervolgens indien nodig opnieuw de COM-poort en probeer de code opnieuw te uploaden. Dit kan je eventueel ook gebruiken om bij een bestaande aansturing even te pauzeren, mocht je in continue-modus werken.
+
+
+#heading(level: 2, numbering: none)[Veelvoorkomende problemen]
+
+- *Geen COM-poort zichtbaar:* controleer de USB-kabel, aansluiting en eventuele benodigde drivers.
+- *Upload mislukt:* controleer het geselecteerde board en de COM-poort. Sluit eventueel andere programma's die de seriële poort gebruiken.
+- *Geen meetgegevens zichtbaar:* controleer de baudrate en of de Arduino-code daadwerkelijk gegevens verstuurt.
+- *Bibliotheek niet gevonden:* installeer de juiste bibliotheek via de Library Manager.
+- *Python kan de COM-poort niet openen:* sluit de Serial Monitor en Serial Plotter en controleer of een ander programma de poort gebruikt.
+
+Let op: de Serial Monitor, Serial Plotter en Python gebruiken dezelfde seriële verbinding. Sluit de actieve verbinding voordat je een ander programma toegang tot dezelfde COM-poort geeft.
+
 
 #pagebreak(weak: true)
 

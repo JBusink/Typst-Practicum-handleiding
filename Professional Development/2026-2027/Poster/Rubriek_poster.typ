@@ -1,17 +1,10 @@
+#import "../../Template Professional Development/template.typ": professional-development, kader, invulveld
 
-#set page(
-  paper: "a4",
-  flipped: true,
-  margin: 1.5cm,
-)
-
-#set text(
-  size: 9pt,
-  lang: "nl",
-)
-
-#set par(
-  first-line-indent: 0pt,
+#show: professional-development.with(
+  titel: "Rubriek Wetenschappelijke Poster",
+  documenttype: "Beoordelingsformulier",
+  liggend: true,
+  tekstgrootte: 9pt,
 )
 
 #let checkbox = box(
@@ -28,13 +21,9 @@
       checkbox,
       item,
     )
-    v(3pt)
+    v(1.5pt)
   }
 }
-
-#heading(level: 1, numbering: none)[
-  Rubriek Wetenschappelijke Poster
-]
 
 *Naam student:* #box(width: 8cm, line(length: 100%, stroke: 0.5pt))
 
@@ -42,9 +31,6 @@
 
 #table(
   columns: (3.3fr, 2.6fr, 2.6fr, 2.4fr, 0.8fr),
-  inset: 6pt,
-  stroke: 0.5pt,
-  align: left + top,
 
   table.header(
     [*Onderdeel*],
